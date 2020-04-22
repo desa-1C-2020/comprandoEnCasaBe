@@ -1,1 +1,3 @@
+spring.application.name: comprandoencasa
+
 server.servlet.contextPath: /comprandoencasa
