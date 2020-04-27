@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.healthcheck;
+package ar.edu.unq.desapp.comprandoencasa.healthCheckk;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

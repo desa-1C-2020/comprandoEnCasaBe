@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.healthcheck;
+package ar.edu.unq.desapp.comprandoencasa.healthCheckk;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
