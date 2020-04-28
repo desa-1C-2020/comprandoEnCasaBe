@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.extensions;
+package ar.edu.unq.desapp.comprandoencasa.utils;
 
 import static org.junit.Assert.fail;
 
