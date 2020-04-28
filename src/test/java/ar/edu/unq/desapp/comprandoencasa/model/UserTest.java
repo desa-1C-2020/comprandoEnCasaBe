@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
-import ar.edu.unq.desapp.comprandoencasa.extensions.TestUtils;
+import ar.edu.unq.desapp.comprandoencasa.utils.TestUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;

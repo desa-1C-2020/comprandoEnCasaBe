@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
-import ar.edu.unq.desapp.comprandoencasa.extensions.TestUtils;
+import ar.edu.unq.desapp.comprandoencasa.utils.TestUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
