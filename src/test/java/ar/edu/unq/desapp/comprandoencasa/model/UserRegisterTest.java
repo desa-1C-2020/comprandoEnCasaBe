@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static ar.edu.unq.desapp.comprandoencasa.model.UserRol.SELLER;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -22,7 +23,7 @@ public class UserRegisterTest {
 
     @Test
     public void whenAUserRegistrarRegistersAUser_thenExistsInUserRegistrar() {
-        User user = new User("carlos", "gonzalez", "carlos@gmail.com");
+        User user = User.createWithoutCommerce("carlos", "gonzalez", "carlos@gmail.com", SELLER );
 
         userRegistrar.register(user);
 
@@ -31,8 +32,8 @@ public class UserRegisterTest {
 
     @Test
     public void whenAUserRegistrarRegistersAnExistingUser_thenDoNotAddIt() {
-        User existingUser = new User("carlos", "gonzalez", "carlos@gmail.com");
-        User newUSer = new User("carlos", "gonzalez", "carlos@gmail.com");
+        User existingUser = User.createWithoutCommerce("carlos", "gonzalez", "carlos@gmail.com", SELLER );
+        User newUSer = User.createWithoutCommerce("carlos", "gonzalez", "carlos@gmail.com", SELLER);
         userRegistrar.register(existingUser);
 
         Exception thrown = faillingRegisterUser(newUSer);
@@ -42,7 +43,7 @@ public class UserRegisterTest {
 
     @Test
     public void whenAEmptyUserRegistrarCheckIfExistsUser_thenRespondFalse() {
-        User user = new User("carlos", "gonzalez", "carlos@gmail.com");
+        User user = User.createWithoutCommerce("carlos", "gonzalez", "carlos@gmail.com", SELLER);
 
         assertThat(userRegistrar.exists(user), is(false));
     }

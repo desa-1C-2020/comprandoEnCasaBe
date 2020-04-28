@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static ar.edu.unq.desapp.comprandoencasa.model.UserRol.SELLER;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -13,11 +14,11 @@ public class UserTest {
 
     @Test
     public void whenWantCreateUserWithWellformedMail_thenTheUserIsCreated() {
-        User user = new User("carlos", "gonzalez", "carlos@gmail.com");
+        User user = User.createWithoutCommerce("carlos", "gonzalez", "carlos@gmail.com", SELLER);
 
-        assertThat(user.name(), is("carlos"));
-        assertThat(user.surname(), is("gonzalez"));
-        assertThat(user.email(), is("carlos@gmail.com"));
+        assertThat(user.getName(), is("carlos"));
+        assertThat(user.getSurname(), is("gonzalez"));
+        assertThat(user.getEmail(), is("carlos@gmail.com"));
     }
 
     @Test
@@ -31,8 +32,8 @@ public class UserTest {
     }
 
     private void assertInvalidEmail(String email) {
-        Exception thrown = TestUtils.assertThrows(() -> new User("carlos", "gonzalez", email), RuntimeException.class);
+        Exception thrown = TestUtils.assertThrows(() -> User.createWithoutCommerce("carlos", "gonzalez", email, SELLER), RuntimeException.class);
 
-        assertThat(thrown.getMessage(), is("El email '" + email + "' no es válido."));
+        assertThat(thrown.getMessage(), is("El getEmail '" + email + "' no es válido."));
     }
 }
