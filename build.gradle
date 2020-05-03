@@ -102,4 +102,8 @@ dependencies {
     //Enviar reporte a codacy
     codacy 'com.github.codacy:codacy-coverage-reporter:-SNAPSHOT'
 
+    //Librería que wrappea el cliente de google maps
+    implementation 'com.google.maps:google-maps-services:0.13.0'
+//    implementation 'org.slf4j:slf4j-simple:1.7.25'
+
 }
