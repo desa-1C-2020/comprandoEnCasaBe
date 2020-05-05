@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
-import ar.edu.unq.desapp.comprandoencasa.model.Product;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 
 public class ProductService {
 

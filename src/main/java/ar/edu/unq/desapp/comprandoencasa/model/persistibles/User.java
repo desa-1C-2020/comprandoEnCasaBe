@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.model;
+package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
 
@@ -21,24 +21,24 @@ public class User {
         this.commerces = new ArrayList<>();
     }
 
-    public static User createWithoutCommerce(String name, String surname, String email, UserRol rol){
+    public static User createWithoutCommerce(String name, String surname, String email, UserRol rol) {
         return new User(name, surname, email, rol);
     }
 
-    public static User createWithCommerce(String name, String surname, String email, UserRol rol, Commerce commerce){
+    public static User createWithCommerce(String name, String surname, String email, UserRol rol, Commerce commerce) {
         User user = new User(name, surname, email, rol);
         user.addCommerce(commerce);
         return user;
     }
 
     public static void validateEmailIsWellFormed(String email) {
-        if (email == null || !email.contains("@")){
+        if (email == null || !email.contains("@")) {
             throw new RuntimeException("El getEmail '" + email + "' no es válido.");
         }
     }
 
     public boolean same(User userToFind) {
-        return emailRegistered(userToFind) ;
+        return emailRegistered(userToFind);
     }
 
     private boolean emailRegistered(User userToFind) {
@@ -57,10 +57,6 @@ public class User {
         return surname;
     }
 
-    public UserRol getRol() {
-        return rol;
-    }
-
     public Optional<Commerce> getCommerce() {
         return Optional.ofNullable(commerces.get(0));
     }
@@ -71,5 +67,31 @@ public class User {
 
     public boolean isSeller() {
         return rol.isSeller();
+    }
+
+    public void addProductToCommerce(Product product) {
+        Commerce commerce = getCommerceOrThrow();
+        commerce.addProduct(product);
+    }
+
+    public boolean containsProductInCommerce(Product product) {
+        Commerce commerce = getCommerceOrThrow();
+        return commerce.containsProduct(product);
+    }
+
+    public boolean sameId(Long userId) {
+        return false;
+    }
+
+    private Commerce getCommerceOrThrow() {
+        Optional<Commerce> commerce = getCommerce();
+        if (commerce.isAbsent()) {
+            throw new RuntimeException("No se puede agregar el product porque no hay un comercio registrado.");
+        }
+        return commerce.get();
+    }
+
+    public void removeFromCommerce(Product product) {
+
     }
 }

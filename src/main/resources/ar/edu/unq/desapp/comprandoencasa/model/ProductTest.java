@@ -1,8 +1,9 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
-import static org.junit.Assert.assertTrue;
-
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 public class ProductTest {
 

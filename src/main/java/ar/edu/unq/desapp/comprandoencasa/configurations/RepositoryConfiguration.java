@@ -1,8 +1,10 @@
 package ar.edu.unq.desapp.comprandoencasa.configurations;
 
-import ar.edu.unq.desapp.comprandoencasa.controllers.CommerceRepository;
-import ar.edu.unq.desapp.comprandoencasa.model.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepositoryMem;
 import com.google.maps.model.LatLng;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,12 @@ public class RepositoryConfiguration {
         CommerceRepositoryMem commerceRepositoryMem = new CommerceRepositoryMem();
         simulateCommerceFakeData(commerceRepositoryMem);
         return commerceRepositoryMem;
+    }
+
+    @Bean
+    public UserRepository userRepository() {
+        UserRepositoryMem userRepositoryMem = new UserRepositoryMem();
+        return userRepositoryMem;
     }
 
     private void simulateCommerceFakeData(CommerceRepositoryMem commerceRepositoryMem) {

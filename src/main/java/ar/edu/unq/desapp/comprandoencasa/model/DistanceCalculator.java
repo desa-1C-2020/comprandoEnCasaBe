@@ -1,7 +1,7 @@
-package ar.edu.unq.desapp.comprandoencasa.controllers;
+package ar.edu.unq.desapp.comprandoencasa.model;
 
 import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
-import ar.edu.unq.desapp.comprandoencasa.model.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.Distance;
 import com.google.maps.model.LatLng;

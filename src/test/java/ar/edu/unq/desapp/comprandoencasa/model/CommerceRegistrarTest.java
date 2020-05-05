@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.utils.TestUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -10,8 +12,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ar.edu.unq.desapp.comprandoencasa.model.UserRol.BUYER;
-import static ar.edu.unq.desapp.comprandoencasa.model.UserRol.SELLER;
+import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.BUYER;
+import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.SELLER;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 

@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.controller;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.CommercesController;
-import ar.edu.unq.desapp.comprandoencasa.model.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;

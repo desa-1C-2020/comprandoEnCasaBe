@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.repositories;
 
-import ar.edu.unq.desapp.comprandoencasa.controllers.CommerceRepository;
-import ar.edu.unq.desapp.comprandoencasa.model.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
