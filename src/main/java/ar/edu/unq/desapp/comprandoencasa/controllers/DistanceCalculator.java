@@ -38,6 +38,6 @@ public class DistanceCalculator {
         if(distance == null){
             return false;
         }
-        return distance.inMeters < maxDistance;
+        return distance.inMeters <= maxDistance;
     }
 }
