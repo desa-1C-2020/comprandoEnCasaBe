@@ -5,6 +5,7 @@ import ar.edu.unq.desapp.comprandoencasa.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     
-    @PostMapping("/saveProduct")
+    @PostMapping("/product")
     @ResponseStatus(value = HttpStatus.OK)
     public void saveNewProduct(@RequestParam("shopID") String shopID,
     						   @RequestParam("name") String name,
@@ -35,7 +36,7 @@ public class ProductController {
     	this.productService.saveProduct(id, product);
     } 
     
-    @DeleteMapping("/deleteProduct")
+    @DeleteMapping("/product")
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteExistingProduct(@RequestParam("shopID") String shopID,
     								  @RequestParam("productID") String productID) {
@@ -44,7 +45,7 @@ public class ProductController {
     	this.productService.deleteProduct(idShop, idProduct);
     } 
     
-    @PostMapping("/modifyProduct")
+    @PatchMapping("/product")
     @ResponseStatus(value = HttpStatus.OK)
     public void modifyExistingProduct(@RequestParam("shopID") String shopID,
     								  @RequestParam("product") Product product) {

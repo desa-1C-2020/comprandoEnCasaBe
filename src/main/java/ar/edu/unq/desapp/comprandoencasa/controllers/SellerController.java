@@ -6,6 +6,7 @@ import ar.edu.unq.desapp.comprandoencasa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class SellerController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("removeProduct")
+    @DeleteMapping("removeProduct")
     public ResponseEntity removeProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
 
 //        String uid = principal.getName();
