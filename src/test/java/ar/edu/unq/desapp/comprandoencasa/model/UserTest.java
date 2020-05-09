@@ -78,7 +78,7 @@ public class UserTest {
 
         assertThatExceptionOfType(RuntimeException.class)
             .isThrownBy(() -> user.addProductToCommerce(product))
-            .withMessage("No se puede agregar el product porque no hay un comercio registrado.");
+            .withMessage("No posee un comercio registrado. No se puede agregar un producto.");
     }
 
     private void assertInvalidEmail(String email) {
