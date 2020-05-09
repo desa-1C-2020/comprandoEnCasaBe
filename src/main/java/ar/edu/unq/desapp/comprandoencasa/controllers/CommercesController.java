@@ -23,7 +23,7 @@ public class CommercesController {
     DistanceCalculator distanceCalculator;
 
     @GetMapping("findInRange")
-    public List<Commerce> getAllWithinGivenDistance(@RequestParam String maxDistanceMeters,
+    public List<Commerce> getAllWithinGivenDistance(@RequestParam("maxDistance") String maxDistanceMeters,
                                                     @RequestParam String latitud,
                                                     @RequestParam String longitud) {
 
