@@ -70,12 +70,20 @@ public class User {
     }
 
     public void addProductToCommerce(Product product) {
-        Commerce commerce = getCommerceOrThrow();
+        Optional<Commerce> commerceOptional = getCommerce();
+        if (commerceOptional.isAbsent()) {
+            throw new RuntimeException("No posee un comercio registrado. No se puede agregar un producto.");
+        }
+        Commerce commerce = commerceOptional.get();
         commerce.addProduct(product);
     }
 
     public boolean containsProductInCommerce(Product product) {
-        Commerce commerce = getCommerceOrThrow();
+        Optional<Commerce> commerceOptional = getCommerce();
+        if (commerceOptional.isAbsent()) {
+            throw new RuntimeException("No posee un comercio registrado. No se puede verificar si existe el producto.");
+        }
+        Commerce commerce = commerceOptional.get();
         return commerce.containsProduct(product);
     }
 
@@ -83,15 +91,10 @@ public class User {
         return false;
     }
 
-    private Commerce getCommerceOrThrow() {
-        Optional<Commerce> commerce = getCommerce();
-        if (commerce.isAbsent()) {
-            throw new RuntimeException("No se puede agregar el product porque no hay un comercio registrado.");
-        }
-        return commerce.get();
-    }
-
     public void removeFromCommerce(Product product) {
-
+        if (containsProductInCommerce(product)) {
+            Commerce existingcommerce = getCommerce().get();
+            existingcommerce.removeProduct(product);
+        }
     }
 }

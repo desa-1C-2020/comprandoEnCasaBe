@@ -23,6 +23,6 @@ public class UserRepositoryMem implements UserRepository {
 
     @Override
     public void update(User user) {
-
+        repo.contains(user);
     }
 }

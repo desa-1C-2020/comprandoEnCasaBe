@@ -90,4 +90,8 @@ public class Commerce {
     public boolean containsProduct(Product product) {
         return products.contains(product);
     }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+    }
 }
