@@ -5,7 +5,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 
 public class UserFinder {
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     public UserFinder(UserRepository userRepository) {
         this.userRepository = userRepository;

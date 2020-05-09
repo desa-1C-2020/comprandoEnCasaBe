@@ -19,7 +19,7 @@ public class SellerController {
     public static final String basePath = "/seller";
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping("addProduct")
     public ResponseEntity addProduct(@RequestParam Long userId, @RequestBody ProductTo productTo) {

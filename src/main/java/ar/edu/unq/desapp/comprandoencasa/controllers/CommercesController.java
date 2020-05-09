@@ -17,10 +17,10 @@ public class CommercesController {
 
     public static final String basePath = "/commerces";
     @Autowired
-    CommerceRepository commerceRepository;
+    private CommerceRepository commerceRepository;
 
     @Autowired
-    DistanceCalculator distanceCalculator;
+    private DistanceCalculator distanceCalculator;
 
     @GetMapping("findInRange")
     public List<Commerce> getAllWithinGivenDistance(@RequestParam("maxDistance") String maxDistanceMeters,
