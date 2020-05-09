@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.DistanceCalculator;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +26,6 @@ public class CommercesController {
     public List<Commerce> getAllWithinGivenDistance(@RequestParam String maxDistanceMeters,
                                                     @RequestParam String latitud,
                                                     @RequestParam String longitud) {
-
-//        String uid = principal.getName();
         List<Commerce> commerceList = commerceRepository.getAll();
         double latitudParsed = Double.parseDouble(latitud);
         double longitudParsed = Double.parseDouble(longitud);
