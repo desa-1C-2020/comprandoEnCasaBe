@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.model;
+package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.utils.TestUtils;
@@ -6,8 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static ar.edu.unq.desapp.comprandoencasa.model.UserRol.BUYER;
-import static ar.edu.unq.desapp.comprandoencasa.model.UserRol.SELLER;
+import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.BUYER;
+import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.SELLER;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -49,11 +50,32 @@ public class UserTest {
 
     @Test
     public void whenWantCreateUserWithCommerce_thenTheUserIsCreated() {
-        Commerce commerce = new Commerce(null, null, null, null, null);
+        Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
         User user = User.createWithCommerce("carlos", "gonzalez", "carlos@gmail.com", SELLER, commerce);
 
         Optional<Commerce> userCommerce = user.getCommerce();
         assertThat(userCommerce.equals(Optional.ofNullable(commerce)), is(true));
+    }
+
+    @Test
+    public void whenWantAddProductToUserWithCommerce_thenItIsAdded() {
+        Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
+        User user = User.createWithCommerce("carlos", "gonzalez", "carlos@gmail.com", SELLER, commerce);
+        Product product = new Product("un producto", "una marca", 1, Double.MAX_VALUE, "una url");
+
+        user.addProductToCommerce(product);
+
+        assertThat(user.containsProductInCommerce(product), is(true));
+    }
+
+    @Test
+    public void whenWantAddProductToUserWithoutCommerce_thenItIsNotAddedAndThrowsAnError() {
+        User user = User.createWithCommerce("carlos", "gonzalez", "carlos@gmail.com", SELLER, null);
+        Product product = new Product("un producto", "una marca", 1, Double.MAX_VALUE, "una url");
+
+        assertThatExceptionOfType(RuntimeException.class)
+            .isThrownBy(() -> user.addProductToCommerce(product))
+            .withMessage("No posee un comercio registrado. No se puede agregar un producto.");
     }
 
     private void assertInvalidEmail(String email) {

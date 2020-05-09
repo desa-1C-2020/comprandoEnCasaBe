@@ -1,11 +1,11 @@
-package ar.edu.unq.desapp.comprandoencasa.model;
+package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static ar.edu.unq.desapp.comprandoencasa.model.UserRol.BUYER;
-import static ar.edu.unq.desapp.comprandoencasa.model.UserRol.SELLER;
+import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.BUYER;
+import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.SELLER;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

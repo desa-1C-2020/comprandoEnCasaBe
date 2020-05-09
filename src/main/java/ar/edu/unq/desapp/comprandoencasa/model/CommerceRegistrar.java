@@ -1,5 +1,8 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+
 public class CommerceRegistrar {
 
     public static CommerceRegistrar create() {

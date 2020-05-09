@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.utils.TestUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -10,8 +12,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ar.edu.unq.desapp.comprandoencasa.model.UserRol.BUYER;
-import static ar.edu.unq.desapp.comprandoencasa.model.UserRol.SELLER;
+import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.BUYER;
+import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.SELLER;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -51,7 +53,7 @@ public class CommerceRegistrarTest {
     private Commerce commerce() {
         List<String> paymentMethods = new ArrayList<>();
         List<String> daysAndHoursOpen = new ArrayList<>();
-        return new Commerce("un rubro", "un domicilio", paymentMethods, daysAndHoursOpen, "2km alcance");
+        return new Commerce("un nombre de comercio", "un rubro", "un domicilio", paymentMethods, daysAndHoursOpen, "2km alcance");
     }
 
     @After

@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
