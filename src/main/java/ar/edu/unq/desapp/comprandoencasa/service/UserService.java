@@ -16,16 +16,16 @@ public class UserService {
         this.repository = userRepository;
     }
 
-    public void addProductByUserId(Product product, Long userId) {
+    public void addProductByUserId(Product product, String userId) {
         findDoAndUpdateUser(userId, (user) -> user.addProductToCommerce(product));
     }
 
-    public void removeProductByUserId(Product product, Long userId) {
+    public void removeProductByUserId(Product product, String userId) {
         findDoAndUpdateUser(userId, (user) -> user.removeFromCommerce(product));
     }
 
 
-    private void findDoAndUpdateUser(Long userId, Consumer<User> consumer) {
+    private void findDoAndUpdateUser(String userId, Consumer<User> consumer) {
         User user = userFinder.findSeller(userId);
         consumer.accept(user);
         repository.update(user);

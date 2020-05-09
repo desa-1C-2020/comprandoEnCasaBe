@@ -53,7 +53,7 @@ public class CommerceRegistrarTest {
     private Commerce commerce() {
         List<String> paymentMethods = new ArrayList<>();
         List<String> daysAndHoursOpen = new ArrayList<>();
-        return new Commerce("un rubro", "un domicilio", paymentMethods, daysAndHoursOpen, "2km alcance");
+        return new Commerce("un nombre de comercio", "un rubro", "un domicilio", paymentMethods, daysAndHoursOpen, "2km alcance");
     }
 
     @After

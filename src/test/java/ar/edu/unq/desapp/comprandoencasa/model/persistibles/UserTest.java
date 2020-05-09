@@ -1,9 +1,6 @@
-package ar.edu.unq.desapp.comprandoencasa.model;
+package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.utils.TestUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +50,7 @@ public class UserTest {
 
     @Test
     public void whenWantCreateUserWithCommerce_thenTheUserIsCreated() {
-        Commerce commerce = new Commerce(null, null, null, null, null);
+        Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
         User user = User.createWithCommerce("carlos", "gonzalez", "carlos@gmail.com", SELLER, commerce);
 
         Optional<Commerce> userCommerce = user.getCommerce();
@@ -62,7 +59,7 @@ public class UserTest {
 
     @Test
     public void whenWantAddProductToUserWithCommerce_thenItIsAdded() {
-        Commerce commerce = new Commerce(null, null, null, null, null);
+        Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
         User user = User.createWithCommerce("carlos", "gonzalez", "carlos@gmail.com", SELLER, commerce);
         Product product = new Product("un producto", "una marca", 1, Double.MAX_VALUE, "una url");
 

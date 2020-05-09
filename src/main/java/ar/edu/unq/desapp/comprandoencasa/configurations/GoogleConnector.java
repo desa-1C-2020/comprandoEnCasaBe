@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.configurations;
 
+import ar.com.kfgodel.nary.api.optionals.Optional;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.maps.DistanceMatrixApi;
@@ -42,14 +43,26 @@ public class GoogleConnector {
         return distanceMatrix.rows[0].elements[0].distance;
     }
 
-    public Distance distanceBetweenTwoLatLng(LatLng latLngFrom, LatLng latLngTo) throws InterruptedException, ApiException, IOException {
-        DistanceMatrix distanceMatrix = DistanceMatrixApi.newRequest(context)
-            .origins(latLngFrom)
-            .destinations(latLngTo)
-            .mode(TravelMode.BICYCLING)
-            .await();
+    public Optional<Long> distanceInMetersBetweenTwoLatLng(LatLng latLngFrom, LatLng latLngTo) {
+        DistanceMatrix distanceMatrix;
+        try {
+            distanceMatrix = DistanceMatrixApi.newRequest(context)
+                .origins(latLngFrom)
+                .destinations(latLngTo)
+                .mode(TravelMode.BICYCLING)
+                .await();
+        } catch (ApiException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
 
-        return distanceMatrix.rows[0].elements[0].distance;
+        return Optional.ofNullable(distanceMatrix.rows[0].elements[0].distance.inMeters);
     }
 
     private AddressComponent[] mapToAddressComponent(GeocodingResult result) {

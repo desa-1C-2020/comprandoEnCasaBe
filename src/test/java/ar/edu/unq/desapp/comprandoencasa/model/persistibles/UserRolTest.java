@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.model;
+package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

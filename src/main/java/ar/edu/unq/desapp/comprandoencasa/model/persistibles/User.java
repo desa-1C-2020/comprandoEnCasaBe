@@ -5,9 +5,12 @@ import ar.com.kfgodel.nary.api.optionals.Optional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.UUID.randomUUID;
+
 public class User {
     private final String name;
     private final String surname;
+    private final String uid;
     private String email;
     private UserRol rol;
     private List<Commerce> commerces;
@@ -19,6 +22,7 @@ public class User {
         this.surname = surname;
         this.email = email;
         this.commerces = new ArrayList<>();
+        this.uid = randomUUID().toString();
     }
 
     public static User createWithoutCommerce(String name, String surname, String email, UserRol rol) {
@@ -87,8 +91,8 @@ public class User {
         return commerce.containsProduct(product);
     }
 
-    public boolean sameId(Long userId) {
-        return false;
+    public boolean sameId(String userId) {
+        return uid.equals(userId);
     }
 
     public void removeFromCommerce(Product product) {
@@ -96,5 +100,9 @@ public class User {
             Commerce existingcommerce = getCommerce().get();
             existingcommerce.removeProduct(product);
         }
+    }
+
+    public String getUid() {
+        return uid;
     }
 }

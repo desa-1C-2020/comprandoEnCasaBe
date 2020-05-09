@@ -22,7 +22,7 @@ public class SellerController {
     private UserService userService;
 
     @GetMapping("addProduct")
-    public ResponseEntity addProduct(@RequestParam Long userId, @RequestBody ProductTo productTo) {
+    public ResponseEntity addProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
 
 //        String uid = principal.getName();
 
@@ -32,7 +32,7 @@ public class SellerController {
     }
 
     @GetMapping("removeProduct")
-    public ResponseEntity removeProduct(@RequestParam Long userId, @RequestBody ProductTo productTo) {
+    public ResponseEntity removeProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
 
 //        String uid = principal.getName();
 

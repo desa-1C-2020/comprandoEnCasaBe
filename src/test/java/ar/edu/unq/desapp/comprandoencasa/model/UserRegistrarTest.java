@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserRegisterTest {
+public class UserRegistrarTest {
 
     private UserRegistrar userRegistrar;
 

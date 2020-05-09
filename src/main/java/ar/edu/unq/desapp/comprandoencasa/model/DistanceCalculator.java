@@ -1,43 +1,35 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
+import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
-import com.google.maps.errors.ApiException;
-import com.google.maps.model.Distance;
 import com.google.maps.model.LatLng;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DistanceCalculator {
+    private List<Commerce> commerceList;
     private GoogleConnector googleConnector;
 
-    public DistanceCalculator(GoogleConnector googleConnector) {
+    public DistanceCalculator(List<Commerce> commerceList, GoogleConnector googleConnector) {
+        this.commerceList = commerceList;
         this.googleConnector = googleConnector;
     }
 
-    public List<Commerce> getInFrom(List<Commerce> commerceList, Double latitud, Double longitud, Long maxDistance) {
-        LatLng latLngFrom = new LatLng(latitud, longitud);
-        return commerceList.stream().filter(commerce -> isInsideRange(maxDistance, latLngFrom, commerce))
+    public List<Commerce> getByLatLngInRange(LatLng latLngFrom, Long maxDistance) {
+        return commerceList
+            .stream()
+            .filter(commerce -> isInsideRange(latLngFrom, commerce, maxDistance))
             .collect(Collectors.toList());
-
     }
 
-    private boolean isInsideRange(Long maxDistance, LatLng latLngFrom, Commerce commerce) {
-        Distance distance = null;
-        try {
-            distance = googleConnector.distanceBetweenTwoLatLng(latLngFrom, commerce.getLatLong());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if(distance == null){
+    private boolean isInsideRange(LatLng latLngFrom, Commerce commerce, Long maxDistance) {
+        Optional<Long> distanceInMeters = googleConnector.distanceInMetersBetweenTwoLatLng(latLngFrom, commerce.getLatLong());
+        if (distanceInMeters.isAbsent()) {
             return false;
         }
-        return distance.inMeters <= maxDistance;
+
+        return distanceInMeters.get() <= maxDistance;
     }
 }

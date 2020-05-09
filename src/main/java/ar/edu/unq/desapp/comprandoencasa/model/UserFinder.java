@@ -11,7 +11,7 @@ public class UserFinder {
         this.userRepository = userRepository;
     }
 
-    public User findSeller(Long userId) {
+    public User findSeller(String userId) {
         User user = find(userId);
         if (!user.isSeller()) {
             throw new RuntimeException("Usuario usuario con id: [" + userId + "], no habilitado para vender.");
@@ -19,7 +19,7 @@ public class UserFinder {
         return user;
     }
 
-    private User find(Long userId) {
+    private User find(String userId) {
         Optional<User> userOptional = userRepository.findBy(userId);
         if (userOptional.isAbsent()) {
             throw new RuntimeException("No existe el usuario con id: [" + userId + "]");

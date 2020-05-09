@@ -20,11 +20,6 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public DistanceCalculator distanceCalculator() {
-        return new DistanceCalculator(googleConnector());
-    }
-
-    @Bean
     public UserFinder userFinder(UserRepository userRepository) {
         return new UserFinder(userRepository);
     }

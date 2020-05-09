@@ -1,8 +1,10 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
 import ar.edu.unq.desapp.comprandoencasa.model.DistanceCalculator;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
+import com.google.maps.model.LatLng;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +22,7 @@ public class CommercesController {
     private CommerceRepository commerceRepository;
 
     @Autowired
-    private DistanceCalculator distanceCalculator;
+    private GoogleConnector googleConnector;
 
     @GetMapping("findInRange")
     public List<Commerce> getAllWithinGivenDistance(@RequestParam("maxDistance") String maxDistanceMeters,
@@ -28,11 +30,15 @@ public class CommercesController {
                                                     @RequestParam String longitud) {
 
 //        String uid = principal.getName();
-        List<Commerce> commerceList = commerceRepository.getAll();
         double latitudParsed = Double.parseDouble(latitud);
         double longitudParsed = Double.parseDouble(longitud);
+        LatLng latLngFrom = new LatLng(latitudParsed, longitudParsed);
         Long maxDistanceLong = Long.valueOf(maxDistanceMeters);
-        return distanceCalculator.getInFrom(commerceList, latitudParsed, longitudParsed, maxDistanceLong);
+
+        List<Commerce> commerceList = commerceRepository.getAll();
+        DistanceCalculator distanceCalculator = new DistanceCalculator(commerceList, googleConnector);
+
+        return distanceCalculator.getByLatLngInRange(latLngFrom, maxDistanceLong);
     }
 }
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Commerce {
+    private String name;
     private String businessSector;
     private String adress;
     private List<String> paymentMethods;
@@ -14,11 +15,13 @@ public class Commerce {
     private LatLng latLng;
     private List<Product> products;
 
+    //For springboot serializer
     public Commerce() {
     }
 
-    public Commerce(String businessSector, String adress, List<String> paymentMethods, List<String> daysAndHoursOpen,
+    public Commerce(String name, String businessSector, String adress, List<String> paymentMethods, List<String> daysAndHoursOpen,
                     String range) {
+        this.name = name;
         this.businessSector = businessSector;
         this.adress = adress;
         this.paymentMethods = paymentMethods;
@@ -93,5 +96,13 @@ public class Commerce {
 
     public void removeProduct(Product product) {
         products.remove(product);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
