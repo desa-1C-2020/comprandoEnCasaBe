@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.comprandoencasa.configurations;
 
-import ar.edu.unq.desapp.comprandoencasa.model.DistanceCalculator;
 import ar.edu.unq.desapp.comprandoencasa.model.UserFinder;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.service.ProductService;
