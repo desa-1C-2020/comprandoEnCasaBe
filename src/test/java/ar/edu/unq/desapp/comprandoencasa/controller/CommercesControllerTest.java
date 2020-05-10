@@ -4,6 +4,7 @@ import ar.edu.unq.desapp.comprandoencasa.controllers.CommercesController;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Test que prueba hasta el repositorio. Sería mejor mockear algunas cosas.
  */
+@Ignore
 public class CommercesControllerTest extends SpringIntegrationTest {
 
     @Autowired
