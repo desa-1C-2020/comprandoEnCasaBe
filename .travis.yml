@@ -9,3 +9,7 @@ cache:
 after_success:
   - ./gradlew jacocoTestReport
   - ./gradlew sendCoverageToCodacy
+
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API_KEY
