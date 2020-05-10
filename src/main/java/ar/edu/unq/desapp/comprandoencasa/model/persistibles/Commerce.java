@@ -10,22 +10,21 @@ import java.util.List;
 public class Commerce {
     private String name;
     private String businessSector;
-    private String adress;
+    private Address address;
     private List<String> paymentMethods;
     private List<String> daysAndHoursOpen;
     private String range;
-    private LatLng latLng;
     private List<Product> products;
 
     //For springboot serializer
     public Commerce() {
     }
 
-    public Commerce(String name, String businessSector, String adress, List<String> paymentMethods, List<String> daysAndHoursOpen,
-                    String range) {
+    public Commerce(String name, String businessSector, Address adress, List<String> paymentMethods,
+                    List<String> daysAndHoursOpen, String range) {
         this.name = name;
         this.businessSector = businessSector;
-        this.adress = adress;
+        this.address = adress;
         this.paymentMethods = paymentMethods;
         this.daysAndHoursOpen = daysAndHoursOpen;
         this.range = range;
@@ -40,12 +39,12 @@ public class Commerce {
         this.businessSector = businessSector;
     }
 
-    public String getAdress() {
-        return adress;
+    public Address getAdress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAdress(Address address) {
+        this.address = address;
     }
 
     public List<String> getPaymentMethods() {
@@ -73,11 +72,7 @@ public class Commerce {
     }
 
     public LatLng getLatLong() {
-        return latLng;
-    }
-
-    public void setLatLng(LatLng latLng) {
-        this.latLng = latLng;
+        return address.getLatLng();
     }
 
     public List<Product> getProducts() {

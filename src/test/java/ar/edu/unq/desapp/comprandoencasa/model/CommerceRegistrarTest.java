@@ -1,8 +1,10 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.utils.TestUtils;
+import com.google.maps.model.LatLng;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +55,8 @@ public class CommerceRegistrarTest {
     private Commerce commerce() {
         List<String> paymentMethods = new ArrayList<>();
         List<String> daysAndHoursOpen = new ArrayList<>();
-        return new Commerce("un nombre de comercio", "un rubro", "un domicilio", paymentMethods, daysAndHoursOpen, "2km alcance");
+        Address unDomicilio = new Address("un domicilio", new LatLng(-34.7066345, -58.2819718));
+        return new Commerce("un nombre de comercio", "un rubro", unDomicilio, paymentMethods, daysAndHoursOpen, "2km alcance");
     }
 
     @After

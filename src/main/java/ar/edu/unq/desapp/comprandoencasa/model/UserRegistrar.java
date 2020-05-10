@@ -1,29 +1,23 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
-
-import java.util.ArrayList;
-import java.util.List;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 
 public class UserRegistrar {
-    private List<User> users;
+    private UserFinder userFinder;
+    private UserRepository userRepository;
 
-    public UserRegistrar() {
-        users = new ArrayList<>();
+    public UserRegistrar(UserFinder userFinder, UserRepository userRepository) {
+        this.userFinder = userFinder;
+        this.userRepository = userRepository;
     }
 
     public void register(User user) {
-        if (existsSameUser(user)) {
-            throw new RuntimeException("No se puede registrar con el mail, ya existe en el sistema.");
+        if (userFinder.existsUser(user)) {
+            String errorMessage = "No se puede registrar debido a que existe en el sistema un usuario con el email: [" + user.getEmail() + "].";
+            throw new RuntimeException(errorMessage);
         }
-        users.add(user);
+        userRepository.addUser(user);
     }
 
-    private boolean existsSameUser(User userToFind) {
-        return users.stream().anyMatch(user -> user.same(userToFind));
-    }
-
-    public boolean exists(User user) {
-        return users.contains(user);
-    }
 }

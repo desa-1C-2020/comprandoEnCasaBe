@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.model;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import com.google.maps.model.LatLng;
 import org.junit.Test;
@@ -78,11 +79,11 @@ public class DistanceCalculatorTest {
         List<String> horarios = new ArrayList<>();
         paymentMethods.add("Efectivo");
         horarios.add("Lunes a viernes de 10 a 18hs");
-        Commerce aCommerce = new Commerce("Kiosco carlos", "Kiosco", "Roque Sáenz Peña 284, Bernal, Buenos Aires", paymentMethods, horarios, "3km");
-        Commerce otherCommerce = new Commerce("Almacen pepe", "Almacen", "Roque Sáenz Peña 106, Bernal, Buenos Aires", paymentMethods, horarios, "5km");
+        Address aCommerceAddress = new Address("Roque Sáenz Peña 284, Bernal, Buenos Aires", aCommerceLatLng);
+        Address otherCommerceAddress = new Address("Roque Sáenz Peña 106, Bernal, Buenos Aires", otherCommerceLatLng);
+        Commerce aCommerce = new Commerce("Kiosco carlos", "Kiosco", aCommerceAddress, paymentMethods, horarios, "3km");
+        Commerce otherCommerce = new Commerce("Almacen pepe", "Almacen", otherCommerceAddress, paymentMethods, horarios, "5km");
 
-        aCommerce.setLatLng(aCommerceLatLng);
-        otherCommerce.setLatLng(otherCommerceLatLng);
         List<Commerce> repo = new ArrayList<>();
         repo.add(aCommerce);
         repo.add(otherCommerce);

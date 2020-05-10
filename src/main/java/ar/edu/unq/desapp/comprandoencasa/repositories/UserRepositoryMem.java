@@ -30,4 +30,9 @@ public class UserRepositoryMem implements UserRepository {
     public void addUser(User user) {
         repo.add(user);
     }
+
+    @Override
+    public List<User> getAll() {
+        return repo;
+    }
 }
