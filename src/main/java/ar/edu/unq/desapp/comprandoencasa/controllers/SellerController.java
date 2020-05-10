@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,21 +23,22 @@ public class SellerController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("addProduct")
+    @PostMapping("product")
     public ResponseEntity addProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
-
-//        String uid = principal.getName();
-
         Product product = mapToProduct(productTo);
         userService.addProductByUserId(product, userId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @DeleteMapping("removeProduct")
+    @PatchMapping("product")
+    public ResponseEntity modifyProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
+        Product product = mapToProduct(productTo);
+        userService.removeProductByUserId(product, userId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @DeleteMapping("product")
     public ResponseEntity removeProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
-
-//        String uid = principal.getName();
-
         Product product = mapToProduct(productTo);
         userService.removeProductByUserId(product, userId);
         return new ResponseEntity(HttpStatus.OK);
