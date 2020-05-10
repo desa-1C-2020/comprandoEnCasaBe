@@ -1,11 +1,15 @@
 package ar.edu.unq.desapp.comprandoencasa.configurations;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepositoryMem;
 import com.google.maps.model.LatLng;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +18,7 @@ import java.util.List;
 
 @Configuration
 public class RepositoryConfiguration {
+    public static Logger logger = LoggerFactory.getLogger(RepositoryConfiguration.class);
     @Bean
     public CommerceRepository commerceRepository() {
         CommerceRepositoryMem commerceRepositoryMem = new CommerceRepositoryMem();
@@ -24,7 +29,21 @@ public class RepositoryConfiguration {
     @Bean
     public UserRepository userRepository() {
         UserRepositoryMem userRepositoryMem = new UserRepositoryMem();
+        simulateUserFakeData(userRepositoryMem, commerceRepository());
         return userRepositoryMem;
+    }
+
+    private void simulateUserFakeData(UserRepository repo, CommerceRepository commerceRepository) {
+        Commerce anyCommerce = commerceRepository.getAll().get(0);
+        Commerce otherCommerce = commerceRepository.getAll().get(1);
+        User userBuyerWithCommerce = User.createWithCommerce("Marcos", "Alvarenga", "marcos@10pines.com", UserRol.BUYER, anyCommerce);
+        User userSellerWithCommerce = User.createWithCommerce("Daniel", "Alvarenga", "marcos+2@10pines.com", UserRol.SELLER, otherCommerce);
+        String userBuyerId = "ID DEL USUARIO BUYER************ -> " + userBuyerWithCommerce.getUid();
+        String userSellerId = "ID DEL USUARIO SELLER************ -> " + userSellerWithCommerce.getUid();
+        logger.info(userBuyerId);
+        logger.info(userSellerId);
+        repo.addUser(userBuyerWithCommerce);
+        repo.addUser(userSellerWithCommerce);
     }
 
     private void simulateCommerceFakeData(CommerceRepositoryMem commerceRepositoryMem) {

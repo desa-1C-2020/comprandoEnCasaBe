@@ -83,26 +83,40 @@ public class User {
     }
 
     public boolean containsProductInCommerce(Product product) {
+        return getCommerceToFindProduct().containsProduct(product);
+    }
+
+    public boolean containsProductInCommerceId(String productId) {
+        return getCommerceToFindProduct().containsProductWithId(productId);
+    }
+
+    private Commerce getCommerceToFindProduct() {
         Optional<Commerce> commerceOptional = getCommerce();
         if (commerceOptional.isAbsent()) {
             throw new RuntimeException("No posee un comercio registrado. No se puede verificar si existe el producto.");
         }
-        Commerce commerce = commerceOptional.get();
-        return commerce.containsProduct(product);
+        return commerceOptional.get();
     }
 
     public boolean sameId(String userId) {
         return uid.equals(userId);
     }
 
-    public void removeFromCommerce(Product product) {
-        if (containsProductInCommerce(product)) {
+    public void removeFromCommerce(String productId) {
+        if (containsProductInCommerceId(productId)) {
             Commerce existingcommerce = getCommerce().get();
-            existingcommerce.removeProduct(product);
+            existingcommerce.removeProductById(productId);
         }
     }
 
     public String getUid() {
         return uid;
+    }
+
+    public void updateProduct(Product product) {
+        if (containsProductInCommerce(product)) {
+            Commerce existingcommerce = getCommerce().get();
+            existingcommerce.updateProduct(product);
+        }
     }
 }

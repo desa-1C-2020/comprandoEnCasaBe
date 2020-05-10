@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import ar.com.kfgodel.nary.api.Nary;
+import ar.com.kfgodel.nary.api.optionals.Optional;
 import com.google.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -86,23 +88,41 @@ public class Commerce {
         this.products = products;
     }
 
-    public void addProduct(Product product) {
-        products.add(product);
-    }
-
-    public boolean containsProduct(Product product) {
-        return products.contains(product);
-    }
-
-    public void removeProduct(Product product) {
-        products.remove(product);
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
+    public boolean containsProduct(Product product) {
+        return products.stream().anyMatch(product1 -> product.sameProduct(product));
+    }
+
+    public boolean containsProductWithId(String productId) {
+        return products.stream().anyMatch(product -> product.sameId(productId));
+    }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+    }
+
+    public void removeProductById(String productId) {
+        Optional<Product> first = Nary.create(products).filterOptional(product -> product.sameId(productId));
+        products.remove(first.get());
+    }
+
+    public void updateProduct(Product productToUpdate) {
+        Optional<Product> productOptional = Nary.create(products).filterOptional(product -> product.sameProduct(productToUpdate));
+
+        if (!productOptional.isAbsent()) {
+            Product product = productOptional.get();
+            product.updateWith(productToUpdate);
+        }
     }
 }

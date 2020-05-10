@@ -7,4 +7,6 @@ public interface UserRepository {
     Optional<User> findBy(String userId);
 
     void update(User user);
+
+    void addUser(User user);
 }
