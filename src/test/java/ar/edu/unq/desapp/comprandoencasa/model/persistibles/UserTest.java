@@ -65,7 +65,7 @@ public class UserTest {
 
         user.addProductToCommerce(product);
 
-        assertThat(user.containsProductInCommerce(product), is(true));
+        assertThat(user.containsProductInCommerceId(product.getId()), is(true));
     }
 
     @Test

@@ -5,6 +5,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class UserService {
@@ -16,18 +17,22 @@ public class UserService {
         this.repository = userRepository;
     }
 
-    public void addProductByUserId(Product product, String userId) {
-        findDoAndUpdateUser(userId, (user) -> user.addProductToCommerce(product));
+    public List<Product> addProductByUserId(Product product, String userId) {
+        return findDoAndUpdateUser(userId, (user) -> user.addProductToCommerce(product));
     }
 
-    public void removeProductByUserId(Product product, String userId) {
-        findDoAndUpdateUser(userId, (user) -> user.removeFromCommerce(product));
+    public List<Product> removeProductByUserId(String productId, String userId) {
+        return findDoAndUpdateUser(userId, (user) -> user.removeFromCommerce(productId));
     }
 
+    public List<Product> updateProductById(Product product, String userId) {
+        return findDoAndUpdateUser(userId, (user) -> user.updateProduct(product));
+    }
 
-    private void findDoAndUpdateUser(String userId, Consumer<User> consumer) {
+    private List<Product> findDoAndUpdateUser(String userId, Consumer<User> consumer) {
         User user = userFinder.findSeller(userId);
         consumer.accept(user);
         repository.update(user);
+        return user.getCommerce().get().getProducts();
     }
 }

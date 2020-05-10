@@ -4,8 +4,7 @@ import ar.edu.unq.desapp.comprandoencasa.controllers.to.ProductTo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
-@RequestMapping(value = SellerController.basePath)
+@RequestMapping(value = SellerController.basePath, consumes = MediaType.APPLICATION_JSON_VALUE)
 public class SellerController {
 
     public static final String basePath = "/seller";
@@ -23,25 +24,21 @@ public class SellerController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("product")
-    public ResponseEntity addProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
+    @PostMapping(value = "product")
+    public List<Product> addProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
         Product product = mapToProduct(productTo);
-        userService.addProductByUserId(product, userId);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    @PatchMapping("product")
-    public ResponseEntity modifyProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
-        Product product = mapToProduct(productTo);
-        userService.removeProductByUserId(product, userId);
-        return new ResponseEntity(HttpStatus.OK);
+        return userService.addProductByUserId(product, userId);
     }
 
     @DeleteMapping("product")
-    public ResponseEntity removeProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
+    public List<Product> removeProduct(@RequestParam String userId, @RequestParam String productId) {
+        return userService.removeProductByUserId(productId, userId);
+    }
+
+    @PatchMapping("product")
+    public List<Product> updateProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
         Product product = mapToProduct(productTo);
-        userService.removeProductByUserId(product, userId);
-        return new ResponseEntity(HttpStatus.OK);
+        return userService.updateProductById(product, userId);
     }
 
     private Product mapToProduct(ProductTo productTo) {

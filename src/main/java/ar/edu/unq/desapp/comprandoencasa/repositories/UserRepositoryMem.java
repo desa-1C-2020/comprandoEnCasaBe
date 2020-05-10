@@ -25,4 +25,9 @@ public class UserRepositoryMem implements UserRepository {
     public void update(User user) {
         repo.contains(user);
     }
+
+    @Override
+    public void addUser(User user) {
+        repo.add(user);
+    }
 }
