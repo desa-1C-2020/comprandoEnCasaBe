@@ -1,29 +1,63 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTo;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.SELLER;
 
 public class UserRegistrar {
-    private List<User> users;
+    private UserFinder userFinder;
+    private UserRepository userRepository;
+    private ObjectMapper mapper;
+    private UserBuyerRepository buyerRepository;
+    private UserSellerRepository userSellerRepository;
 
-    public UserRegistrar() {
-        users = new ArrayList<>();
+    public UserRegistrar(UserFinder userFinder, ObjectMapper mapper, UserRepository userRepository,
+                         UserBuyerRepository buyerRepository, UserSellerRepository userSellerRepository) {
+        this.userFinder = userFinder;
+        this.userRepository = userRepository;
+        this.mapper = mapper;
+        this.buyerRepository = buyerRepository;
+        this.userSellerRepository = userSellerRepository;
     }
 
-    public void register(User user) {
-        if (existsSameUser(user)) {
-            throw new RuntimeException("No se puede registrar con el mail, ya existe en el sistema.");
+    public UserBuyer registerNewUser(RegisterUserTO registerUserTO) {
+        User newUser = mapper.mapToToUser(registerUserTO);
+        User user = registerUser(newUser);
+        return registerBuyer(user);
+    }
+
+    public UserSeller registerSellerCommerce(SellerTo sellerTo) {
+        User user = userFinder.findUserById(sellerTo.getUserId());
+        return registerSeller(user, sellerTo);
+    }
+
+    private UserBuyer registerBuyer(User user) {
+        UserBuyer userBuyer = new UserBuyer(user);
+        buyerRepository.save(userBuyer);
+        return userBuyer;
+    }
+
+    private User registerUser(User user) {
+        if (userFinder.existsUser(user)) {
+            String errorMessage = "No se puede registrar debido a que existe en el sistema un usuario con el email: [" + user.getEmail() + "].";
+            throw new RuntimeException(errorMessage);
         }
-        users.add(user);
+        userRepository.addUser(user);
+        return user;
     }
 
-    private boolean existsSameUser(User userToFind) {
-        return users.stream().anyMatch(user -> user.same(userToFind));
-    }
-
-    public boolean exists(User user) {
-        return users.contains(user);
+    private UserSeller registerSeller(User user, SellerTo sellerTo) {
+        Commerce commerce = mapper.mapToCommerce(sellerTo);
+        UserSeller userSeller = new UserSeller(user, SELLER, commerce);
+        userSellerRepository.save(userSeller);
+        return userSeller;
     }
 }

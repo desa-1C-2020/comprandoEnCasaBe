@@ -2,37 +2,38 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.edu.unq.desapp.comprandoencasa.model.UserFinder;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
-import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 public class UserService {
     private final UserFinder userFinder;
-    private final UserRepository repository;
+    private final UserSellerRepository repository;
 
-    public UserService(UserFinder userFinder, UserRepository userRepository) {
+    public UserService(UserFinder userFinder, UserSellerRepository userRepository) {
         this.userFinder = userFinder;
         this.repository = userRepository;
     }
 
     public List<Product> addProductByUserId(Product product, String userId) {
-        return findDoAndUpdateUser(userId, (user) -> user.addProductToCommerce(product));
+        UserSeller seller = userFinder.findSellerById(userId);
+        seller.addProductToCommerce(product);
+        repository.update(seller);
+        return seller.getProducts();
     }
 
     public List<Product> removeProductByUserId(String productId, String userId) {
-        return findDoAndUpdateUser(userId, (user) -> user.removeFromCommerce(productId));
+        UserSeller seller = userFinder.findSellerById(userId);
+        seller.removeFromCommerce(productId);
+        repository.update(seller);
+        return seller.getProducts();
     }
 
     public List<Product> updateProductById(Product product, String userId) {
-        return findDoAndUpdateUser(userId, (user) -> user.updateProduct(product));
-    }
-
-    private List<Product> findDoAndUpdateUser(String userId, Consumer<User> consumer) {
-        User user = userFinder.findSeller(userId);
-        consumer.accept(user);
-        repository.update(user);
-        return user.getCommerce().get().getProducts();
+        UserSeller seller = userFinder.findSellerById(userId);
+        seller.updateProduct(product);
+        repository.update(seller);
+        return seller.getProducts();
     }
 }

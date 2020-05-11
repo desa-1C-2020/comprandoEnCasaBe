@@ -1,20 +1,23 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.BUYER;
 import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.SELLER;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -26,19 +29,25 @@ public class UserFinderTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private UserSellerRepository userSellerRepository;
+
     @Before
     public void setUp() {
-        userFinder = new UserFinder(userRepository);
+        userFinder = new UserFinder(userRepository, userSellerRepository);
     }
 
     @Test
     public void whenFindAnExistingSellerUserInRepositoryById_ThenReturnsTheExistentUser() {
-        User savedUser = User.createWithoutCommerce("carlos", "gonzalez", "carlos@gmail.com", SELLER);
+        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com");
+        Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
+        UserSeller userSeller = new UserSeller(savedUser, SELLER, commerce);
         when(userRepository.findBy(anyString())).thenReturn(Optional.of(savedUser));
+        when(userSellerRepository.findByUser(any())).thenReturn(Optional.of(userSeller));
 
-        User findUser = userFinder.findSeller(savedUser.getUid());
+        UserSeller foundUser = userFinder.findSellerById(savedUser.getUid());
 
-        assertThat(findUser, is(savedUser));
+        assertThat(foundUser.getUser(), is(savedUser));
     }
 
     @Test
@@ -47,17 +56,18 @@ public class UserFinderTest {
         when(userRepository.findBy(anyString())).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> userFinder.findSeller(userUid))
+            .isThrownBy(() -> userFinder.findSellerById(userUid))
             .withMessage("No existe el usuario con id: [" + userUid + "]");
     }
 
     @Test
-    public void whenFindAnExistingUserButIsNotSellerInRepositoryById_ThenFailsWithException() {
-        User savedBuyerUser = User.createWithoutCommerce("carlos", "gonzalez", "carlos@gmail.com", BUYER);
-        when(userRepository.findBy(anyString())).thenReturn(Optional.of(savedBuyerUser));
+    public void whenFindAExistingUserInRepositoryByIdButIsNotRegisterdAsSeller_ThenFailsWithException() {
+        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com");
+        when(userRepository.findBy(anyString())).thenReturn(Optional.of(savedUser));
+        when(userSellerRepository.findByUser(savedUser)).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> userFinder.findSeller(savedBuyerUser.getUid()))
-            .withMessage("Usuario usuario con id: [" + savedBuyerUser.getUid() + "], no habilitado para vender.");
+            .isThrownBy(() -> userFinder.findSellerById(savedUser.getUid()))
+            .withMessage("Usuario no registrado como vendedor. ID [" + savedUser.getUid() + "]");
     }
 }
