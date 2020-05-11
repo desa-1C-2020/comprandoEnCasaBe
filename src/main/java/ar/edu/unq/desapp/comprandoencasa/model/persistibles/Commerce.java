@@ -11,23 +11,23 @@ public class Commerce {
     private String name;
     private String businessSector;
     private Address address;
-    private List<String> paymentMethods;
+    private List<PaymentMethod> paymentMethods;
     private List<String> daysAndHoursOpen;
-    private String range;
+    private String arrivalRange;
     private List<Product> products;
 
     //For springboot serializer
     public Commerce() {
     }
 
-    public Commerce(String name, String businessSector, Address adress, List<String> paymentMethods,
-                    List<String> daysAndHoursOpen, String range) {
+    public Commerce(String name, String businessSector, Address adress, List<PaymentMethod> paymentMethods,
+                    List<String> daysAndHoursOpen, String arrivalRange) {
         this.name = name;
         this.businessSector = businessSector;
         this.address = adress;
         this.paymentMethods = paymentMethods;
         this.daysAndHoursOpen = daysAndHoursOpen;
-        this.range = range;
+        this.arrivalRange = arrivalRange;
         this.products = new ArrayList<>();
     }
 
@@ -47,11 +47,11 @@ public class Commerce {
         this.address = address;
     }
 
-    public List<String> getPaymentMethods() {
+    public List<PaymentMethod> getPaymentMethods() {
         return paymentMethods;
     }
 
-    public void setPaymentMethods(List<String> paymentMethods) {
+    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
         this.paymentMethods = paymentMethods;
     }
 
@@ -63,12 +63,12 @@ public class Commerce {
         this.daysAndHoursOpen = daysAndHoursOpen;
     }
 
-    public String getRange() {
-        return range;
+    public String getArrivalRange() {
+        return arrivalRange;
     }
 
-    public void setRange(String range) {
-        this.range = range;
+    public void setArrivalRange(String arrivalRange) {
+        this.arrivalRange = arrivalRange;
     }
 
     public LatLng getLatLong() {

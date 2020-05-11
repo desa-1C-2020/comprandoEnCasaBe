@@ -2,26 +2,31 @@ package ar.edu.unq.desapp.comprandoencasa.model;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 
 import java.util.List;
 
 public class UserFinder {
     private UserRepository userRepository;
+    private UserSellerRepository userSellerRepository;
 
-    public UserFinder(UserRepository userRepository) {
+    public UserFinder(UserRepository userRepository, UserSellerRepository userSellerRepository) {
         this.userRepository = userRepository;
+        this.userSellerRepository = userSellerRepository;
     }
 
-    public User findSeller(String userId) {
-        User user = findById(userId);
-        if (!user.isSeller()) {
-            throw new RuntimeException("Usuario usuario con id: [" + userId + "], no habilitado para vender.");
+    public UserSeller findSellerById(String userId) {
+        User user = findUserById(userId);
+        Optional<UserSeller> userSeller = userSellerRepository.findByUser(user);
+        if (userSeller.isAbsent()) {
+            throw new RuntimeException("Usuario no registrado como vendedor. ID [" + userId + "]");
         }
-        return user;
+        return userSeller.get();
     }
 
-    private User findById(String userId) {
+    public User findUserById(String userId) {
         Optional<User> userOptional = userRepository.findBy(userId);
         return getUserOrThrow(userId, userOptional);
     }

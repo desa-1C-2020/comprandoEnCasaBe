@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ProductTo;
+import ar.edu.unq.desapp.comprandoencasa.model.ObjectMapper;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,14 @@ public class SellerController {
     public static final String basePath = "/seller";
 
     @Autowired
+    private ObjectMapper mapper;
+
+    @Autowired
     private UserService userService;
 
     @PostMapping(value = "product")
     public List<Product> addProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
-        Product product = mapToProduct(productTo);
+        Product product = mapper.mapToProduct(productTo);
         return userService.addProductByUserId(product, userId);
     }
 
@@ -37,13 +41,8 @@ public class SellerController {
 
     @PatchMapping("product")
     public List<Product> updateProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
-        Product product = mapToProduct(productTo);
+        Product product = mapper.mapToProduct(productTo);
         return userService.updateProductById(product, userId);
-    }
-
-    private Product mapToProduct(ProductTo productTo) {
-        return new Product(productTo.getName(), productTo.getBrand(), productTo.getStock(), productTo.getPrice(),
-            productTo.getImageUrl());
     }
 }
 

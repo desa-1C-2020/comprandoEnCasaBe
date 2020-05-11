@@ -3,11 +3,11 @@ package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 import com.google.maps.model.LatLng;
 
 public class Address {
-    private String adress;
+    private String street;
     private LatLng latLng;
 
-    public Address(String adress, LatLng latLng) {
-        this.adress = adress;
+    public Address(String street, LatLng latLng) {
+        this.street = street;
         this.latLng = latLng;
     }
 
@@ -15,11 +15,11 @@ public class Address {
         return latLng;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getStreet() {
+        return street;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setStreet(String street) {
+        this.street = street;
     }
 }

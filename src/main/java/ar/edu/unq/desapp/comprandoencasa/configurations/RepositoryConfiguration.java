@@ -2,12 +2,20 @@ package ar.edu.unq.desapp.comprandoencasa.configurations;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepositoryMem;
 import com.google.maps.model.LatLng;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,27 +39,45 @@ public class RepositoryConfiguration {
     @Bean
     public UserRepository userRepository() {
         UserRepositoryMem userRepositoryMem = new UserRepositoryMem();
-        simulateUserFakeData(userRepositoryMem, commerceRepository());
+        simulateUserFakeData(userRepositoryMem, commerceRepository(), userBuyerRepository(), userSellerRepository());
         return userRepositoryMem;
     }
 
-    private void simulateUserFakeData(UserRepository repo, CommerceRepository commerceRepository) {
-        Commerce anyCommerce = commerceRepository.getAll().get(0);
+    @Bean
+    public UserBuyerRepository userBuyerRepository() {
+        return new UserBuyerRepositoryMem();
+    }
+
+    @Bean
+    public UserSellerRepository userSellerRepository() {
+        return new UserSellerRepositoryMem();
+    }
+
+    private void simulateUserFakeData(UserRepository repo, CommerceRepository commerceRepository,
+                                      UserBuyerRepository userBuyerRepository, UserSellerRepository userSellerRepository) {
         Commerce otherCommerce = commerceRepository.getAll().get(1);
-        User userBuyerWithCommerce = User.createWithCommerce("Marcos", "Alvarenga", "marcos@10pines.com", UserRol.BUYER, anyCommerce);
-        User userSellerWithCommerce = User.createWithCommerce("Daniel", "Alvarenga", "marcos+2@10pines.com", UserRol.SELLER, otherCommerce);
-        String userBuyerId = "ID DEL USUARIO BUYER************ -> " + userBuyerWithCommerce.getUid();
-        String userSellerId = "ID DEL USUARIO SELLER************ -> " + userSellerWithCommerce.getUid();
+
+        User userBuyer = User.create("Marcos", "Alvarenga", "marcos@10pines.com");
+        UserBuyer userBuyer1 = new UserBuyer(userBuyer, UserRol.BUYER);
+
+        User userSellerWithCommerce = User.create("Daniel", "Alvarenga", "marcos+2@10pines.com");
+        UserSeller userSeller = new UserSeller(userSellerWithCommerce, UserRol.SELLER, otherCommerce);
+
+        String userBuyerId = "ID DEL USUARIO BUYER************ -> " + userBuyer1.getUser().getUid();
+        String userSellerId = "ID DEL USUARIO SELLER************ -> " + userSeller.getUser().getUid();
         logger.info(userBuyerId);
         logger.info(userSellerId);
-        repo.addUser(userBuyerWithCommerce);
+        userBuyerRepository.save(userBuyer1);
+        userSellerRepository.save(userSeller);
+        repo.addUser(userBuyer);
         repo.addUser(userSellerWithCommerce);
     }
 
     private void simulateCommerceFakeData(CommerceRepositoryMem commerceRepositoryMem) {
-        List<String> paymentMethods = new ArrayList<>();
+        Efectivo efectivo = new Efectivo("pesos");
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        paymentMethods.add(efectivo);
         List<String> horarios = new ArrayList<>();
-        paymentMethods.add("Efectivo");
         horarios.add("Lunes a viernes de 10 a 18hs");
 
         Address kioscoAddress = new Address("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));

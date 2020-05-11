@@ -4,6 +4,8 @@ import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import com.google.maps.model.LatLng;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,9 +77,10 @@ public class DistanceCalculatorTest {
     }
 
     public List<Commerce> createCommerces(LatLng aCommerceLatLng, LatLng otherCommerceLatLng) {
-        List<String> paymentMethods = new ArrayList<>();
+        Efectivo efectivo = new Efectivo("pesos");
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        paymentMethods.add(efectivo);
         List<String> horarios = new ArrayList<>();
-        paymentMethods.add("Efectivo");
         horarios.add("Lunes a viernes de 10 a 18hs");
         Address aCommerceAddress = new Address("Roque Sáenz Peña 284, Bernal, Buenos Aires", aCommerceLatLng);
         Address otherCommerceAddress = new Address("Roque Sáenz Peña 106, Bernal, Buenos Aires", otherCommerceLatLng);
