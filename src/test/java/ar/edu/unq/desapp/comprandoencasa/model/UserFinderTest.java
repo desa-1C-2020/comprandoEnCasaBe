@@ -59,4 +59,15 @@ public class UserFinderTest {
             .isThrownBy(() -> userFinder.findSellerById(userUid))
             .withMessage("No existe el usuario con id: [" + userUid + "]");
     }
+
+    @Test
+    public void whenFindAExistingUserInRepositoryByIdButIsNotRegisterdAsSeller_ThenFailsWithException() {
+        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com");
+        when(userRepository.findBy(anyString())).thenReturn(Optional.of(savedUser));
+        when(userSellerRepository.findByUser(savedUser)).thenReturn(Optional.empty());
+
+        assertThatExceptionOfType(RuntimeException.class)
+            .isThrownBy(() -> userFinder.findSellerById(savedUser.getUid()))
+            .withMessage("Usuario no registrado como vendedor. ID [" + savedUser.getUid() + "]");
+    }
 }
