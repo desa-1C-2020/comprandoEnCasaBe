@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.configurations;
 
-import ar.edu.unq.desapp.comprandoencasa.model.ObjectMapper;
+import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
 import ar.edu.unq.desapp.comprandoencasa.model.UserFinder;
 import ar.edu.unq.desapp.comprandoencasa.model.UserRegistrar;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;

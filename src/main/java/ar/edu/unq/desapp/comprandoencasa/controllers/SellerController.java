@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ProductTo;
-import ar.edu.unq.desapp.comprandoencasa.model.ObjectMapper;
+import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
