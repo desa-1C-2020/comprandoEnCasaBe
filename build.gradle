@@ -1,6 +1,11 @@
 buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
     dependencies {
-        classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:0.14.0"
+        classpath "gradle.plugin.com.vanniktech:gradle-android-junit-jacoco-plugin:0.14.0"
     }
 }
 
@@ -60,6 +65,14 @@ task sendCoverageToCodacy(type: JavaExec) {
     ]
 }
 
+junitJacoco {
+    jacocoVersion = '0.8.3' // type String
+    ignoreProjects = [] // type String array
+    excludes = ['**/ar/edu/unq/desapp/comprandoencasa/controllers/to/*']// type String List
+    includeNoLocationClasses = false // type boolean
+    includeInstrumentationCoverageInMergedReport = false // type boolean
+}
+
 dependencies {
     //Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -104,6 +117,4 @@ dependencies {
 
     //Librería que wrappea el cliente de google maps
     implementation 'com.google.maps:google-maps-services:0.13.0'
-//    implementation 'org.slf4j:slf4j-simple:1.7.25'
-
 }
