@@ -58,7 +58,7 @@ public class RepositoryConfiguration {
         Commerce otherCommerce = commerceRepository.getAll().get(1);
 
         User userBuyer = User.create("Marcos", "Alvarenga", "marcos@10pines.com");
-        UserBuyer userBuyer1 = new UserBuyer(userBuyer, UserRol.BUYER);
+        UserBuyer userBuyer1 = new UserBuyer(userBuyer);
 
         User userSellerWithCommerce = User.create("Daniel", "Alvarenga", "marcos+2@10pines.com");
         UserSeller userSeller = new UserSeller(userSellerWithCommerce, UserRol.SELLER, otherCommerce);

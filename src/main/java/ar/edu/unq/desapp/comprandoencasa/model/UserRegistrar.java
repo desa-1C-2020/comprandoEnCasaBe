@@ -10,7 +10,6 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 
-import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.BUYER;
 import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.SELLER;
 
 public class UserRegistrar {
@@ -41,7 +40,7 @@ public class UserRegistrar {
     }
 
     private UserBuyer registerBuyer(User user) {
-        UserBuyer userBuyer = new UserBuyer(user, BUYER);
+        UserBuyer userBuyer = new UserBuyer(user);
         buyerRepository.save(userBuyer);
         return userBuyer;
     }

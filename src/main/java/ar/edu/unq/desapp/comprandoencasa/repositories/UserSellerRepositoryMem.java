@@ -27,5 +27,7 @@ public class UserSellerRepositoryMem implements UserSellerRepository {
 
     @Override
     public void update(UserSeller seller) {
+        //Revisar esto, porque no está bien..
+        repo.add(seller);
     }
 }
