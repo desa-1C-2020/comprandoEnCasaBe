@@ -3,7 +3,7 @@ package ar.edu.unq.desapp.comprandoencasa.controllers;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ProductTo;
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
-import ar.edu.unq.desapp.comprandoencasa.service.UserService;
+import ar.edu.unq.desapp.comprandoencasa.service.UserSellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,23 +26,23 @@ public class SellerController {
     private ObjectMapper mapper;
 
     @Autowired
-    private UserService userService;
+    private UserSellerService userSellerService;
 
     @PostMapping(value = "product")
     public List<Product> addProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
         Product product = mapper.mapToProduct(productTo);
-        return userService.addProductByUserId(product, userId);
+        return userSellerService.addProductByUserId(product, userId);
     }
 
     @DeleteMapping("product")
     public List<Product> removeProduct(@RequestParam String userId, @RequestParam String productId) {
-        return userService.removeProductByUserId(productId, userId);
+        return userSellerService.removeProductByUserId(productId, userId);
     }
 
     @PatchMapping("product")
     public List<Product> updateProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
         Product product = mapper.mapToProduct(productTo);
-        return userService.updateProductById(product, userId);
+        return userSellerService.updateProductById(product, userId);
     }
 }
 
