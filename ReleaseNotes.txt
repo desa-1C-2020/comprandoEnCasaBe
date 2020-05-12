@@ -1,0 +1,23 @@
+---------------------------------------------------------------------
+TAG Entrega-1.0
+---------------------------------------------------------------------
+NEW FEATURES:
+* Implementado con controller incluido:
+    - creación de usuario comprador
+    - creación de usuario vendedor
+    - ABM de productos.
+    - creación de lista de compras con productos de diferentes comercios
+* Deploy automático a heroku con merge a master.
+* Testing automatizado.
+
+NOTES:
+* Implementamos algunas partes del modelo, no está completo por el momento.
+* Cobertura de tests un poco baja debido a que no pudimos configurar correctamente jacoco para que ignore getters
+y setters y solo tome clases de modelo, persistibles o no.
+* Se utilizan por el momento repositorios en memoria.
+
+KNOWN ISSUES:
+* Las excepciones de google connector no se manejan correctamente.
+* Quitar referencias al id en mensajes del modelo.
+* Quitar stock y precio del modelo del producto.
+* Falta configurar mapStruct para el manejo de TOs.
