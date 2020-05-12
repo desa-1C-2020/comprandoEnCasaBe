@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.model;
+package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTo;
