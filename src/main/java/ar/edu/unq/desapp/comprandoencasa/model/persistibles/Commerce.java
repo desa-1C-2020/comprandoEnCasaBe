@@ -7,7 +7,10 @@ import com.google.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.UUID.randomUUID;
+
 public class Commerce {
+    private String id;
     private String name;
     private String businessSector;
     private Address address;
@@ -15,11 +18,9 @@ public class Commerce {
     private List<String> daysAndHoursOpen;
     private String arrivalRange;
     private List<Product> products;
-
     //For springboot serializer
     public Commerce() {
     }
-
     public Commerce(String name, String businessSector, Address adress, List<PaymentMethod> paymentMethods,
                     List<String> daysAndHoursOpen, String arrivalRange) {
         this.name = name;
@@ -29,6 +30,15 @@ public class Commerce {
         this.daysAndHoursOpen = daysAndHoursOpen;
         this.arrivalRange = arrivalRange;
         this.products = new ArrayList<>();
+        this.id = randomUUID().toString();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getBusinessSector() {
