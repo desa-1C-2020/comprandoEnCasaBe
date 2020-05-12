@@ -1,12 +1,15 @@
 package ar.edu.unq.desapp.comprandoencasa.configurations;
 
-import ar.edu.unq.desapp.comprandoencasa.model.ObjectMapper;
-import ar.edu.unq.desapp.comprandoencasa.model.UserFinder;
-import ar.edu.unq.desapp.comprandoencasa.model.UserRegistrar;
+import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
+import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
-import ar.edu.unq.desapp.comprandoencasa.service.UserService;
+import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreator;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
+import ar.edu.unq.desapp.comprandoencasa.service.UserRegistrar;
+import ar.edu.unq.desapp.comprandoencasa.service.UserSellerService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +30,8 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public UserService userService(UserFinder userFinder, UserSellerRepository userSellerRepository) {
-        return new UserService(userFinder, userSellerRepository);
+    public UserSellerService userSellerService(UserFinder userFinder, UserSellerRepository userSellerRepository) {
+        return new UserSellerService(userFinder, userSellerRepository);
     }
 
     @Bean
@@ -40,5 +43,12 @@ public class ServiceConfiguration {
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
+    }
+
+    @Bean
+    public ShoppingListCreator shoppingListCreator(UserFinder userFinder,
+                                                   ShoppingListRepository shoppingListRepository,
+                                                   CommerceRepository commerceRepository) {
+        return new ShoppingListCreator(userFinder, shoppingListRepository, commerceRepository);
     }
 }

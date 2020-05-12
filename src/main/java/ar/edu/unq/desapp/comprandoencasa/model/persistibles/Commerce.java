@@ -120,4 +120,9 @@ public class Commerce {
             product.updateWith(productToUpdate);
         }
     }
+
+    public Product getProductById(String productId) {
+        Optional<Product> productOptional = Nary.create(products).filterOptional(product -> product.sameId(productId));
+        return productOptional.get();
+    }
 }

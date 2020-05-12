@@ -7,8 +7,11 @@ public class Product {
     private String id;
     private String name;
     private String brand;
+
+    //Estos dos no van con el producto.. sacarlos
     private int stock;
     private double price;
+
     private String imageUrl;
 
     public Product(String name, String brand, int stock, double price, String url) {

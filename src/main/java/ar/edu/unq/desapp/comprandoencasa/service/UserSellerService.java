@@ -1,17 +1,16 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
-import ar.edu.unq.desapp.comprandoencasa.model.UserFinder;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 
 import java.util.List;
 
-public class UserService {
+public class UserSellerService {
     private final UserFinder userFinder;
     private final UserSellerRepository repository;
 
-    public UserService(UserFinder userFinder, UserSellerRepository userRepository) {
+    public UserSellerService(UserFinder userFinder, UserSellerRepository userRepository) {
         this.userFinder = userFinder;
         this.repository = userRepository;
     }

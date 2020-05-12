@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.model;
+package ar.edu.unq.desapp.comprandoencasa.extensions;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ProductTo;
