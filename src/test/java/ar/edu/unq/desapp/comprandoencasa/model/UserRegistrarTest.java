@@ -8,6 +8,8 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
+import ar.edu.unq.desapp.comprandoencasa.service.UserRegistrar;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

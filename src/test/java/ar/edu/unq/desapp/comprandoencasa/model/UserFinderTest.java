@@ -6,6 +6,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

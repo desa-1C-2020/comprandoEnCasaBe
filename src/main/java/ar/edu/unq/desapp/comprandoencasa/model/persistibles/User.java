@@ -3,9 +3,9 @@ package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 import static java.util.UUID.randomUUID;
 
 public class User {
-    private final String uid;
-    private final String name;
-    private final String surname;
+    private String uid;
+    private String name;
+    private String surname;
     private String email;
 
     private User(String name, String surname, String email) {

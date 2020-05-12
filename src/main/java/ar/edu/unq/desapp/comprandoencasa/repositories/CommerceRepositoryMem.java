@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.repositories;
 
+import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,11 @@ public class CommerceRepositoryMem implements CommerceRepository {
     @Override
     public List<Commerce> getAll() {
         return repo;
+    }
+
+    @Override
+    public Optional<Commerce> getById(String id) {
+        return null;
     }
 
     public void add(Commerce commerce) {

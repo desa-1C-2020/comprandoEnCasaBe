@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
-import ar.edu.unq.desapp.comprandoencasa.model.UserFinder;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
