@@ -5,12 +5,12 @@ import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListItemTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
-import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreator;
-import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,10 +59,10 @@ public class ShoppingListCreatorTest {
 
     @Test
     public void whenCreatesAShoppingListWithValidValus_thenSavesTheCreatedShoppingList() {
-        ShoppingListTo shoppingListTo = getShoppingListTo("unComercio", "unProductId");
+        ShoppingListTo shoppingListTo = getShoppingListTo("unComercio", "unProductId", "unId");
         simulatesRightOperationForCommerceAndCommerceRepository();
 
-        ShoppingList shoppingList = creator.from(shoppingListTo);
+        ShoppingList shoppingList = creator.createAndSave(shoppingListTo);
 
         assertThat(shoppingList.getTotal(), is(shoppingListTo.getTotal()));
         verify(shoppingListRepository, times(1)).save(shoppingListCaptor.capture());
@@ -70,13 +70,13 @@ public class ShoppingListCreatorTest {
     }
 
     @Test
-    public void cuandoGuadaUnaListaDeComprasConUnComercioQueNoExiste_FallaLaCreacionDeLaLista() {
+    public void whenWantCreateAShoppingListWithACommerceThatNotExists_thenFailsWithExceptionAndNotSaveTheShoppingList() {
         String commerceId = "unComercio";
-        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, "unProductId");
+        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, "unProductId", "unId");
         when(commerceRepository.getById(anyString())).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> creator.from(shoppingListTo))
+            .isThrownBy(() -> creator.createAndSave(shoppingListTo))
             .withMessage("No existe el comercio con id: [" + commerceId + "]. No se puede crear la lista de compras");
 
         verify(commerceRepository, times(1)).getById(commerceId);
@@ -84,27 +84,49 @@ public class ShoppingListCreatorTest {
     }
 
     @Test
-    public void cuandoGuadaUnaListaDeComprasConUnProductoQueExisteEnUnComercio_FallaLaCreacionDeLaLista() {
+    public void whenWantCreateAShoppingListWithAProductThatNotExistsInCommerce_thenFailsWithExceptionAndNotSaveTheShoppingList() {
         String commerceId = "unComercio";
         String productId = "unProductId";
-        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, productId);
+        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, productId, "unId");
         Commerce anyCommerce = new Commerce("name", null, null, null, null, null);
         when(commerceRepository.getById(anyString())).thenReturn(Optional.of(anyCommerce));
 
         String errorMessage = "No existe el producto con id: [" + productId + "] en el comercio [" +
             anyCommerce.getName() + "]. No se puede crear la lista de compras";
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> creator.from(shoppingListTo))
+            .isThrownBy(() -> creator.createAndSave(shoppingListTo))
             .withMessage(errorMessage);
 
         verify(shoppingListRepository, never()).save(any());
     }
 
-    private ShoppingListTo getShoppingListTo(String commerceId, String productId) {
+    @Test
+    public void whenWantGetAllListsForUser_thenGetsTheListForTheUser() {
+        User user = User.create("aName", "aSurname", "anEmail@email.com");
+        ShoppingList shoppingList = createShoppingList(user);
+        List<ShoppingList> shoppingLists = new ArrayList<>();
+        shoppingLists.add(shoppingList);
+        when(shoppingListRepository.getAllByUser(user)).thenReturn(shoppingLists);
+        when(userFinder.findUserById(anyString())).thenReturn(user);
+
+        List<ShoppingList> recoveredShoppingLists = creator.recreateAllListsForUserWithId(user.getUid());
+
+        verify(shoppingListRepository, times(1)).getAllByUser(user);
+        verify(userFinder, times(1)).findUserById(anyString());
+        assertThat(recoveredShoppingLists.size(), is(1));
+        assertThat(recoveredShoppingLists.get(0), is(shoppingList));
+    }
+
+    private ShoppingList createShoppingList(User user) {
+        List<ItemsByCommerce> itemsByCommerces = new ArrayList<>();
+        return new ShoppingList(user, itemsByCommerces, BigDecimal.TEN, new Date());
+    }
+
+    private ShoppingListTo getShoppingListTo(String commerceId, String productId, String userId) {
         List<ItemByCommerceTo> itemsByCommerce = getItemByCommerceTos(commerceId, productId);
 
         ShoppingListTo shoppingListTo = new ShoppingListTo();
-        shoppingListTo.setUserId("unId");
+        shoppingListTo.setUserId(userId);
         shoppingListTo.setTotal(BigDecimal.TEN);
         shoppingListTo.setCreationDateTime(new Date());
         shoppingListTo.setItemByCommerceTo(itemsByCommerce);

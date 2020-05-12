@@ -31,7 +31,7 @@ public class ShoppingListCreator {
         this.commerceRepository = commerceRepository;
     }
 
-    public ShoppingList from(ShoppingListTo shoppingListTo) {
+    public ShoppingList createAndSave(ShoppingListTo shoppingListTo) {
         //Aca deberia ver de guardar los errores, pero si crear la lista con los que no fallaron.
         //Revisar esto pero por ahora si falla uno, fallan todos.
         String userId = shoppingListTo.getUserId();
@@ -81,5 +81,10 @@ public class ShoppingListCreator {
         }
 
         return commerceOptional.get();
+    }
+
+    public List<ShoppingList> recreateAllListsForUserWithId(String userId) {
+        User user = userFinder.findUserById(userId);
+        return shoppingListRepository.getAllByUser(user);
     }
 }

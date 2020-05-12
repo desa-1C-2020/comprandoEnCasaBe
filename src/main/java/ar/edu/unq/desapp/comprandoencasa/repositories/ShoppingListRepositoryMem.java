@@ -1,9 +1,11 @@
 package ar.edu.unq.desapp.comprandoencasa.repositories;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShoppingListRepositoryMem implements ShoppingListRepository {
 
@@ -16,5 +18,13 @@ public class ShoppingListRepositoryMem implements ShoppingListRepository {
     @Override
     public void save(ShoppingList shoppingList) {
         repo.add(shoppingList);
+    }
+
+    @Override
+    public List<ShoppingList> getAllByUser(User user) {
+        return repo
+            .stream()
+            .filter(shoppingList -> shoppingList.itIsFrom(user))
+            .collect(Collectors.toList());
     }
 }

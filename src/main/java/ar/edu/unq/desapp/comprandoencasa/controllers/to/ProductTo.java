@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 
 import javax.validation.constraints.NotNull;
 
-/** Models the product added from frontend
+/** Models the product added createAndSave frontend
  * */
 public class ProductTo {
     @NotNull

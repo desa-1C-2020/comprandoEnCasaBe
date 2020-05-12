@@ -60,4 +60,8 @@ public class ShoppingList {
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
+
+    public boolean itIsFrom(User user) {
+        return user.same(user);
+    }
 }
