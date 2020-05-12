@@ -21,7 +21,43 @@ public class ShoppingList {
         this.id = randomUUID().toString();
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<ItemsByCommerce> getItemsByCommerce() {
+        return itemsByCommerce;
+    }
+
+    public void setItemsByCommerce(List<ItemsByCommerce> itemsByCommerce) {
+        this.itemsByCommerce = itemsByCommerce;
+    }
+
+    public Date getCreationDateTime() {
+        return creationDateTime;
+    }
+
+    public void setCreationDateTime(Date creationDateTime) {
+        this.creationDateTime = creationDateTime;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public BigDecimal getTotal() {
         return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 }

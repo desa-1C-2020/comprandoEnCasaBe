@@ -10,6 +10,8 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
@@ -41,6 +43,11 @@ public class RepositoryConfiguration {
         UserRepositoryMem userRepositoryMem = new UserRepositoryMem();
         simulateUserFakeData(userRepositoryMem, commerceRepository(), userBuyerRepository(), userSellerRepository());
         return userRepositoryMem;
+    }
+
+    @Bean
+    public ShoppingListRepository shoppingListRepository() {
+        return new ShoppingListRepositoryMem();
     }
 
     @Bean
