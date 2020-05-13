@@ -21,11 +21,11 @@ public class Commerce {
     //For springboot serializer
     public Commerce() {
     }
-    public Commerce(String name, String businessSector, Address adress, List<PaymentMethod> paymentMethods,
+    public Commerce(String name, String businessSector, Address address, List<PaymentMethod> paymentMethods,
                     List<String> daysAndHoursOpen, String arrivalRange) {
         this.name = name;
         this.businessSector = businessSector;
-        this.address = adress;
+        this.address = address;
         this.paymentMethods = paymentMethods;
         this.daysAndHoursOpen = daysAndHoursOpen;
         this.arrivalRange = arrivalRange;
@@ -49,11 +49,11 @@ public class Commerce {
         this.businessSector = businessSector;
     }
 
-    public Address getAdress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAdress(Address address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
