@@ -58,6 +58,18 @@ public class DistanceCalculatorTest {
         assertThat(commercesInRange, empty());
     }
 
+    @Test
+    public void whenCalculatesNearCommercesByInGivenRangeAndPositionButFailsGoogleConnector_thenReturnsEmptyList() {
+        createDistanceCalculatorWith(new LatLng(-34.7066345, -58.2819718));
+        when(googleConnector.distanceInMetersBetweenTwoLatLng(any(), any())).thenReturn(Optional.empty());
+        LatLng latLngFrom = new LatLng(-34.7040003, -58.2754042);
+
+        Long range = Long.valueOf("2000");
+        List<Commerce> commercesInRange = distanceCalculator.getByLatLngInRange(latLngFrom, range);
+
+        assertThat(commercesInRange, empty());
+    }
+
     private Commerce createDistanceCalculatorWith(LatLng aCommerceLatLng) {
         LatLng otherCommerceLatLng = new LatLng(-34.7166345, -58.2822718);
         List<Commerce> commerceList = createCommerces(aCommerceLatLng, otherCommerceLatLng);

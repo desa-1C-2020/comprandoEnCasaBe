@@ -1,9 +1,3 @@
-buildscript {
-    dependencies {
-        classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:0.14.0"
-    }
-}
-
 plugins {
     id 'org.springframework.boot' version '2.1.3.RELEASE'
     id 'java'
@@ -13,7 +7,7 @@ plugins {
 
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'net.ltgt.apt-idea'
-apply plugin: 'com.vanniktech.android.junit.jacoco'
+apply plugin: 'jacoco'
 
 group 'ar.edu.unq.desapp'
 version '1.0-SNAPSHOT'
@@ -60,6 +54,116 @@ task sendCoverageToCodacy(type: JavaExec) {
     ]
 }
 
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    dependsOn jacocoTestCoverageVerification // tests are required to run before generating the report
+}
+
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/reports/jacoco/test")
+}
+
+//Hack de https://binkley.blogspot.com/2018/05/jacoco-gradle-and-exclusions.html
+//Lo unico que funcionó para excluir clases del reporte y del analisis.
+final def excludedClasses = ["ar/edu/unq/desapp/comprandoencasa/**",
+                             "ar/edu/unq/desapp/comprandoencasa/configurations/**",
+                             "ar/edu/unq/desapp/comprandoencasa/controllers/**",
+                             "ar/edu/unq/desapp/comprandoencasa/controllers/to/**",
+                             "ar/edu/unq/desapp/comprandoencasa/extensions/**",
+                             "ar/edu/unq/desapp/comprandoencasa/healthcheck/**",
+                             "ar/edu/unq/desapp/comprandoencasa/repositories/**",
+                             "ar/edu/unq/desapp/comprandoencasa/service/**"]
+
+def excludedMethods = [
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address.setStreet(java.lang.String)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address.getStreet()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.getId()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.setId(java.lang.String)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.getBusinessSector()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.setBusinessSector(java.lang.String)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.getAdress()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.setAdress(ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.getPaymentMethods()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.setPaymentMethods(java.util.List)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.getDaysAndHoursOpen()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.setDaysAndHoursOpen(java.util.List)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.getArrivalRange()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.setArrivalRange(java.lang.String)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.getProducts()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.setProducts(java.util.List)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce.setName(java.lang.String)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product.setId(java.lang.String)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product.setName(java.lang.String)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product.setBrand(java.lang.String)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product.getStock()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product.setStock(int)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product.getPrice()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product.setPrice(double)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product.setImageUrl(java.lang.String)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce.getCommerce()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce.setCommerce(ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo.setAccept(java.lang.String)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo.getAccept()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList.setTotal(java.math.BigDecimal)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList.setId(java.lang.String)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList.getId()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList.setCreationDateTime(java.util.Date)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList.getCreationDateTime()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList.setItemsByCommerce(java.util.List)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList.getItemsByCommerce()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList.setUser(ar.edu.unq.desapp.comprandoencasa.model.persistibles.User)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList.getUser()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingListItem.setQuantity(int)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingListItem.getQuantity()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingListItem.setProduct(ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingListItem.getProduct()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingListItem.setPrice(java.math.BigDecimal)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingListItem.getPrice()",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce.setItems(java.util.List)",
+        "ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce.getItems()"
+]
+
+def collect = excludedClasses.collect {
+    it.replace('.', '/') + '.class'
+}
+
+jacocoTestCoverageVerification {
+//    violationRules {
+//        rule {
+//            element = 'METHOD'
+//            limit {
+//                counter = 'LINE'
+//                value = 'COVEREDRATIO'
+//                minimum = 0.0
+//            }
+//            excludes = excludedMethods
+//        }
+//    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, excludes: collect)
+        })
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled true
+        html.destination file("${buildDir}/reports/jacoco/test/jacocoHtml")
+    }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, excludes: collect)
+        })
+    }
+}
+
 dependencies {
     //Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -104,6 +208,4 @@ dependencies {
 
     //Librería que wrappea el cliente de google maps
     implementation 'com.google.maps:google-maps-services:0.13.0'
-//    implementation 'org.slf4j:slf4j-simple:1.7.25'
-
 }
