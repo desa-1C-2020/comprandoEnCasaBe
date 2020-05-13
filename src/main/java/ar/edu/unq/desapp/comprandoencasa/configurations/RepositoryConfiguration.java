@@ -92,10 +92,10 @@ public class RepositoryConfiguration {
         Address almacenAddress = new Address("Roque Sáenz Peña 700, Bernal, Buenos Aires", new LatLng(-34.7104061, -58.2823677));
         Address perfumeriaAddress = new Address("Lebensohn Nº 789, B1876 Bernal, Buenos Aires", new LatLng(-34.7105312, -58.2742587));
 
-        Commerce kiosco = new Commerce("un nombre de comercio", "Kiosco", kioscoAddress, paymentMethods, horarios, "3km");
-        Commerce kiosco2 = new Commerce("un nombre de comercio", "Kiosco", kiosco2Address, paymentMethods, horarios, "5km");
-        Commerce almacen = new Commerce("un nombre de comercio", "Almacen", almacenAddress, paymentMethods, horarios, "4km");
-        Commerce perfumeria = new Commerce("un nombre de comercio", "Perfumeria", perfumeriaAddress, paymentMethods, horarios, "2km");
+        Commerce kiosco = new Commerce("un kiosco", "Kiosco", kioscoAddress, paymentMethods, horarios, "3km");
+        Commerce kiosco2 = new Commerce("otro kiosco", "Kiosco", kiosco2Address, paymentMethods, horarios, "5km");
+        Commerce almacen = new Commerce("un almacen", "Almacen", almacenAddress, paymentMethods, horarios, "4km");
+        Commerce perfumeria = new Commerce("una perfumeria", "Perfumeria", perfumeriaAddress, paymentMethods, horarios, "2km");
 
         commerceRepositoryMem.add(kiosco);
         commerceRepositoryMem.add(kiosco2);
