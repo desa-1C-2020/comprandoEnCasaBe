@@ -1,9 +1,9 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.ProductTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleableItemTo;
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
-import ar.edu.unq.desapp.comprandoencasa.service.UserSellerService;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
+import ar.edu.unq.desapp.comprandoencasa.service.SaleableItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,23 +26,23 @@ public class SellerController {
     private ObjectMapper mapper;
 
     @Autowired
-    private UserSellerService userSellerService;
+    private SaleableItemService saleableItemService;
 
     @PostMapping(value = "product")
-    public List<Product> addProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
-        Product product = mapper.mapToProduct(productTo);
-        return userSellerService.addProductByUserId(product, userId);
+    public List<SaleableItem> addSaleableProduct(@RequestParam String userId, @RequestBody SaleableItemTo saleableItemTo) {
+        SaleableItem saleableItem = mapper.mapToSaleableProduct(saleableItemTo);
+        return saleableItemService.addSaleableProductByUserId(saleableItem, userId);
     }
 
     @DeleteMapping("product")
-    public List<Product> removeProduct(@RequestParam String userId, @RequestParam String productId) {
-        return userSellerService.removeProductByUserId(productId, userId);
+    public List<SaleableItem> removeSaleableProduct(@RequestParam String userId, @RequestParam String productId) {
+        return saleableItemService.removeSaleableProductForUser(productId, userId);
     }
 
     @PatchMapping("product")
-    public List<Product> updateProduct(@RequestParam String userId, @RequestBody ProductTo productTo) {
-        Product product = mapper.mapToProduct(productTo);
-        return userSellerService.updateProductById(product, userId);
+    public List<SaleableItem> updateSaleableProduct(@RequestParam String userId, @RequestBody SaleableItemTo saleableItemTo) {
+        SaleableItem saleableItem = mapper.mapToSaleableProduct(saleableItemTo);
+        return saleableItemService.updateSaleableProduct(saleableItem, userId);
     }
 }
 

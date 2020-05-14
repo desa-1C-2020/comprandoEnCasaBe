@@ -9,4 +9,7 @@ public interface CommerceRepository {
     List<Commerce> getAll();
 
     Optional<Commerce> getById(String id);
+
+    //Tine que reemplazar el que viene basicamente
+    void update(Commerce commerce);
 }

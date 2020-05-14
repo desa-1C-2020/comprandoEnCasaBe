@@ -17,10 +17,12 @@ public class Commerce {
     private List<PaymentMethod> paymentMethods;
     private List<String> daysAndHoursOpen;
     private String arrivalRange;
-    private List<Product> products;
+    private List<SaleableItem> saleableItems;
+
     //For springboot serializer
     public Commerce() {
     }
+
     public Commerce(String name, String businessSector, Address address, List<PaymentMethod> paymentMethods,
                     List<String> daysAndHoursOpen, String arrivalRange) {
         this.name = name;
@@ -29,7 +31,7 @@ public class Commerce {
         this.paymentMethods = paymentMethods;
         this.daysAndHoursOpen = daysAndHoursOpen;
         this.arrivalRange = arrivalRange;
-        this.products = new ArrayList<>();
+        this.saleableItems = new ArrayList<>();
         this.id = randomUUID().toString();
     }
 
@@ -85,12 +87,12 @@ public class Commerce {
         return address.getLatLng();
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<SaleableItem> getSaleableItems() {
+        return saleableItems;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setSaleableItems(List<SaleableItem> saleableItems) {
+        this.saleableItems = saleableItems;
     }
 
     public String getName() {
@@ -101,38 +103,62 @@ public class Commerce {
         this.name = name;
     }
 
-    public void addProduct(Product product) {
-        products.add(product);
+    public void addSaleableItem(SaleableItem saleableItem) {
+        saleableItems.add(saleableItem);
     }
 
     public boolean containsProduct(Product product) {
-        return products.stream().anyMatch(product1 -> product.sameProduct(product));
+        return saleableItems.stream().anyMatch(saleableItem -> saleableItem.sameProduct(product));
     }
 
     public boolean containsProductWithId(String productId) {
-        return products.stream().anyMatch(product -> product.sameId(productId));
+        return saleableItems.stream().anyMatch(saleableItem -> saleableItem.sameProductId(productId));
     }
 
     public void removeProduct(Product product) {
-        products.remove(product);
+        SaleableItem saleableItem = findByProduct(product);
+        saleableItems.remove(saleableItem);
     }
 
-    public void removeProductById(String productId) {
-        Optional<Product> first = Nary.create(products).filterOptional(product -> product.sameId(productId));
-        products.remove(first.get());
+    private SaleableItem findByProduct(Product product) {
+        return saleableItems
+            .stream()
+            .filter(saleableItem -> saleableItem.sameProduct(product))
+            .findFirst()
+            .get();
     }
 
-    public void updateProduct(Product productToUpdate) {
-        Optional<Product> productOptional = Nary.create(products).filterOptional(product -> product.sameProduct(productToUpdate));
+    private SaleableItem findByProductId(String productId) {
+        return saleableItems
+            .stream()
+            .filter(saleableItem -> saleableItem.sameProductId(productId))
+            .findFirst()
+            .get();
+    }
 
-        if (!productOptional.isAbsent()) {
-            Product product = productOptional.get();
-            product.updateWith(productToUpdate);
+    public SaleableItem removeSaleableItemByProductId(String productId) {
+        SaleableItem saleableItem = findByProductId(productId);
+        saleableItems.remove(saleableItem);
+        return saleableItem;
+    }
+
+    public void updateSaleableItem(SaleableItem toUpdate) {
+        Optional<SaleableItem> saleableItemOptional =
+            Nary.create(saleableItems).filterOptional(saleableItem -> saleableItem.sameProductId(toUpdate.getProductId()));
+
+        if (saleableItemOptional.isAbsent()) {
+            String errorMessage = "No se puede actualizar. No existe el producto con id: [" + toUpdate.getProductId() + "]";
+            throw new RuntimeException(errorMessage);
         }
+        SaleableItem saleableItem = saleableItemOptional.get();
+        saleableItem.updateWith(toUpdate);
     }
 
-    public Product getProductById(String productId) {
-        Optional<Product> productOptional = Nary.create(products).filterOptional(product -> product.sameId(productId));
-        return productOptional.get();
+    public Product getProductById(String saleableId) {
+        Optional<SaleableItem> saleableItemOptional = Nary
+            .create(saleableItems)
+            .filterOptional(saleableItem -> saleableItem.sameProductId(saleableId));
+        SaleableItem saleableItem = saleableItemOptional.get();
+        return saleableItem.getProduct();
     }
 }

@@ -7,19 +7,12 @@ public class Product {
     private String id;
     private String name;
     private String brand;
-
-    //Estos dos no van con el producto.. sacarlos
-    private int stock;
-    private double price;
-
     private String imageUrl;
 
-    public Product(String name, String brand, int stock, double price, String url) {
+    public Product(String name, String brand, String url) {
         this.id = randomUUID().toString();
         this.name = name;
         this.brand = brand;
-        this.stock = stock;
-        this.price = price;
         this.imageUrl = url;
     }
 
@@ -47,22 +40,6 @@ public class Product {
         this.brand = brand;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public String getImageUrl() {
         return imageUrl;
     }
@@ -76,17 +53,13 @@ public class Product {
     }
 
     public boolean sameProduct(Product product) {
-        return name.equals(product.getName()) &&
-            brand.equals(product.getBrand()) &&
-            imageUrl.equals(product.getImageUrl());
+        return name.equals(product.getName()) && brand.equals(product.getBrand());
     }
 
     public Product updateWith(Product productToUpdate) {
-        this.setName(productToUpdate.name);
-        this.setBrand(productToUpdate.brand);
-        this.setImageUrl(productToUpdate.imageUrl);
-        this.setPrice(productToUpdate.price);
-        this.setStock(productToUpdate.stock);
+        this.setName(productToUpdate.getName());
+        this.setBrand(productToUpdate.getBrand());
+        this.setImageUrl(productToUpdate.getImageUrl());
         return this;
     }
 }

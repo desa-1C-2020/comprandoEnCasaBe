@@ -2,9 +2,12 @@ package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 
 import javax.validation.constraints.NotNull;
 
-/** Models the product added createAndSave frontend
- * */
-public class ProductTo {
+/**
+ * Models the product added createAndSave frontend
+ */
+public class SaleableItemTo {
+    @NotNull
+    private String productId;
     @NotNull
     private String name;
     @NotNull
@@ -53,5 +56,13 @@ public class ProductTo {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 }

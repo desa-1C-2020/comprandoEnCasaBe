@@ -156,7 +156,7 @@ public class ShoppingListCreatorTest {
     private void simulatesRightOperationForCommerceAndCommerceRepository() {
         Commerce anyCommerce = mock(Commerce.class);
         when(anyCommerce.containsProductWithId(anyString())).thenReturn(true);
-        Product product = new Product("a Product", null, Integer.MIN_VALUE, Double.MIN_VALUE, null);
+        Product product = new Product("a Product", null, null);
         when(anyCommerce.getProductById(anyString())).thenReturn(product);
         when(commerceRepository.getById(anyString())).thenReturn(Optional.of(anyCommerce));
     }
