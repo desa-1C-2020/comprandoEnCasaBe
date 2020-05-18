@@ -208,4 +208,7 @@ dependencies {
 
     //Librería que wrappea el cliente de google maps
     implementation 'com.google.maps:google-maps-services:0.13.0'
+
+    //Utilidades
+    compile 'org.apache.commons:commons-lang3:3.7'
 }
