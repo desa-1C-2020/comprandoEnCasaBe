@@ -6,14 +6,12 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
-import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol.SELLER;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.hamcrest.CoreMatchers.is;
@@ -42,7 +40,7 @@ public class UserFinderTest {
     public void whenFindAnExistingSellerUserInRepositoryById_ThenReturnsTheExistentUser() {
         User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com");
         Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
-        UserSeller userSeller = new UserSeller(savedUser, SELLER, commerce);
+        UserSeller userSeller = new UserSeller(savedUser, commerce);
         when(userRepository.findBy(anyString())).thenReturn(Optional.of(savedUser));
         when(userSellerRepository.findByUser(any())).thenReturn(Optional.of(userSeller));
 

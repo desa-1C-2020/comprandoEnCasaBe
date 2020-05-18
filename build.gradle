@@ -50,7 +50,7 @@ task sendCoverageToCodacy(type: JavaExec) {
             "-l",
             "Java",
             "-r",
-            "${buildDir}/reports/jacoco/test/test/jacocoTestReport.xml"
+            "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
     ]
 }
 
@@ -64,7 +64,7 @@ jacocoTestReport {
 
 jacoco {
     toolVersion = "0.8.5"
-    reportsDir = file("$buildDir/reports/jacoco/test")
+    reportsDir = file("$buildDir/reports/jacoco")
 }
 
 //Hack de https://binkley.blogspot.com/2018/05/jacoco-gradle-and-exclusions.html

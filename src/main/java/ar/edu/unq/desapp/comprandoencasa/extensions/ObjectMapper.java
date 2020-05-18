@@ -2,8 +2,8 @@ package ar.edu.unq.desapp.comprandoencasa.extensions;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTo;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.ProductTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleableItemTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListItemTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
@@ -11,6 +11,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingListItem;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
@@ -36,9 +37,10 @@ public class ObjectMapper {
         return new Address(addressTo.getStreet(), latLng);
     }
 
-    public Product mapToProduct(ProductTo productTo) {
-        return new Product(productTo.getName(), productTo.getBrand(), productTo.getStock(), productTo.getPrice(),
-            productTo.getImageUrl());
+    public SaleableItem mapToSaleableProduct(SaleableItemTo saleableItemTo) {
+        Product product = new Product(saleableItemTo.getName(), saleableItemTo.getBrand(), saleableItemTo.getImageUrl());
+        product.setId(saleableItemTo.getProductId());
+        return new SaleableItem(saleableItemTo.getStock(), saleableItemTo.getPrice(), product);
     }
 
     public List<ShoppingListTo> mapToShoppingListsTo(List<ShoppingList> shoppingLists) {

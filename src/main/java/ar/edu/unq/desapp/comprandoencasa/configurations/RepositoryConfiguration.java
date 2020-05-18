@@ -6,10 +6,11 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserRol;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
@@ -60,6 +61,11 @@ public class RepositoryConfiguration {
         return new UserSellerRepositoryMem();
     }
 
+    @Bean
+    public SaleableItemRepository saleableItemRepository() {
+        return new SaleableItemRepositoryMem();
+    }
+
     private void simulateUserFakeData(UserRepository repo, CommerceRepository commerceRepository,
                                       UserBuyerRepository userBuyerRepository, UserSellerRepository userSellerRepository) {
         Commerce otherCommerce = commerceRepository.getAll().get(1);
@@ -68,7 +74,7 @@ public class RepositoryConfiguration {
         UserBuyer userBuyer1 = new UserBuyer(userBuyer);
 
         User userSellerWithCommerce = User.create("Daniel", "Alvarenga", "marcos+2@10pines.com");
-        UserSeller userSeller = new UserSeller(userSellerWithCommerce, UserRol.SELLER, otherCommerce);
+        UserSeller userSeller = new UserSeller(userSellerWithCommerce, otherCommerce);
 
         String userBuyerId = "ID DEL USUARIO BUYER************ -> " + userBuyer1.getUser().getUid();
         String userSellerId = "ID DEL USUARIO SELLER************ -> " + userSeller.getUser().getUid();

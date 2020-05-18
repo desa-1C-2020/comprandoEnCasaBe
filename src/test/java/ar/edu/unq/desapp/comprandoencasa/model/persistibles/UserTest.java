@@ -30,6 +30,21 @@ public class UserTest {
         assertInvalidEmail("carlosgmail.com");
     }
 
+    @Test
+    public void whenCheckIfSameIdThatSameUser_thenReturnTrue() {
+        User user = User.create("carlos", "gonzalez", "carlos@gmail.com");
+
+        assertThat(user.sameId(user.getUid()), is(true));
+    }
+
+    @Test
+    public void whenCheckIfSameIdForDifferentUser_thenReturnFalse() {
+        User user = User.create("carlos", "gonzalez", "carlos@gmail.com");
+        User otherUser = User.create("martin", "gonzalez", "martin@gmail.com");
+
+        assertThat(user.sameId(otherUser.getUid()), is(false));
+    }
+
     private void assertInvalidEmail(String email) {
         Exception thrown = TestUtils.assertThrows(() -> User.create("carlos", "gonzalez", email), RuntimeException.class);
 

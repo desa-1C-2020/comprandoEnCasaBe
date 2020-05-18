@@ -58,7 +58,7 @@ public class UserRegistrar {
 
     private UserSeller registerSeller(User user, SellerTo sellerTo) {
         Commerce commerce = mapper.mapToCommerce(sellerTo);
-        UserSeller userSeller = new UserSeller(user, SELLER, commerce);
+        UserSeller userSeller = new UserSeller(user, commerce);
         userSellerRepository.save(userSeller);
         return userSeller;
     }

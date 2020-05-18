@@ -27,10 +27,10 @@ public class User {
     }
 
     public boolean same(User userToFind) {
-        return emailRegistered(userToFind);
+        return sameEmailRegistered(userToFind);
     }
 
-    private boolean emailRegistered(User userToFind) {
+    private boolean sameEmailRegistered(User userToFind) {
         return email == userToFind.getEmail();
     }
 
