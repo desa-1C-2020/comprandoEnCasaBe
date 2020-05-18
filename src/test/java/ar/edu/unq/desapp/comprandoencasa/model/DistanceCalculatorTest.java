@@ -94,8 +94,8 @@ public class DistanceCalculatorTest {
         paymentMethods.add(efectivo);
         List<String> horarios = new ArrayList<>();
         horarios.add("Lunes a viernes de 10 a 18hs");
-        Address aCommerceAddress = new Address("Roque Sáenz Peña 284, Bernal, Buenos Aires", aCommerceLatLng);
-        Address otherCommerceAddress = new Address("Roque Sáenz Peña 106, Bernal, Buenos Aires", otherCommerceLatLng);
+        Address aCommerceAddress = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", aCommerceLatLng);
+        Address otherCommerceAddress = Address.create("Roque Sáenz Peña 106, Bernal, Buenos Aires", otherCommerceLatLng);
         Commerce aCommerce = new Commerce("Kiosco carlos", "Kiosco", aCommerceAddress, paymentMethods, horarios, "3km");
         Commerce otherCommerce = new Commerce("Almacen pepe", "Almacen", otherCommerceAddress, paymentMethods, horarios, "5km");
 

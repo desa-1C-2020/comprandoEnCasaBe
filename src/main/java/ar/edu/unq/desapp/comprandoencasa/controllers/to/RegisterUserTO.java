@@ -5,9 +5,9 @@ public class RegisterUserTO {
     private String surname;
     private String email;
     private String password;
-    private AddressTo address;
+    private AddressTO address;
 
-    public RegisterUserTO(String name, String surname, String email, String password, AddressTo address) {
+    public RegisterUserTO(String name, String surname, String email, String password, AddressTO address) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -47,11 +47,11 @@ public class RegisterUserTO {
         this.password = password;
     }
 
-    public AddressTo getAddress() {
+    public AddressTO getAddress() {
         return address;
     }
 
-    public void setAddress(AddressTo address) {
+    public void setAddress(AddressTO address) {
         this.address = address;
     }
 }
