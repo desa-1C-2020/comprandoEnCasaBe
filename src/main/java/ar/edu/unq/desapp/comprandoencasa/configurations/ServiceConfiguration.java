@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.configurations;
 
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
+import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
@@ -37,8 +38,10 @@ public class ServiceConfiguration {
 
     @Bean
     public UserRegistrar userRegistrar(UserFinder userFinder, ObjectMapper objectMapper, UserRepository userRepository,
-                                       UserBuyerRepository userBuyerRepository, UserSellerRepository userSellerRepository) {
-        return new UserRegistrar(userFinder, objectMapper, userRepository, userBuyerRepository, userSellerRepository);
+                                       UserBuyerRepository userBuyerRepository,
+                                       UserSellerRepository userSellerRepository, ObjectConverter objectConverter) {
+        return new UserRegistrar(userFinder, objectMapper, userRepository, userBuyerRepository, userSellerRepository,
+            objectConverter);
     }
 
     @Bean

@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
+import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
@@ -17,14 +18,17 @@ public class UserRegistrar {
     private ObjectMapper mapper;
     private UserBuyerRepository buyerRepository;
     private UserSellerRepository userSellerRepository;
+    private ObjectConverter converter;
 
     public UserRegistrar(UserFinder userFinder, ObjectMapper mapper, UserRepository userRepository,
-                         UserBuyerRepository buyerRepository, UserSellerRepository userSellerRepository) {
+                         UserBuyerRepository buyerRepository, UserSellerRepository userSellerRepository,
+                         ObjectConverter objectConverter) {
         this.userFinder = userFinder;
         this.userRepository = userRepository;
         this.mapper = mapper;
         this.buyerRepository = buyerRepository;
         this.userSellerRepository = userSellerRepository;
+        converter = objectConverter;
     }
 
     public UserBuyer registerNewUser(RegisterUserTO registerUserTO) {
@@ -54,7 +58,7 @@ public class UserRegistrar {
     }
 
     private UserSeller registerSeller(User user, SellerTO sellerTo) {
-        Commerce commerce = mapper.mapToCommerce(sellerTo);
+        Commerce commerce = converter.convertTo(Commerce.class, sellerTo);
         UserSeller userSeller = new UserSeller(user, commerce);
         userSellerRepository.save(userSeller);
         return userSeller;

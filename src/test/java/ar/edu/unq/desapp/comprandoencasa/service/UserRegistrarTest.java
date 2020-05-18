@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
+import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
@@ -43,6 +44,9 @@ public class UserRegistrarTest {
     @Mock
     private UserBuyerRepository userBuyerRepository;
 
+    @Mock
+    private ObjectConverter converter;
+
     @Captor
     private ArgumentCaptor<User> userCaptor;
 
@@ -52,7 +56,8 @@ public class UserRegistrarTest {
     @Before
     public void setUp() {
         ObjectMapper mapper = new ObjectMapper();
-        userRegistrar = new UserRegistrar(userFinder, mapper, userRepository, userBuyerRepository, userSellerRepository);
+        userRegistrar = new UserRegistrar(userFinder, mapper, userRepository, userBuyerRepository,
+            userSellerRepository, converter);
     }
 
     @Test

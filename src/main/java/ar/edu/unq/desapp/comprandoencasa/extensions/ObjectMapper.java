@@ -1,21 +1,16 @@
 package ar.edu.unq.desapp.comprandoencasa.extensions;
 
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleableItemTo;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListItemTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingListItem;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
-import com.google.maps.model.LatLng;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,19 +18,6 @@ import java.util.stream.Collectors;
 public class ObjectMapper {
     public User mapToToUser(RegisterUserTO userto) {
         return User.create(userto.getName(), userto.getSurname(), userto.getEmail());
-    }
-
-    public Commerce mapToCommerce(SellerTO sellerTo) {
-        AddressTO addressTo = sellerTo.getCommerceAddress();
-        Address address = mapToAddress(addressTo);
-        Commerce commerce = new Commerce(sellerTo.getCommerceName(), sellerTo.getBusinessSector(),
-            address, sellerTo.getPaymentMethods(), sellerTo.getDaysAndHoursOpen(), sellerTo.getArrivalRange());
-        return commerce;
-    }
-
-    private Address mapToAddress(AddressTO addressTo) {
-        LatLng latLng = new LatLng(addressTo.getLatitud(), addressTo.getLongitud());
-        return Address.create(addressTo.getStreet(), latLng);
     }
 
     public SaleableItem mapToSaleableProduct(SaleableItemTo saleableItemTo) {
