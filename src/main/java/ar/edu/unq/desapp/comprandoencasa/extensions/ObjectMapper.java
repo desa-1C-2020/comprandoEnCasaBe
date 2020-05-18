@@ -1,10 +1,10 @@
 package ar.edu.unq.desapp.comprandoencasa.extensions;
 
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleableItemTo;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListItemTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
@@ -25,16 +25,17 @@ public class ObjectMapper {
         return User.create(userto.getName(), userto.getSurname(), userto.getEmail());
     }
 
-    public Commerce mapToCommerce(SellerTo sellerTo) {
-        AddressTo addressTo = sellerTo.getCommerceAddress();
+    public Commerce mapToCommerce(SellerTO sellerTo) {
+        AddressTO addressTo = sellerTo.getCommerceAddress();
         Address address = mapToAddress(addressTo);
-        return new Commerce(sellerTo.getCommerceName(), sellerTo.getCommerceBusinessSector(),
+        Commerce commerce = new Commerce(sellerTo.getCommerceName(), sellerTo.getBusinessSector(),
             address, sellerTo.getPaymentMethods(), sellerTo.getDaysAndHoursOpen(), sellerTo.getArrivalRange());
+        return commerce;
     }
 
-    private Address mapToAddress(AddressTo addressTo) {
+    private Address mapToAddress(AddressTO addressTo) {
         LatLng latLng = new LatLng(addressTo.getLatitud(), addressTo.getLongitud());
-        return new Address(addressTo.getStreet(), latLng);
+        return Address.create(addressTo.getStreet(), latLng);
     }
 
     public SaleableItem mapToSaleableProduct(SaleableItemTo saleableItemTo) {

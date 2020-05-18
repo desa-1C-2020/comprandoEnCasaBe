@@ -6,13 +6,23 @@ public class Address {
     private String street;
     private LatLng latLng;
 
-    public Address(String street, LatLng latLng) {
-        this.street = street;
-        this.latLng = latLng;
+    public static Address create(String street, LatLng latLng) {
+        Address address = new Address();
+        address.street = street;
+        address.latLng = latLng;
+        return address;
     }
 
     public LatLng getLatLng() {
         return latLng;
+    }
+
+    public double getLatitud() {
+        return latLng.lat;
+    }
+
+    public double getLongitud() {
+        return latLng.lng;
     }
 
     public String getStreet() {

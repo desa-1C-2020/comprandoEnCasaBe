@@ -5,7 +5,9 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class SellerTo {
+public class SellerTO {
+    public static final String commerceName_FIELD = "commerceName";
+    public static final String commerceAddress_FIELD = "commerceAddress";
     @NotNull
     private String userId;
     @NotNull
@@ -13,7 +15,7 @@ public class SellerTo {
     @NotNull
     private String commerceBusinessSector;
     @NotNull
-    private AddressTo commerceAddress;
+    private AddressTO commerceAddress;
     private List<PaymentMethod> paymentMethods;
     private List<String> daysAndHoursOpen;
     private String arrivalRange;
@@ -34,7 +36,7 @@ public class SellerTo {
         this.commerceName = commerceName;
     }
 
-    public String getCommerceBusinessSector() {
+    public String getBusinessSector() {
         return commerceBusinessSector;
     }
 
@@ -42,11 +44,11 @@ public class SellerTo {
         this.commerceBusinessSector = commerceBusinessSector;
     }
 
-    public AddressTo getCommerceAddress() {
+    public AddressTO getCommerceAddress() {
         return commerceAddress;
     }
 
-    public void setCommerceAddress(AddressTo commerceAddress) {
+    public void setCommerceAddress(AddressTO commerceAddress) {
         this.commerceAddress = commerceAddress;
     }
 

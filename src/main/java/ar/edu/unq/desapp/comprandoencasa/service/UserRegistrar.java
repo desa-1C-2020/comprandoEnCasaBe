@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
@@ -33,7 +33,7 @@ public class UserRegistrar {
         return registerBuyer(user);
     }
 
-    public UserSeller registerSellerCommerce(SellerTo sellerTo) {
+    public UserSeller registerSellerCommerce(SellerTO sellerTo) {
         User user = userFinder.findUserById(sellerTo.getUserId());
         return registerSeller(user, sellerTo);
     }
@@ -53,7 +53,7 @@ public class UserRegistrar {
         return user;
     }
 
-    private UserSeller registerSeller(User user, SellerTo sellerTo) {
+    private UserSeller registerSeller(User user, SellerTO sellerTo) {
         Commerce commerce = mapper.mapToCommerce(sellerTo);
         UserSeller userSeller = new UserSeller(user, commerce);
         userSellerRepository.save(userSeller);

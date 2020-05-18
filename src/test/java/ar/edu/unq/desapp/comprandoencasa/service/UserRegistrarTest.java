@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
@@ -57,7 +57,10 @@ public class UserRegistrarTest {
 
     @Test
     public void whenAUserRegistrarRegistersAUser_thenSaveInTheRepository() {
-        AddressTo addressTo = new AddressTo("street", 123L, -123L);
+        AddressTO addressTo = new AddressTO();
+        addressTo.setStreet("street");
+        addressTo.setLatitud(Double.parseDouble("123"));
+        addressTo.setLongitud(Double.parseDouble("-123"));
         RegisterUserTO registerUserTO = new RegisterUserTO("carlos", "gonzalez", "carlos@gmail.com", "password", addressTo);
 
         userRegistrar.registerNewUser(registerUserTO);
@@ -72,7 +75,10 @@ public class UserRegistrarTest {
     @Test
     public void whenAUserRegistrarRegistersAnExistingUser_thenDoNotAddIt() {
         when(userFinder.existsUser(ArgumentMatchers.any())).thenReturn(true);
-        AddressTo addressTo = new AddressTo("street", 123L, -123L);
+        AddressTO addressTo = new AddressTO();
+        addressTo.setStreet("street");
+        addressTo.setLatitud(Double.parseDouble("123"));
+        addressTo.setLongitud(Double.parseDouble("-123"));
         RegisterUserTO newRegisterUserTO = new RegisterUserTO("carlos", "gonzalez", "carlos@gmail.com", "password", addressTo);
 
         String errorMessage = "No se puede registrar debido a que existe en el sistema un usuario con el email: [" + newRegisterUserTO.getEmail() + "].";

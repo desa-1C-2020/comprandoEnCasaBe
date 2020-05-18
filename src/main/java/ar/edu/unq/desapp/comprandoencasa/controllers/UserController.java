@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.service.UserRegistrar;
@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("seller")
-    public UserSeller registerSeller(@RequestBody SellerTo sellerTo) {
+    public UserSeller registerSeller(@RequestBody SellerTO sellerTo) {
         return userRegistrar.registerSellerCommerce(sellerTo);
     }
 }
