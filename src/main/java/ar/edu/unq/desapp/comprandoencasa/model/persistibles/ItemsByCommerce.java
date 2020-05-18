@@ -6,6 +6,11 @@ public class ItemsByCommerce {
     private Commerce commerce;
     private List<ShoppingListItem> items;
 
+    public ItemsByCommerce(Commerce commerce, List<ShoppingListItem> shoppingList) {
+        this.commerce = commerce;
+        this.items = shoppingList;
+    }
+
     public Commerce getCommerce() {
         return commerce;
     }
@@ -20,10 +25,5 @@ public class ItemsByCommerce {
 
     public void setItems(List<ShoppingListItem> items) {
         this.items = items;
-    }
-
-    public ItemsByCommerce(Commerce commerce, List<ShoppingListItem> shoppingList) {
-        this.commerce = commerce;
-        this.items = shoppingList;
     }
 }

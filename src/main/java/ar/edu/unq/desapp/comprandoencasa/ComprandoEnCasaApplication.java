@@ -9,7 +9,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 @SpringBootApplication
 public class ComprandoEnCasaApplication {
 
-  public static void main(String[] args) {
-    new SpringApplicationBuilder(ComprandoEnCasaApplication.class).run(args);
-  }
+    public static void main(String[] args) {
+        new SpringApplicationBuilder(ComprandoEnCasaApplication.class).run(args);
+    }
 }
