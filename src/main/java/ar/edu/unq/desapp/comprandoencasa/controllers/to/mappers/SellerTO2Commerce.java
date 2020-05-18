@@ -1,5 +1,6 @@
-package ar.edu.unq.desapp.comprandoencasa.controllers.to;
+package ar.edu.unq.desapp.comprandoencasa.controllers.to.mappers;
 
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.MapperFunction;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import org.mapstruct.Mapper;
