@@ -10,6 +10,10 @@ import java.util.List;
 import static java.util.UUID.randomUUID;
 
 public class Commerce {
+    public static final String name_FIELD = "name";
+    public static final String id_FIELD = "id";
+    public static final String address_FIELD = "address";
+    public static final String saleableItems_FIELD = "saleableItems";
     private String id;
     private String name;
     private String businessSector;
@@ -89,10 +93,6 @@ public class Commerce {
 
     public List<SaleableItem> getSaleableItems() {
         return saleableItems;
-    }
-
-    public void setSaleableItems(List<SaleableItem> saleableItems) {
-        this.saleableItems = saleableItems;
     }
 
     public String getName() {
