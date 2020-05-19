@@ -7,6 +7,10 @@ public class RegisterUserTO {
     private String password;
     private AddressTO address;
 
+    public RegisterUserTO() {
+
+    }
+
     public RegisterUserTO(String name, String surname, String email, String password, AddressTO address) {
         this.name = name;
         this.surname = surname;
