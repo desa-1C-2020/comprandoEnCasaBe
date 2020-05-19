@@ -102,7 +102,7 @@ public class ShoppingListCreatorTest {
 
     @Test
     public void whenWantGetAllListsForUser_thenGetsTheListForTheUser() {
-        User user = User.create("aName", "aSurname", "anEmail@email.com");
+        User user = User.create("aName", "aSurname", "anEmail@email.com", "password", null);
         ShoppingList shoppingList = createShoppingList(user);
         List<ShoppingList> shoppingLists = new ArrayList<>();
         shoppingLists.add(shoppingList);

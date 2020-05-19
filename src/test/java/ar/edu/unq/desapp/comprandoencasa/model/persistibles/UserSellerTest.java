@@ -14,7 +14,7 @@ public class UserSellerTest {
     @Test
     public void whenWantCreateUserWithCommerce_thenTheUserIsCreated() {
         Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
-        User user = User.create("carlos", "gonzalez", "carlos@gmail.com");
+        User user = userCarlos();
         UserSeller userSeller = new UserSeller(user, commerce);
 
         Commerce userCommerce = userSeller.getCommerceOrThrow();
@@ -23,7 +23,7 @@ public class UserSellerTest {
 
     @Test
     public void whenWantGetCommerceAndNotExist_thenThrowsAnException() {
-        User user = User.create("carlos", "gonzalez", "carlos@gmail.com");
+        User user = userCarlos();
         UserSeller userSeller = new UserSeller(user, null);
 
         assertThatExceptionOfType(RuntimeException.class)
@@ -33,7 +33,7 @@ public class UserSellerTest {
 
     @Test
     public void sameUserWithTheUserOfTheUserSeller_returnsTrue() {
-        User user = User.create("carlos", "gonzalez", "carlos@gmail.com");
+        User user = userCarlos();
         UserSeller userSeller = new UserSeller(user, null);
 
         boolean isSameUser = userSeller.sameUser(user);
@@ -43,12 +43,16 @@ public class UserSellerTest {
 
     @Test
     public void sameUserWithDifferentUserOfTheUserSeller_returnsFalse() {
-        User user = User.create("carlos", "gonzalez", "carlos@gmail.com");
-        User otherUser = User.create("martin", "gonzalez", "martins@gmail.com");
+        User user = userCarlos();
+        User otherUser = User.create("martin", "gonzalez", "martins@gmail.com", "password", null);
         UserSeller userSeller = new UserSeller(user, null);
 
         boolean isSameUser = userSeller.sameUser(otherUser);
 
         assertThat(isSameUser, is(false));
+    }
+
+    private User userCarlos() {
+        return User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
     }
 }

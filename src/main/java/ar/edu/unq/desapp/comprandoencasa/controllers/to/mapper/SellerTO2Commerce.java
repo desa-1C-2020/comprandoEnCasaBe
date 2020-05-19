@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.controllers.to.mappers;
+package ar.edu.unq.desapp.comprandoencasa.controllers.to.mapper;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.MapperFunction;
@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring", uses = {Address2AddressTO.class})
+@Mapper(componentModel = "spring", uses = {AddressTO2Address.class})
 public interface SellerTO2Commerce extends MapperFunction<SellerTO, Commerce> {
 
 

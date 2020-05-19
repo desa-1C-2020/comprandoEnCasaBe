@@ -13,7 +13,7 @@ public class UserTest {
 
     @Test
     public void whenWantCreateUserWithWellformedMail_thenTheUserIsCreated() {
-        User user = User.create("carlos", "gonzalez", "carlos@gmail.com");
+        User user = userCarlos();
 
         assertThat(user.getName(), is("carlos"));
         assertThat(user.getSurname(), is("gonzalez"));
@@ -32,22 +32,26 @@ public class UserTest {
 
     @Test
     public void whenCheckIfSameIdThatSameUser_thenReturnTrue() {
-        User user = User.create("carlos", "gonzalez", "carlos@gmail.com");
+        User user = userCarlos();
 
         assertThat(user.sameId(user.getUid()), is(true));
     }
 
     @Test
     public void whenCheckIfSameIdForDifferentUser_thenReturnFalse() {
-        User user = User.create("carlos", "gonzalez", "carlos@gmail.com");
-        User otherUser = User.create("martin", "gonzalez", "martin@gmail.com");
+        User user = userCarlos();
+        User otherUser = User.create("martin", "gonzalez", "martin@gmail.com", "password", null);
 
         assertThat(user.sameId(otherUser.getUid()), is(false));
     }
 
     private void assertInvalidEmail(String email) {
-        Exception thrown = TestUtils.assertThrows(() -> User.create("carlos", "gonzalez", email), RuntimeException.class);
+        Exception thrown = TestUtils.assertThrows(() -> User.create("carlos", "gonzalez", email, "password", null), RuntimeException.class);
 
         assertThat(thrown.getMessage(), is("El email: [" + email + "] no es válido."));
+    }
+
+    private User userCarlos() {
+        return User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
     }
 }

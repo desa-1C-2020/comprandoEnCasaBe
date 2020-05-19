@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.extensions;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTo;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleableItemTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListItemTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
@@ -10,16 +9,11 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingListItem;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ObjectMapper {
-    public User mapToToUser(RegisterUserTO userto) {
-        return User.create(userto.getName(), userto.getSurname(), userto.getEmail());
-    }
-
     public SaleableItem mapToSaleableProduct(SaleableItemTo saleableItemTo) {
         Product product = new Product(saleableItemTo.getName(), saleableItemTo.getBrand(), saleableItemTo.getImageUrl());
         product.setId(saleableItemTo.getProductId());

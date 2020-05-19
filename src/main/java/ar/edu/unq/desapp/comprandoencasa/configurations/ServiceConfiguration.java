@@ -40,7 +40,7 @@ public class ServiceConfiguration {
     public UserRegistrar userRegistrar(UserFinder userFinder, ObjectMapper objectMapper, UserRepository userRepository,
                                        UserBuyerRepository userBuyerRepository,
                                        UserSellerRepository userSellerRepository, ObjectConverter objectConverter) {
-        return new UserRegistrar(userFinder, objectMapper, userRepository, userBuyerRepository, userSellerRepository,
+        return new UserRegistrar(userFinder, userRepository, userBuyerRepository, userSellerRepository,
             objectConverter);
     }
 

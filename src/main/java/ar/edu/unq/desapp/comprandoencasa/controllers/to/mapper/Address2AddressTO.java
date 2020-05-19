@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.controllers.to.mappers;
+package ar.edu.unq.desapp.comprandoencasa.controllers.to.mapper;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.MapperFunction;
