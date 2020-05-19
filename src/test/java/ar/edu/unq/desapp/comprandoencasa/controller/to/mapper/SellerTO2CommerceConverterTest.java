@@ -1,11 +1,10 @@
 package ar.edu.unq.desapp.comprandoencasa.controller.to.mapper;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.PaymentMethodTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
 import com.google.maps.model.LatLng;
 import org.junit.Before;
@@ -44,8 +43,11 @@ public class SellerTO2CommerceConverterTest extends SpringIntegrationTest {
         List<String> daysAndHours = new ArrayList<>();
         daysAndHours.add("an hour");
         sellerTO.setDaysAndHoursOpen(daysAndHours);
-        List<PaymentMethod> paymentMethods = new ArrayList<>();
-        paymentMethods.add(new Efectivo("pesos"));
+        List<PaymentMethodTO> paymentMethods = new ArrayList<>();
+        PaymentMethodTO paymentMethodTO = new PaymentMethodTO();
+        paymentMethodTO.setAccept("Efectivo");
+        paymentMethodTO.setType("Efectivo");
+        paymentMethods.add(paymentMethodTO);
         sellerTO.setPaymentMethods(paymentMethods);
         sellerTO.setUserId("userId");
     }

@@ -1,7 +1,5 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
-
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -16,7 +14,7 @@ public class SellerTO {
     private String commerceBusinessSector;
     @NotNull
     private AddressTO commerceAddress;
-    private List<PaymentMethod> paymentMethods;
+    private List<PaymentMethodTO> paymentMethods;
     private List<String> daysAndHoursOpen;
     private String arrivalRange;
 
@@ -52,11 +50,11 @@ public class SellerTO {
         this.commerceAddress = commerceAddress;
     }
 
-    public List<PaymentMethod> getPaymentMethods() {
+    public List<PaymentMethodTO> getPaymentMethods() {
         return paymentMethods;
     }
 
-    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+    public void setPaymentMethods(List<PaymentMethodTO> paymentMethods) {
         this.paymentMethods = paymentMethods;
     }
 

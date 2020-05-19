@@ -46,7 +46,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Detergente Ala\",\n    \"brand\": \"Ala\",\n    \"stock\": \"10\",\n    \"price\": \"59.90\",\n    \"imageUrl\": \"https://statics.dinoonline.com.ar/imagenes/full_600x600_ma/2790265_1_f.jpg\"\n}",
+					"raw": "{\n\t\"productId\": \"un product id\",\n    \"name\": \"Shampoo\",\n    \"brand\": \"Sedal\",\n    \"stock\": \"7\",\n    \"price\": \"70.65\",\n    \"imageUrl\": \"https://www.sedal.com.ar/content/dam/unilever/sunsilk/argentina/pack_shot/front/hair_care/wash_and_care/sedal_ceramidas_shampoo_340ml/ceramidas-340ml-fop-sh-755200.png\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -54,7 +54,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{host}}/seller/product?userId=8cc90b5e-0980-4a53-886c-eb92b55e22b1",
+					"raw": "http://{{host}}/seller/product?userId=0a6c6159-f518-4325-a946-fdf89ba9f099",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -66,7 +66,7 @@
 					"query": [
 						{
 							"key": "userId",
-							"value": "8cc90b5e-0980-4a53-886c-eb92b55e22b1"
+							"value": "0a6c6159-f518-4325-a946-fdf89ba9f099"
 						}
 					]
 				}
@@ -114,6 +114,125 @@
 					]
 				},
 				"description": "Quita el producto, o sea, todo el stock"
+			},
+			"response": []
+		},
+		{
+			"name": "registrar comprador",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"carlos\",\n    \"surname\": \"perez\",\n    \"email\": \"carlos@carlos.com\",\n    \"password\": \"1234\",\n    \"address\": {\n        \"street\": \"una calle 123\",\n        \"latitud\": 38.988237,\n        \"longitud\": -3894923\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/account/buyer",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"account",
+						"buyer"
+					]
+				},
+				"description": "registrar un comprador"
+			},
+			"response": []
+		},
+		{
+			"name": "crea usuario vendedor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": \"uid\",\n    \"commerceName\": \"wang\",\n    \"commerceBusinessSector\": \"Minimercado\",\n    \"commerceAddress\": {\n        \"street\": \"otra calle 111\",\n        \"latitud\": 38.988237,\n        \"longitud\": -3894923\n    },\n    \"paymentMethods\": [\n        {\n            \"@type\": \"Efectivo\",\n            \"accept\": \"Efectivo\"\n        }\n    ],\n    \"daysAndHoursOpen\": [\n        \"algunos strungs\"\n    ],\n    \"arrivalRange\": \"2km\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/account/seller",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"account",
+						"seller"
+					]
+				},
+				"description": "crea un usuario comprador"
+			},
+			"response": []
+		},
+		{
+			"name": "agregar lista de compra",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": \"b8f9303b-fd6c-4f34-9be0-4d1809f0633c\",\n    \"itemByCommerceTo\": [\n        {\n            \"commerceId\": \"un comercio id\",\n            \"items\": [\n                {\n                    \"productId\": \"producto id\",\n                    \"quantity\": 12,\n                    \"price\": 123\n                }\n            ]\n        }\n    ],\n    \"creationDateTime\": 12122020,\n    \"total\": 123\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/buyer/shoppingList",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"buyer",
+						"shoppingList"
+					]
+				},
+				"description": "agregar lista de compra a un usuario dado"
+			},
+			"response": []
+		},
+		{
+			"name": "obtener listas de compras",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/buyer/shoppingList?userId=b8f9303b-fd6c-4f34-9be0-4d1809f0633c",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"buyer",
+						"shoppingList"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "b8f9303b-fd6c-4f34-9be0-4d1809f0633c"
+						}
+					]
+				},
+				"description": "Obtener todas las listas de compra para el usuario con id"
 			},
 			"response": []
 		}

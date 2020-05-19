@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring", uses = {AddressTO2Address.class})
+@Mapper(componentModel = "spring", uses = {AddressTO2Address.class, PaymentMethodTO2PaymentMethod.class})
 public interface SellerTO2Commerce extends MapperFunction<SellerTO, Commerce> {
     @Mappings({
         @Mapping(source = SellerTO.commerceName_FIELD, target = Commerce.name_FIELD),
