@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.extensions;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTo;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleableItemTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleableItemTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListItemTo;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce;
@@ -14,12 +14,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ObjectMapper {
-    public SaleableItem mapToSaleableProduct(SaleableItemTo saleableItemTo) {
-        Product product = new Product(saleableItemTo.getName(), saleableItemTo.getBrand(), saleableItemTo.getImageUrl());
-        product.setId(saleableItemTo.getProductId());
-        return new SaleableItem(saleableItemTo.getStock(), saleableItemTo.getPrice(), product);
-    }
-
     public List<ShoppingListTo> mapToShoppingListsTo(List<ShoppingList> shoppingLists) {
         return shoppingLists.stream().map(shoppingList -> mapToShoppingListT(shoppingList)).collect(Collectors.toList());
     }
