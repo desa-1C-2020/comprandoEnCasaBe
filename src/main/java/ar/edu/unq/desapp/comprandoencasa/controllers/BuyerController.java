@@ -34,9 +34,9 @@ public class BuyerController {
     private ObjectMapper objectMapper;
 
     @PostMapping(value = "shoppingList")
-    public ResponseEntity addShoppingList(@RequestBody ShoppingListTo shoppingListTo) {
-        shoppingListCreator.createAndSave(shoppingListTo);
-        return (ResponseEntity) ResponseEntity.ok();
+    public String addShoppingList(@RequestBody ShoppingListTo shoppingListTo) {
+        ShoppingList shoppingList = shoppingListCreator.createAndSave(shoppingListTo);
+        return shoppingList.getId();
     }
 
     @GetMapping(value = "shoppingList")
