@@ -38,7 +38,7 @@ public class UserFinderTest {
 
     @Test
     public void whenFindAnExistingSellerUserInRepositoryById_ThenReturnsTheExistentUser() {
-        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com");
+        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
         Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
         UserSeller userSeller = new UserSeller(savedUser, commerce);
         when(userRepository.findBy(anyString())).thenReturn(Optional.of(savedUser));
@@ -61,7 +61,7 @@ public class UserFinderTest {
 
     @Test
     public void whenFindAExistingUserInRepositoryByIdButIsNotRegisterdAsSeller_ThenFailsWithException() {
-        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com");
+        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
         when(userRepository.findBy(anyString())).thenReturn(Optional.of(savedUser));
         when(userSellerRepository.findByUser(savedUser)).thenReturn(Optional.empty());
 

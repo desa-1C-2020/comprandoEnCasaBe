@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ItemByCommerceTo {
     private String commerceId;
-    private List<ShoppingListItemTo> items;
+    private List<ShoppingListItemTO> items;
 
     public String getCommerceId() {
         return commerceId;
@@ -14,11 +14,11 @@ public class ItemByCommerceTo {
         this.commerceId = commerceId;
     }
 
-    public List<ShoppingListItemTo> getItems() {
+    public List<ShoppingListItemTO> getItems() {
         return items;
     }
 
-    public void setItems(List<ShoppingListItemTo> items) {
+    public void setItems(List<ShoppingListItemTO> items) {
         this.items = items;
     }
 }

@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Models the product added createAndSave frontend
  */
-public class SaleableItemTo {
+public class SaleableItemTO {
     @NotNull
     private String productId;
     @NotNull

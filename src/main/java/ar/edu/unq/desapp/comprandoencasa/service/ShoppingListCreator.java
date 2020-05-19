@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTo;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListItemTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListItemTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce;
@@ -53,7 +53,7 @@ public class ShoppingListCreator {
 
     private ItemsByCommerce getItemByCommerce(ItemByCommerceTo itemByCommerceTo) {
         String commerceId = itemByCommerceTo.getCommerceId();
-        List<ShoppingListItemTo> itemsTo = itemByCommerceTo.getItems();
+        List<ShoppingListItemTO> itemsTo = itemByCommerceTo.getItems();
         Commerce commerce = getCommerceOrThrow(commerceId);
         List<ShoppingListItem> shoppingList = itemsTo
             .stream()
@@ -63,7 +63,7 @@ public class ShoppingListCreator {
         return new ItemsByCommerce(commerce, shoppingList);
     }
 
-    private ShoppingListItem getShoppingListItem(ShoppingListItemTo shoppingListItemTo, Commerce commerce) {
+    private ShoppingListItem getShoppingListItem(ShoppingListItemTO shoppingListItemTo, Commerce commerce) {
         String productId = shoppingListItemTo.getProductId();
         if (!commerce.containsProductWithId(productId)) {
             String errorMessage = "No existe el producto con id: [" + productId + "] en el comercio [" +

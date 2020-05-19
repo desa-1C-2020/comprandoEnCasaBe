@@ -7,6 +7,7 @@ import java.util.List;
 import static java.util.UUID.randomUUID;
 
 public class ShoppingList {
+    public static final String itemsByCommerce_FIELD = "itemsByCommerce";
     private User user;
     private List<ItemsByCommerce> itemsByCommerce;
     private Date creationDateTime;
@@ -63,5 +64,9 @@ public class ShoppingList {
 
     public boolean itIsFrom(User user) {
         return user.same(user);
+    }
+
+    public String getUserId() {
+        return user.getUid();
     }
 }

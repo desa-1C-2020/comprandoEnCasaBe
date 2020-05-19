@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.controller.to;
+package ar.edu.unq.desapp.comprandoencasa.controller.to.mapper;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
@@ -25,13 +25,14 @@ public class SellerTO2CommerceConverterTest extends SpringIntegrationTest {
 
     private SellerTO sellerTO;
     private LatLng latLng;
+    private AddressTO addressTO;
 
     @Before
     public void setUp() {
         long lat = 10L;
         long lng = 20L;
         latLng = new LatLng(lat, lng);
-        AddressTO addressTO = new AddressTO();
+        addressTO = new AddressTO();
         addressTO.setStreet("street");
         addressTO.setLatitud(Double.longBitsToDouble(lat));
         addressTO.setLongitud(Double.longBitsToDouble(lng));
@@ -57,5 +58,6 @@ public class SellerTO2CommerceConverterTest extends SpringIntegrationTest {
         assertThat(commerce.getDaysAndHoursOpen(), is(sellerTO.getDaysAndHoursOpen()));
         assertThat(commerce.getAddress().getStreet(), is(sellerTO.getCommerceAddress().getStreet()));
         assertThat(commerce.getBusinessSector(), is(sellerTO.getBusinessSector()));
+        assertThat(commerce.getAddress().getLatitud(), is(addressTO.getLatitud()));
     }
 }

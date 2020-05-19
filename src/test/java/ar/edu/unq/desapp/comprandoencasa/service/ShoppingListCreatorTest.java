@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTo;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListItemTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListItemTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce;
@@ -102,7 +102,7 @@ public class ShoppingListCreatorTest {
 
     @Test
     public void whenWantGetAllListsForUser_thenGetsTheListForTheUser() {
-        User user = User.create("aName", "aSurname", "anEmail@email.com");
+        User user = User.create("aName", "aSurname", "anEmail@email.com", "password", null);
         ShoppingList shoppingList = createShoppingList(user);
         List<ShoppingList> shoppingLists = new ArrayList<>();
         shoppingLists.add(shoppingList);
@@ -134,7 +134,7 @@ public class ShoppingListCreatorTest {
     }
 
     private List<ItemByCommerceTo> getItemByCommerceTos(String commerceId, String productId) {
-        List<ShoppingListItemTo> items = getAShoppingListItemTo(productId);
+        List<ShoppingListItemTO> items = getAShoppingListItemTo(productId);
         List<ItemByCommerceTo> itemsByCommerce = new ArrayList<>();
         ItemByCommerceTo itemByCommerceTo = new ItemByCommerceTo();
         itemByCommerceTo.setCommerceId(commerceId);
@@ -143,14 +143,14 @@ public class ShoppingListCreatorTest {
         return itemsByCommerce;
     }
 
-    private List<ShoppingListItemTo> getAShoppingListItemTo(String unProductID) {
-        List<ShoppingListItemTo> shoppingListItemTos = new ArrayList<>();
-        ShoppingListItemTo itemTo = new ShoppingListItemTo();
+    private List<ShoppingListItemTO> getAShoppingListItemTo(String unProductID) {
+        List<ShoppingListItemTO> shoppingListItemTOS = new ArrayList<>();
+        ShoppingListItemTO itemTo = new ShoppingListItemTO();
         itemTo.setPrice(BigDecimal.ONE);
         itemTo.setProductId(unProductID);
         itemTo.setQuantity(10);
-        shoppingListItemTos.add(itemTo);
-        return shoppingListItemTos;
+        shoppingListItemTOS.add(itemTo);
+        return shoppingListItemTOS;
     }
 
     private void simulatesRightOperationForCommerceAndCommerceRepository() {

@@ -1,43 +1,37 @@
-package ar.edu.unq.desapp.comprandoencasa.controller.to;
+package ar.edu.unq.desapp.comprandoencasa.controller.to.mapper;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
-import com.google.maps.model.LatLng;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class Address2AddressTOConverterTest extends SpringIntegrationTest {
+public class AddressTO2AddressConverterTest extends SpringIntegrationTest {
 
     @Autowired
     private ObjectConverter objectConverter;
 
-    private Address address;
-    private LatLng latLng;
+    private AddressTO addressTO;
 
     @Before
     public void setUp() {
         long lat = 10L;
         long lng = 20L;
-        latLng = new LatLng(lat, lng);
-        address = Address.create("a street", latLng);
+
+        addressTO = new AddressTO();
+        addressTO.setStreet("street");
+        addressTO.setLatitud(Double.longBitsToDouble(lat));
+        addressTO.setLongitud(Double.longBitsToDouble(lng));
     }
 
     @Test
-    public void convertingFromAddress2AddressTOMapsAllFields() {
-        AddressTO addressTO = objectConverter.convertTo(AddressTO.class, address);
+    public void convertingFromAddressTO2AddressMapsAllFields() {
+        Address address = objectConverter.convertTo(Address.class, addressTO);
 
         assertThat(addressTO.getStreet(), is(address.getStreet()));
         assertThat(addressTO.getLatitud().doubleValue(), is(address.getLatLng().lat));

@@ -2,21 +2,21 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
-import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
+import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
+import ar.edu.unq.desapp.meta.SpringIntegrationTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,8 +26,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class UserRegistrarTest {
+public class UserRegistrarTest extends SpringIntegrationTest {
 
     private UserRegistrar userRegistrar;
 
@@ -43,6 +42,9 @@ public class UserRegistrarTest {
     @Mock
     private UserBuyerRepository userBuyerRepository;
 
+    @Autowired
+    private ObjectConverter converter;
+
     @Captor
     private ArgumentCaptor<User> userCaptor;
 
@@ -51,8 +53,8 @@ public class UserRegistrarTest {
 
     @Before
     public void setUp() {
-        ObjectMapper mapper = new ObjectMapper();
-        userRegistrar = new UserRegistrar(userFinder, mapper, userRepository, userBuyerRepository, userSellerRepository);
+        userRegistrar = new UserRegistrar(userFinder, userRepository, userBuyerRepository,
+            userSellerRepository, converter);
     }
 
     @Test

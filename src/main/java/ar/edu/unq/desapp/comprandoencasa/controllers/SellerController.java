@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleableItemTo;
-import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleableItemTO;
+import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
 import ar.edu.unq.desapp.comprandoencasa.service.SaleableItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +23,14 @@ public class SellerController {
     public static final String basePath = "/seller";
 
     @Autowired
-    private ObjectMapper mapper;
-
-    @Autowired
     private SaleableItemService saleableItemService;
 
+    @Autowired
+    private ObjectConverter converter;
+
     @PostMapping(value = "product")
-    public List<SaleableItem> addSaleableProduct(@RequestParam String userId, @RequestBody SaleableItemTo saleableItemTo) {
-        SaleableItem saleableItem = mapper.mapToSaleableProduct(saleableItemTo);
+    public List<SaleableItem> addSaleableProduct(@RequestParam String userId, @RequestBody SaleableItemTO saleableItemTo) {
+        SaleableItem saleableItem = converter.convertTo(SaleableItem.class, saleableItemTo);
         return saleableItemService.addSaleableProductByUserId(saleableItem, userId);
     }
 
@@ -40,8 +40,8 @@ public class SellerController {
     }
 
     @PatchMapping("product")
-    public List<SaleableItem> updateSaleableProduct(@RequestParam String userId, @RequestBody SaleableItemTo saleableItemTo) {
-        SaleableItem saleableItem = mapper.mapToSaleableProduct(saleableItemTo);
+    public List<SaleableItem> updateSaleableProduct(@RequestParam String userId, @RequestBody SaleableItemTO saleableItemTo) {
+        SaleableItem saleableItem = converter.convertTo(SaleableItem.class, saleableItemTo);
         return saleableItemService.updateSaleableProduct(saleableItem, userId);
     }
 }

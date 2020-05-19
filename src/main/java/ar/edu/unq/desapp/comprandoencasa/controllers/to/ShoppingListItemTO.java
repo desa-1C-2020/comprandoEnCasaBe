@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 
 import java.math.BigDecimal;
 
-public class ShoppingListItemTo {
+public class ShoppingListItemTO {
     private String productId;
     private int quantity;
     private BigDecimal price;

@@ -26,6 +26,10 @@ public class ShoppingListItem {
         return product;
     }
 
+    public String getProductId() {
+        return product.getId();
+    }
+
     public void setProduct(Product product) {
         this.product = product;
     }
