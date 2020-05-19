@@ -3,7 +3,6 @@ package ar.edu.unq.desapp.comprandoencasa.controllers.to.mapper;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.MapperFunction;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

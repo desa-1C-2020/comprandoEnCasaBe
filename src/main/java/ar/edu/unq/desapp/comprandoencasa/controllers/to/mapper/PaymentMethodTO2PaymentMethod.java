@@ -13,7 +13,7 @@ public class PaymentMethodTO2PaymentMethod implements MapperFunction<PaymentMeth
         if (paymentMethodTO == null) {
             return null;
         }
-        if (paymentMethodTO.getType() == "Efectivo") {
+        if (paymentMethodTO.getType().equals("Efectivo")) {
             return new Efectivo(paymentMethodTO.getAccept());
         }
         return new Efectivo(paymentMethodTO.getAccept());//Revisar esto
