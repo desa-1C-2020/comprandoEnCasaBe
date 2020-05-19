@@ -19,6 +19,10 @@ public class ItemsByCommerce {
         this.commerce = commerce;
     }
 
+    public String getCommerceId() {
+        return commerce.getId();
+    }
+
     public List<ShoppingListItem> getItems() {
         return items;
     }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ShoppingListTo {
+    public static final String itemByCommerceTo_FIELD = "itemByCommerceTo";
     private String userId;
     private List<ItemByCommerceTo> itemByCommerceTo;
     private Date creationDateTime;

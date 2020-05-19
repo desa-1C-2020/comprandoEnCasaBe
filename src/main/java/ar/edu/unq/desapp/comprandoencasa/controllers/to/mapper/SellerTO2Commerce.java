@@ -9,8 +9,6 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring", uses = {AddressTO2Address.class})
 public interface SellerTO2Commerce extends MapperFunction<SellerTO, Commerce> {
-
-
     @Mappings({
         @Mapping(source = SellerTO.commerceName_FIELD, target = Commerce.name_FIELD),
         @Mapping(source = SellerTO.commerceAddress_FIELD, target = Commerce.address_FIELD),
