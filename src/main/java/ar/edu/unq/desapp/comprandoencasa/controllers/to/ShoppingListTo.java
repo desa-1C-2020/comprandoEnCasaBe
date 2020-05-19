@@ -8,7 +8,6 @@ public class ShoppingListTo {
     public static final String itemByCommerceTo_FIELD = "itemByCommerceTo";
     private String userId;
     private List<ItemByCommerceTo> itemByCommerceTo;
-    private Date creationDateTime;
     private BigDecimal total;
 
     public List<ItemByCommerceTo> getItemByCommerceTo() {
@@ -25,14 +24,6 @@ public class ShoppingListTo {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public Date getCreationDateTime() {
-        return creationDateTime;
-    }
-
-    public void setCreationDateTime(Date creationDateTime) {
-        this.creationDateTime = creationDateTime;
     }
 
     public BigDecimal getTotal() {

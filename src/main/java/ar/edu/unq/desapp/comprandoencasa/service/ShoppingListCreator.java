@@ -36,7 +36,7 @@ public class ShoppingListCreator {
         //Revisar esto pero por ahora si falla uno, fallan todos.
         String userId = shoppingListTo.getUserId();
         User user = userFinder.findUserById(userId);
-        Date creationDateTime = shoppingListTo.getCreationDateTime();
+        Date creationDateTime = new Date();
         BigDecimal total = shoppingListTo.getTotal();
 
         List<ItemByCommerceTo> itemByCommerceTo = shoppingListTo.getItemByCommerceTo();

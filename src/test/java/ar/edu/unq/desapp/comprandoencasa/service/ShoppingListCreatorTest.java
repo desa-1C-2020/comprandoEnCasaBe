@@ -128,7 +128,6 @@ public class ShoppingListCreatorTest {
         ShoppingListTo shoppingListTo = new ShoppingListTo();
         shoppingListTo.setUserId(userId);
         shoppingListTo.setTotal(BigDecimal.TEN);
-        shoppingListTo.setCreationDateTime(new Date());
         shoppingListTo.setItemByCommerceTo(itemsByCommerce);
         return shoppingListTo;
     }
