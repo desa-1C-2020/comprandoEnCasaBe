@@ -9,4 +9,6 @@ public interface ShoppingListRepository {
     void save(ShoppingList shoppingList);
 
     List<ShoppingList> getAllByUser(User user);
+
+    void removeById(String shoppingListToDeleteId);
 }

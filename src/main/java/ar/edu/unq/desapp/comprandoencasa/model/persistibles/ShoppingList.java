@@ -69,4 +69,8 @@ public class ShoppingList {
     public String getUserId() {
         return user.getUid();
     }
+
+    public boolean sameId(String shoppingListToDeleteId) {
+        return id.equals(shoppingListToDeleteId);
+    }
 }
