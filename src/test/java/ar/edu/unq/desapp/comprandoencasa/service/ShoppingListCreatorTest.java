@@ -20,6 +20,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -119,7 +120,7 @@ public class ShoppingListCreatorTest {
 
     private ShoppingList createShoppingList(User user) {
         List<ItemsByCommerce> itemsByCommerces = new ArrayList<>();
-        return new ShoppingList(user, itemsByCommerces, BigDecimal.TEN, new Date());
+        return new ShoppingList(user, itemsByCommerces, BigDecimal.TEN, LocalDateTime.now());
     }
 
     private ShoppingListTo getShoppingListTo(String commerceId, String productId, String userId) {

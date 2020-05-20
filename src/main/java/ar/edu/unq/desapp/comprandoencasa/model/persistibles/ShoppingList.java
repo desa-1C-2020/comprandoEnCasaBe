@@ -1,8 +1,9 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.UUID.randomUUID;
 
@@ -10,11 +11,11 @@ public class ShoppingList {
     public static final String itemsByCommerce_FIELD = "itemsByCommerce";
     private User user;
     private List<ItemsByCommerce> itemsByCommerce;
-    private Date creationDateTime;
+    private LocalDateTime creationDateTime;
     private BigDecimal total;
     private String id;
 
-    public ShoppingList(User user, List<ItemsByCommerce> itemsByCommerce, BigDecimal total, Date creationDateTime) {
+    public ShoppingList(User user, List<ItemsByCommerce> itemsByCommerce, BigDecimal total, LocalDateTime creationDateTime) {
         this.user = user;
         this.itemsByCommerce = itemsByCommerce;
         this.total = total;
@@ -38,11 +39,11 @@ public class ShoppingList {
         this.itemsByCommerce = itemsByCommerce;
     }
 
-    public Date getCreationDateTime() {
+    public LocalDateTime getCreationDateTime() {
         return creationDateTime;
     }
 
-    public void setCreationDateTime(Date creationDateTime) {
+    public void setCreationDateTime(LocalDateTime creationDateTime) {
         this.creationDateTime = creationDateTime;
     }
 

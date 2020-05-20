@@ -14,7 +14,7 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +36,7 @@ public class ShoppingListCreator {
         //Revisar esto pero por ahora si falla uno, fallan todos.
         String userId = shoppingListTo.getUserId();
         User user = userFinder.findUserById(userId);
-        Date creationDateTime = new Date();
+        LocalDateTime creationDateTime = LocalDateTime.now();
         BigDecimal total = shoppingListTo.getTotal();
 
         List<ItemByCommerceTo> itemByCommerceTo = shoppingListTo.getItemByCommerceTo();
