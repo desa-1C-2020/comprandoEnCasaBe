@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
-import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
+import ar.edu.unq.desapp.comprandoencasa.service.GoogleConnector;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;

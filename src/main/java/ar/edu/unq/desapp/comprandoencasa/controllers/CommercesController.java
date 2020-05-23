@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
-import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
+import ar.edu.unq.desapp.comprandoencasa.service.GoogleConnector;
 import ar.edu.unq.desapp.comprandoencasa.model.DistanceCalculator;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
