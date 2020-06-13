@@ -16,7 +16,9 @@ import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class GoogleConnector {
     private GeoApiContext context;
@@ -49,17 +51,27 @@ public class GoogleConnector {
         LatLng[] origins = new LatLng[]{addressOrigin};
         LatLng[] destinations = addressesDestionations.stream().toArray(LatLng[]::new);
 
-        return distanceMatrixCalculationBetween(origins, destinations);
+        Optional<DistanceMatrixRow[]> optional = distanceMatrixCalculationBetween(origins, destinations);
+        return optional.mapOptional(this::sumDistances);
+    }
+
+    private Long sumDistances(DistanceMatrixRow[] distanceMatrixRows) {
+
+        Stream<DistanceMatrixRow> distanceMatrixRowStream = Arrays.stream(distanceMatrixRows);
+        distanceMatrixRowStream.map(distanceMatrixRow -> distanceMatrixRow.elements[0].distance.inMeters);
+        return null;
     }
 
     public Optional<Long> distanceInMetersBetweenTwoLatLng(LatLng latLngFrom, LatLng latLngTo) {
         LatLng[] origins = new LatLng[]{latLngFrom};
         LatLng[] destionations = new LatLng[]{latLngTo};
 
-        return distanceMatrixCalculationBetween(origins, destionations);
+        Optional<DistanceMatrixRow[]> optional = distanceMatrixCalculationBetween(origins, destionations);
+
+        return optional.mapOptional(distanceMatrixRows -> distanceMatrixRows[0].elements[0].distance.inMeters);
     }
 
-    private DistanceMatrixRow distanceMatrixCalculationBetween(LatLng[] origins, LatLng[] destinations) {
+    private Optional<DistanceMatrixRow[]> distanceMatrixCalculationBetween(LatLng[] origins, LatLng[] destinations) {
         DistanceMatrix distanceMatrix;
         try {
             distanceMatrix = DistanceMatrixApi.newRequest(context)
@@ -78,7 +90,7 @@ public class GoogleConnector {
             return Optional.empty();
         }
 
-        return Optional.ofNullable(distanceMatrix.rows[0];
+        return Optional.ofNullable(distanceMatrix.rows);
 //        return Optional.ofNullable(distanceMatrixRow.elements[0].distance.inMeters);
     }
 

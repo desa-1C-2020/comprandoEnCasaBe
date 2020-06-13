@@ -74,4 +74,11 @@ public class ShoppingList {
     public boolean sameId(String shoppingListToDeleteId) {
         return id.equals(shoppingListToDeleteId);
     }
+
+    public List<Commerce> getCommerces() {
+        return itemsByCommerce
+            .stream()
+            .map(ItemsByCommerce::getCommerce)
+            .collect(Collectors.toList());
+    }
 }

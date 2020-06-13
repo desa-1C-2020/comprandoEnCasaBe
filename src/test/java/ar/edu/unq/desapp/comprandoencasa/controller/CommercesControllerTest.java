@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Test que prueba hasta el repositorio. Sería mejor mockear algunas cosas.
  */
-@Ignore
+
 public class CommercesControllerTest extends SpringIntegrationTest {
 
     @Autowired

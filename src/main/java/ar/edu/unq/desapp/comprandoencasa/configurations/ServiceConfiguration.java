@@ -2,12 +2,15 @@ package ar.edu.unq.desapp.comprandoencasa.configurations;
 
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
+import ar.edu.unq.desapp.comprandoencasa.model.DistanceCalculator;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
+import ar.edu.unq.desapp.comprandoencasa.service.DeliveryOptions;
+import ar.edu.unq.desapp.comprandoencasa.service.GoogleConnector;
 import ar.edu.unq.desapp.comprandoencasa.service.SaleableItemService;
 import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreator;
 import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
@@ -54,5 +57,10 @@ public class ServiceConfiguration {
                                                    ShoppingListRepository shoppingListRepository,
                                                    CommerceRepository commerceRepository) {
         return new ShoppingListCreator(userFinder, shoppingListRepository, commerceRepository);
+    }
+
+    @Bean
+    public DeliveryOptions deliveryXX() {
+        return new DeliveryOptions(null);
     }
 }
