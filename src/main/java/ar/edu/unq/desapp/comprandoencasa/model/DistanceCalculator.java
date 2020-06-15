@@ -9,15 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DistanceCalculator {
-    private List<Commerce> commerceList;
     private GoogleConnector googleConnector;
 
-    public DistanceCalculator(List<Commerce> commerceList, GoogleConnector googleConnector) {
-        this.commerceList = commerceList;
+    public DistanceCalculator(GoogleConnector googleConnector) {
         this.googleConnector = googleConnector;
     }
 
-    public List<Commerce> getByLatLngInRange(LatLng latLngFrom, Long maxDistance) {
+    public List<Commerce> getByLatLngInRange(LatLng latLngFrom, Long maxDistance, List<Commerce> commerceList) {
         return commerceList
             .stream()
             .filter(commerce -> isInsideRange(latLngFrom, commerce, maxDistance))
@@ -25,11 +23,15 @@ public class DistanceCalculator {
     }
 
     private boolean isInsideRange(LatLng latLngFrom, Commerce commerce, Long maxDistance) {
-        Optional<Long> distanceInMeters = googleConnector.distanceInMetersBetweenTwoLatLng(latLngFrom, commerce.getLatLong());
+        Optional<Long> distanceInMeters = distanceInMetersBetweenTwoLatLng(latLngFrom, commerce.getLatLong());
         if (distanceInMeters.isAbsent()) {
             return false;
         }
 
         return distanceInMeters.get() <= maxDistance;
+    }
+
+    public Optional<Long> distanceInMetersBetweenTwoLatLng(LatLng latLngFrom, LatLng latLong) {
+        return googleConnector.distanceInMetersBetweenTwoLatLng(latLngFrom, latLong);
     }
 }
