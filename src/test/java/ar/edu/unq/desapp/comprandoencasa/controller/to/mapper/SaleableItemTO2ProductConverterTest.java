@@ -2,7 +2,6 @@ package ar.edu.unq.desapp.comprandoencasa.controller.to.mapper;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleableItemTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
 import org.junit.Before;

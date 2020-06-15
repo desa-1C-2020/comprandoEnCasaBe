@@ -11,6 +11,7 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 import ar.edu.unq.desapp.comprandoencasa.service.SaleableItemService;
 import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreator;
 import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
+import ar.edu.unq.desapp.comprandoencasa.service.UserLoger;
 import ar.edu.unq.desapp.comprandoencasa.service.UserRegistrar;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,8 +28,9 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public UserFinder userFinder(UserRepository userRepository, UserSellerRepository userSellerRepository) {
-        return new UserFinder(userRepository, userSellerRepository);
+    public UserFinder userFinder(UserRepository userRepository, UserSellerRepository userSellerRepository,
+                                 UserBuyerRepository userBuyerRepository) {
+        return new UserFinder(userRepository, userSellerRepository, userBuyerRepository);
     }
 
     @Bean
@@ -37,7 +39,7 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public UserRegistrar userRegistrar(UserFinder userFinder, ObjectMapper objectMapper, UserRepository userRepository,
+    public UserRegistrar userRegistrar(UserFinder userFinder, UserRepository userRepository,
                                        UserBuyerRepository userBuyerRepository,
                                        UserSellerRepository userSellerRepository, ObjectConverter objectConverter) {
         return new UserRegistrar(userFinder, userRepository, userBuyerRepository, userSellerRepository,
@@ -54,5 +56,10 @@ public class ServiceConfiguration {
                                                    ShoppingListRepository shoppingListRepository,
                                                    CommerceRepository commerceRepository) {
         return new ShoppingListCreator(userFinder, shoppingListRepository, commerceRepository);
+    }
+
+    @Bean
+    public UserLoger userLoger(UserFinder userFinder) {
+        return new UserLoger(userFinder);
     }
 }
