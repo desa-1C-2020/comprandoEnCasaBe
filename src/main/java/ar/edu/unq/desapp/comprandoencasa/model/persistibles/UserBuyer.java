@@ -10,4 +10,8 @@ public class UserBuyer {
     public User getUser() {
         return user;
     }
+
+    public boolean sameUser(User user) {
+        return this.user.same(user);
+    }
 }

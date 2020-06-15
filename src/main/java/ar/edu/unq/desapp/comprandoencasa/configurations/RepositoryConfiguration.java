@@ -70,10 +70,11 @@ public class RepositoryConfiguration {
                                       UserBuyerRepository userBuyerRepository, UserSellerRepository userSellerRepository) {
         Commerce otherCommerce = commerceRepository.getAll().get(1);
 
-        User userBuyer = User.create("Marcos", "Alvarenga", "marcos@10pines.com", "password", null);
+        Address casaMarcos = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
+        User userBuyer = User.create("Marcos", "Alvarenga", "marcos@10pines.com", "password", casaMarcos);
         UserBuyer userBuyer1 = new UserBuyer(userBuyer);
 
-        User userSellerWithCommerce = User.create("Daniel", "Alvarenga", "marcos+2@10pines.com", "password", null);
+        User userSellerWithCommerce = User.create("Daniel", "Alvarenga", "marcos+2@10pines.com", "password", casaMarcos);
         UserSeller userSeller = new UserSeller(userSellerWithCommerce, otherCommerce);
 
         String userBuyerId = "ID DEL USUARIO BUYER************ -> " + userBuyer1.getUser().getUid();

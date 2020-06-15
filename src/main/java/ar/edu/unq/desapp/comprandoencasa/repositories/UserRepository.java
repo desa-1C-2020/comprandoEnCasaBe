@@ -6,11 +6,11 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import java.util.List;
 
 public interface UserRepository {
-    Optional<User> findBy(String userId);
-
-    void update(User user);
+    Optional<User> findById(String userId);
 
     void addUser(User user);
 
     List<User> getAll();
+
+    Optional<User> findByEmail(String email);
 }

@@ -34,7 +34,7 @@ public class User {
     }
 
     public boolean same(User userToFind) {
-        return sameEmailRegistered(userToFind);
+        return sameEmailRegistered(userToFind.getEmail());
     }
 
     public String getName() {
@@ -81,11 +81,15 @@ public class User {
         return uid.equals(userId);
     }
 
-    private boolean sameEmailRegistered(User userToFind) {
-        return email == userToFind.getEmail();
+    public boolean sameEmailRegistered(String emailToFind) {
+        return email.equals(emailToFind);
     }
 
     public String getUid() {
         return uid;
+    }
+
+    public boolean samePassword(String password) {
+        return this.password.equals(password);
     }
 }

@@ -16,14 +16,9 @@ public class UserRepositoryMem implements UserRepository {
     }
 
     @Override
-    public Optional<User> findBy(String userId) {
+    public Optional<User> findById(String userId) {
         java.util.Optional<User> first = repo.stream().filter(user -> user.sameId(userId)).findFirst();
         return Optional.create(first);
-    }
-
-    @Override
-    public void update(User user) {
-        repo.contains(user);
     }
 
     @Override
@@ -34,5 +29,10 @@ public class UserRepositoryMem implements UserRepository {
     @Override
     public List<User> getAll() {
         return repo;
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return Optional.create(repo.stream().filter(user -> user.sameEmailRegistered(email)).findFirst());
     }
 }
