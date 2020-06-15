@@ -15,7 +15,10 @@ public class SaleableItemTO2Product implements MapperFunction<SaleableItemTO, Pr
         }
 
         Product product = new Product(saleableItemTO.getName(), saleableItemTO.getBrand(), saleableItemTO.getImageUrl());
-        product.setId(saleableItemTO.getProductId());
+        String saleableItemTOProductId = saleableItemTO.getProductId();
+        if (saleableItemTOProductId != null) {
+            product.setId(saleableItemTOProductId);
+        }
         return product;
     }
 }
