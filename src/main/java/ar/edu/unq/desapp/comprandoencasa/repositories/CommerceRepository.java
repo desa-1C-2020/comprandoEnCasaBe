@@ -10,6 +10,8 @@ public interface CommerceRepository {
 
     Optional<Commerce> getById(String id);
 
-    //Tine que reemplazar el que viene basicamente
+    //Tiene que reemplazar el que viene basicamente
     void update(Commerce commerce);
+
+    void add(Commerce commerce);
 }
