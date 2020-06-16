@@ -1,4 +1,27 @@
 ---------------------------------------------------------------------
+TAG Entrega-2.0
+---------------------------------------------------------------------
+NEW FEATURES:
+* Implementado con controller incluido:
+    - busqueda de producto dentro de un rango
+    - Login de usuarios
+* Se configuró mapStruct para el manejo de TOs.
+* Se quitaron stock y precio del modelo del producto.
+
+NOTES:
+* Implementamos algunas partes del modelo, no está completo por el momento.
+* Falta agregar H2 como herramienta para persistir datos.
+* Aumentó la cobertura de Test, y si bien se configuraro Jacoco, no hay manera de excluir algunas clases que no requieren
+tests como obligatorios y nos bajan la cobertura.
+79% actualmente dentro de model, teniendo en cuenta getters y setters que bajan el ratio de tests.
+* Se agregan datos fake en los repos en memoria
+
+KNOWN ISSUES:
+* Las excepciones de google connector no se manejan correctamente.
+* Quitar referencias al id en mensajes del modelo.
+* Falta manejar errores sobre la creación de lista de compras si por ejemplo, un producto o comercio o usuario no existen.
+
+---------------------------------------------------------------------
 TAG Entrega-1.0
 ---------------------------------------------------------------------
 NEW FEATURES:
