@@ -111,6 +111,26 @@ public class CommerceTest {
         assertThat(foundProduct, is(product));
     }
 
+    @Test
+    public void whenWantCheckIfCOntainsProductByNameWithSameProductName_thenReturnsTrue() {
+        String nameToFind = "same name";
+        Product product = new Product(nameToFind, "una marca", "www.imagenes.com/imagen");
+        Commerce kiosco = createCommerceWith(product);
+
+        boolean containsProductByName = kiosco.containsProductByName(nameToFind);
+
+        assertThat(containsProductByName, is(true));
+    }
+
+    @Test
+    public void whenWantCheckIfCOntainsProductByNameButTheCommerceHasNoProducts_thenReturnsFalse() {
+        String nameToFind = "same name";
+        Commerce kiosco = createCommerceWith(null);
+
+        boolean containsProductByName = kiosco.containsProductByName(nameToFind);
+
+        assertThat(containsProductByName, is(false));
+    }
 
     private Commerce createCommerceWith(Product product) {
         Efectivo efectivo = new Efectivo("pesos");

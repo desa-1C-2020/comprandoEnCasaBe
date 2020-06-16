@@ -69,4 +69,8 @@ public class SaleableItem {
     public String getProductId() {
         return product.getId();
     }
+
+    public boolean containsInProductName(String productToFind) {
+        return product.containsInName(productToFind);
+    }
 }

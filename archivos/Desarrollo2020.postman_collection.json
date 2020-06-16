@@ -12,7 +12,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{host}}/commerces/findInRange?maxDistance=2000&latitud=-34.7040003&longitud=-58.2754042",
+					"raw": "http://{{host}}/commerces/findInRange?maxDistance=20&latitud=-34.7066345&longitud=-58.2819718",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -24,15 +24,15 @@
 					"query": [
 						{
 							"key": "maxDistance",
-							"value": "2000"
+							"value": "20"
 						},
 						{
 							"key": "latitud",
-							"value": "-34.7040003"
+							"value": "-34.7066345"
 						},
 						{
 							"key": "longitud",
-							"value": "-58.2754042"
+							"value": "-58.2819718"
 						}
 					]
 				}
@@ -153,7 +153,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"userId\": \"uid\",\n    \"commerceName\": \"wang\",\n    \"commerceBusinessSector\": \"Minimercado\",\n    \"commerceAddress\": {\n        \"street\": \"otra calle 111\",\n        \"latitud\": 38.988237,\n        \"longitud\": -3894923\n    },\n    \"paymentMethods\": [\n        {\n            \"@type\": \"Efectivo\",\n            \"accept\": \"Efectivo\"\n        }\n    ],\n    \"daysAndHoursOpen\": [\n        \"algunos strungs\"\n    ],\n    \"arrivalRange\": \"2km\"\n}",
+					"raw": "{\n    \"userId\": \"uid\",\n    \"commerceName\": \"wang\",\n    \"commerceBusinessSector\": \"Minimercado\",\n    \"commerceAddress\": {\n        \"street\": \"otra calle 111\",\n        \"latitud\": 38.988237,\n        \"longitud\": -3894923 \n    },\n    \"paymentMethods\": [\n        {\n            \"@type\": \"Efectivo\",\n            \"accept\": \"Efectivo\"\n        }\n    ],\n    \"daysAndHoursOpen\": [\n        \"algunos strungs\"\n    ],\n    \"arrivalRange\": \"2km\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -233,6 +233,68 @@
 					]
 				},
 				"description": "Obtener todas las listas de compra para el usuario con id"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"marcos+2@10pines.com\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/account/login",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"account",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Encontrar productos por nombre",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/products/find?userId=edb1807a-fb70-49ce-83fd-46dd556b881d&productToFind=GaSeOsA&maxDistance=200000",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"products",
+						"find"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "edb1807a-fb70-49ce-83fd-46dd556b881d"
+						},
+						{
+							"key": "productToFind",
+							"value": "GaSeOsA"
+						},
+						{
+							"key": "maxDistance",
+							"value": "200000"
+						}
+					]
+				},
+				"description": "Encuentra los productos por nombre, id de usuario y distancia maxima al usuario pasado por id"
 			},
 			"response": []
 		}

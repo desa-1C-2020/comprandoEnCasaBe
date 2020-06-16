@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import org.apache.commons.lang3.StringUtils;
+
 import static java.util.UUID.randomUUID;
 
 public class Product {
@@ -61,5 +63,11 @@ public class Product {
         this.setBrand(productToUpdate.getBrand());
         this.setImageUrl(productToUpdate.getImageUrl());
         return this;
+    }
+
+    public boolean containsInName(String productToFind) {
+        boolean existsInName = StringUtils.containsIgnoreCase(name, productToFind);
+        boolean existsInBrand = StringUtils.containsIgnoreCase(brand, productToFind);
+        return existsInName || existsInBrand;
     }
 }

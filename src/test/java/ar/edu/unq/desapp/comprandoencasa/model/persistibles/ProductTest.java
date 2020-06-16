@@ -51,4 +51,64 @@ public class ProductTest {
 
         assertThat(isSameProduct, is(false));
     }
+
+    @Test
+    public void whenCheckIfContainsInNameWithSameName_thenReturnsTrue() {
+        String productName = "un nombre";
+        Product product = new Product(productName, "una marca", "una url");
+
+        boolean containsInName = product.containsInName(productName);
+
+        assertThat(containsInName, is(true));
+    }
+
+    @Test
+    public void whenCheckIfContainsInNameWithSubStringOfName_thenReturnsTrue() {
+        String productName = "un nombre";
+        Product product = new Product(productName, "una marca", "una url");
+
+        boolean containsInName = product.containsInName("un");
+
+        assertThat(containsInName, is(true));
+    }
+
+    @Test
+    public void whenCheckIfContainsInNameWithUpperCaseValue_thenReturnsTrue() {
+        String productName = "un nombre";
+        Product product = new Product(productName, "una marca", "una url");
+
+        boolean containsInName = product.containsInName("NOMBRE");
+
+        assertThat(containsInName, is(true));
+    }
+
+    @Test
+    public void whenCheckIfContainsInNameWithEmptyValue_thenReturnsTrue() {
+        String productName = "un nombre";
+        Product product = new Product(productName, "una marca", "una url");
+
+        boolean containsInName = product.containsInName("");
+
+        assertThat(containsInName, is(true));
+    }
+
+    @Test
+    public void whenCheckIfContainsInNameWithValueThatIsNotContained_thenReturnsFalse() {
+        String productName = "un nombre";
+        Product product = new Product(productName, "una marca", "una url");
+
+        boolean containsInName = product.containsInName("Otro");
+
+        assertThat(containsInName, is(false));
+    }
+
+    @Test
+    public void whenCheckIfContainsInNameWithValueContainedInBrand_thenReturnsTrue() {
+        String productName = "un nombre";
+        Product product = new Product(productName, "una marca", "una url");
+
+        boolean containsInName = product.containsInName("marca");
+
+        assertThat(containsInName, is(true));
+    }
 }

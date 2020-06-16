@@ -21,4 +21,10 @@ public class SaleableItemRepositoryMem implements SaleableItemRepository {
     public void delete(SaleableItem removedItem) {
         repo.remove(removedItem);
     }
+
+    //Para fake data en memoria. Borrar cuando integre h2
+    @Override
+    public List<SaleableItem> getBetween(int start, int end) {
+        return repo.subList(start, end);
+    }
 }

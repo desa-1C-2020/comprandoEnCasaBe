@@ -161,4 +161,11 @@ public class Commerce {
         SaleableItem saleableItem = saleableItemOptional.get();
         return saleableItem.getProduct();
     }
+
+    public boolean containsProductByName(String productToFind) {
+        long count = saleableItems
+            .stream()
+            .filter(saleableItem -> saleableItem.containsInProductName(productToFind)).count();
+        return count != 0;
+    }
 }
