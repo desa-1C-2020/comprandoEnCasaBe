@@ -63,8 +63,7 @@ public class ProductFinderTest extends SpringIntegrationTest {
         long distance = 10L;
         String maxDistance = "20";
         String productToFind = "un nombre";
-        Product product = new Product("un nombre", "una marca", "www.imagenes.com/imagen");
-        Commerce commerce = createCommerceWith(product);
+        Commerce commerce = simulatesCommerceWithName("un nombre de comercio");
         List<Commerce> commercesSaved = new ArrayList<>();
         commercesSaved.add(commerce);
         when(commerceFinder.findAllInsideRange(any(), any())).thenReturn(commercesSaved);
@@ -79,14 +78,15 @@ public class ProductFinderTest extends SpringIntegrationTest {
         assertThat(commerceWithFoundProduct.getDistance(), is(distance));
     }
 
-    private Commerce createCommerceWith(Product product) {
+    private Commerce simulatesCommerceWithName(String commerceName) {
+        Product product = new Product("un nombre", "una marca", "www.imagenes.com/imagen");
         Efectivo efectivo = new Efectivo("pesos");
         List<PaymentMethod> paymentMethods = new ArrayList<>();
         paymentMethods.add(efectivo);
         List<String> horarios = new ArrayList<>();
         horarios.add("Lunes a viernes de 10 a 18hs");
         Address kioscoAddress = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
-        Commerce kiosco = new Commerce("un nombre de comercio", "Kiosco", kioscoAddress, paymentMethods, horarios, "3km");
+        Commerce kiosco = new Commerce(commerceName, "Kiosco", kioscoAddress, paymentMethods, horarios, "3km");
         SaleableItem saleableItem = new SaleableItem(1, 50.00, product);
 
         if (product != null) {
