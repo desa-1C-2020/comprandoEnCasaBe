@@ -33,6 +33,13 @@ public class ProductFinder {
         return commercesWithProduct.stream().map(commerce -> mapTocommerceWithFoundProducts(commerce, latLngFrom, productToFind)).collect(Collectors.toList());
     }
 
+    private List<Commerce> commercesWithProduct(String productToFind, List<Commerce> commerceNearUser) {
+        return commerceNearUser
+            .stream()
+            .filter(commerce -> commerce.containsProductByName(productToFind))
+            .collect(Collectors.toList());
+    }
+
     private CommerceWithFoundProducts mapTocommerceWithFoundProducts(Commerce commerce, LatLng latLngFrom, String productToFind) {
         Optional<Long> distanceInMeters = distanceCalculator.distanceInMetersBetweenTwoLatLng(latLngFrom, commerce.getLatLong());
         CommerceWithFoundProducts commerceWithFoundProducts = new CommerceWithFoundProducts();
@@ -58,12 +65,5 @@ public class ProductFinder {
             SaleableItemTO saleableItemTO = converter.convertTo(SaleableItemTO.class, saleableItem);
             saleableItemTOS.add(saleableItemTO);
         }
-    }
-
-    private List<Commerce> commercesWithProduct(String productToFind, List<Commerce> commerceNearUser) {
-        return commerceNearUser
-            .stream()
-            .filter(commerce -> commerce.containsProductByName(productToFind))
-            .collect(Collectors.toList());
     }
 }
