@@ -1,0 +1,12 @@
+spring:
+  application.name: comprandoencasa
+  datasource:
+    url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+    driverClassName: org.h2.Driver
+    username: sa
+    password: sa
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+google.api.key: ${GOOGLE_API_KEY}
