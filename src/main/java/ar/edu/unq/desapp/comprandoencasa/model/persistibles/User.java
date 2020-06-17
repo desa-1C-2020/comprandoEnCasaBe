@@ -3,7 +3,6 @@ package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,13 +15,9 @@ import static java.util.UUID.randomUUID;
 public class User extends PersistibleSupport {
     @Transient
     private String uid;
-    @Column(name = "name")
     private String name;
-    @Column(name = "surname")
     private String surname;
-    @Column(name = "email")
     private String email;
-    @Column(name = "password")
     private String password;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;

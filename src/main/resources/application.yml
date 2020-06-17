@@ -2,7 +2,7 @@ spring:
   application.name: comprandoencasa
   datasource:
     url: ${JDBC_DATABASE_URL}
-    username: sa
+    username: ${DATASOURCE_HEROKU_USERNAME}
     password: ${DATASOURCE_HEROKU_PASSWORD}
   jpa:
     properties.hibernate.jdbc.lob.non_contextual_creation: true
