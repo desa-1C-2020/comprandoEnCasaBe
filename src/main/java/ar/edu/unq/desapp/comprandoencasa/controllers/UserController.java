@@ -3,15 +3,20 @@ package ar.edu.unq.desapp.comprandoencasa.controllers;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.UserLoginTo;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.service.UserLoger;
 import ar.edu.unq.desapp.comprandoencasa.service.UserRegistrar;
+import com.google.maps.model.LatLng;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,11 +34,14 @@ public class UserController {
     @Autowired
     private UserLoger userLoger;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping("buyer")
     public UserBuyer registerBuyer(@RequestBody RegisterUserTO registerUserTO) {
         UserBuyer userBuyer = userRegistrar.registerNewUser(registerUserTO);
         //Aca mappearlo a un to para quitar por ejemplo el password en este caso.
-        logger.info("Se creo el usuario comprador con id: [" + userBuyer.getUserBasic().getUid() + "]");
+        logger.info("Se creo el usuario comprador con id: [" + userBuyer.getUser().getUid() + "]");
         return userBuyer;
     }
 
@@ -41,7 +49,7 @@ public class UserController {
     public UserSeller registerSeller(@RequestBody SellerTO sellerTo) {
         UserSeller userSeller = userRegistrar.registerSellerCommerce(sellerTo);
         //Aca mappearlo a un to para quitar por ejemplo el password en este caso.
-        logger.info("Se creo el usuario vendedor con id: [" + userSeller.getUserBasic().getUid() + "]");
+        logger.info("Se creo el usuario vendedor con id: [" + userSeller.getUser().getUid() + "]");
         return userSeller;
     }
 

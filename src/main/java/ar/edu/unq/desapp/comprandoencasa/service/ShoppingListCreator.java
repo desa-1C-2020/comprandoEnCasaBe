@@ -9,7 +9,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingListItem;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 
@@ -35,7 +35,7 @@ public class ShoppingListCreator {
         //Aca deberia ver de guardar los errores, pero si crear la lista con los que no fallaron.
         //Revisar esto pero por ahora si falla uno, fallan todos.
         String userId = shoppingListTo.getUserId();
-        UserBasic userBasic = userFinder.findUserById(userId);
+        User user = userFinder.findUserById(userId);
         Date creationDateTime = shoppingListTo.getCreationDateTime();
         BigDecimal total = shoppingListTo.getTotal();
 
@@ -46,7 +46,7 @@ public class ShoppingListCreator {
             .map(this::getItemByCommerce)
             .collect(Collectors.toList());
 
-        ShoppingList shoppingList = new ShoppingList(userBasic, itemsByCommerces, total, creationDateTime);
+        ShoppingList shoppingList = new ShoppingList(user, itemsByCommerces, total, creationDateTime);
         shoppingListRepository.save(shoppingList);
         return shoppingList;
     }
@@ -84,7 +84,7 @@ public class ShoppingListCreator {
     }
 
     public List<ShoppingList> recreateAllListsForUserWithId(String userId) {
-        UserBasic userBasic = userFinder.findUserById(userId);
-        return shoppingListRepository.getAllByUser(userBasic);
+        User user = userFinder.findUserById(userId);
+        return shoppingListRepository.getAllByUser(user);
     }
 }

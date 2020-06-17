@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.repositories.memoria;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 
@@ -21,8 +21,8 @@ public class UserSellerRepositoryMem implements UserSellerRepository {
     }
 
     @Override
-    public Optional<UserSeller> findByUser(UserBasic userBasic) {
-        java.util.Optional<UserSeller> first = repo.stream().filter(userSeller -> userSeller.sameUser(userBasic)).findFirst();
+    public Optional<UserSeller> findByUser(User user) {
+        java.util.Optional<UserSeller> first = repo.stream().filter(userSeller -> userSeller.sameUser(user)).findFirst();
         return Optional.create(first);
     }
 

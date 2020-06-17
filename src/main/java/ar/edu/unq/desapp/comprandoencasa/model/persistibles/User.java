@@ -13,7 +13,7 @@ import static java.util.UUID.randomUUID;
 
 @Entity
 @Table(name = "basic_user")
-public class UserBasic extends PersistibleSupport {
+public class User extends PersistibleSupport {
     @Transient
     private String uid;
     @Column(name = "name")
@@ -27,10 +27,10 @@ public class UserBasic extends PersistibleSupport {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
-    public UserBasic() {
+    public User() {
     }
 
-    private UserBasic(String name, String surname, String email, String password, Address address) {
+    private User(String name, String surname, String email, String password, Address address) {
         validateEmailIsWellFormed(email);
         this.uid = randomUUID().toString();
         this.name = name;
@@ -40,8 +40,8 @@ public class UserBasic extends PersistibleSupport {
         this.address = address;
     }
 
-    public static UserBasic create(String name, String surname, String email, String password, Address address) {
-        return new UserBasic(name, surname, email, password, address);
+    public static User create(String name, String surname, String email, String password, Address address) {
+        return new User(name, surname, email, password, address);
     }
 
     public static void validateEmailIsWellFormed(String email) {
@@ -50,8 +50,8 @@ public class UserBasic extends PersistibleSupport {
         }
     }
 
-    public boolean same(UserBasic userBasicToFind) {
-        return sameEmailRegistered(userBasicToFind.getEmail());
+    public boolean same(User userToFind) {
+        return sameEmailRegistered(userToFind.getEmail());
     }
 
     public String getName() {

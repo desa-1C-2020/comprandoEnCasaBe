@@ -1,16 +1,16 @@
 package ar.edu.unq.desapp.comprandoencasa.repositories;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 
 import java.util.List;
 
 public interface UserRepository {
-    Optional<UserBasic> findById(String userId);
+    Optional<User> findById(String userId);
 
-    void addUser(UserBasic userBasic);
+    void addUser(User user);
 
-    List<UserBasic> getAll();
+    List<User> getAll();
 
-    Optional<UserBasic> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

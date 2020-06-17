@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.repositories.impl;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.UserRepositoryJpa;
 
@@ -18,22 +18,22 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<UserBasic> findById(String userId) {
+    public Optional<User> findById(String userId) {
         return null;
     }
 
     @Override
-    public void addUser(UserBasic userBasic) {
-        repoJpa.save(userBasic);
+    public void addUser(User user) {
+        repoJpa.save(user);
     }
 
     @Override
-    public List<UserBasic> getAll() {
+    public List<User> getAll() {
         return repoJpa.findAll();
     }
 
     @Override
-    public Optional<UserBasic> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return null;
     }
 }

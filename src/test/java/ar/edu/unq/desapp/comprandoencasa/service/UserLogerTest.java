@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.UserLoginTo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import org.junit.Before;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserBasicLogerTest {
+public class UserLogerTest {
     private UserLoger userLoger;
 
     @Mock
@@ -47,8 +47,8 @@ public class UserBasicLogerTest {
     @Test
     public void whenWantLogInWithWrongPassword_thenTrowAnError() {
         UserLoginTo userLoginTo = new UserLoginTo("existent@email.com", "WrongPassword");
-        UserBasic existentUserBasic = UserBasic.create("name", "surname", "existent@email.com", "password", null);
-        when(userFinder.findByEmail(userLoginTo.getEmail())).thenReturn(existentUserBasic);
+        User existentUser = User.create("name", "surname", "existent@email.com", "password", null);
+        when(userFinder.findByEmail(userLoginTo.getEmail())).thenReturn(existentUser);
 
         assertThatExceptionOfType(RuntimeException.class)
             .isThrownBy(() -> userLoger.logIn(userLoginTo))
@@ -58,31 +58,31 @@ public class UserBasicLogerTest {
     @Test
     public void whenWantLogInForBuyer_thenReturnTheUserBuyer() {
         UserLoginTo userLoginTo = new UserLoginTo("existent@email.com", "password");
-        UserBasic existentUserBasic = UserBasic.create("name", "surname", "existent@email.com", "password", null);
-        UserBuyer userBuyer = new UserBuyer(existentUserBasic);
-        when(userFinder.findByEmail(userLoginTo.getEmail())).thenReturn(existentUserBasic);
-        when(userFinder.isBuyer(existentUserBasic)).thenReturn(true);
-        when(userFinder.findBuyerByUser(existentUserBasic)).thenReturn(userBuyer);
+        User existentUser = User.create("name", "surname", "existent@email.com", "password", null);
+        UserBuyer userBuyer = new UserBuyer(existentUser);
+        when(userFinder.findByEmail(userLoginTo.getEmail())).thenReturn(existentUser);
+        when(userFinder.isBuyer(existentUser)).thenReturn(true);
+        when(userFinder.findBuyerByUser(existentUser)).thenReturn(userBuyer);
 
         Object userLogged = userLoger.logIn(userLoginTo);
 
         assertThat(userLogged, instanceOf(UserBuyer.class));
-        assertThat(((UserBuyer) userLogged).sameUser(existentUserBasic), is(true));
+        assertThat(((UserBuyer) userLogged).sameUser(existentUser), is(true));
     }
 
     @Test
     public void whenWantLogInForSeller_thenReturnTheUserSeller() {
         UserLoginTo userLoginTo = new UserLoginTo("existent@email.com", "password");
-        UserBasic existentUserBasic = UserBasic.create("name", "surname", "existent@email.com", "password", null);
-        UserSeller userSeller = new UserSeller(existentUserBasic, mock(Commerce.class));
-        when(userFinder.findByEmail(userLoginTo.getEmail())).thenReturn(existentUserBasic);
-        when(userFinder.isSeller(existentUserBasic)).thenReturn(true);
-        when(userFinder.findSellerByUser(existentUserBasic)).thenReturn(userSeller);
+        User existentUser = User.create("name", "surname", "existent@email.com", "password", null);
+        UserSeller userSeller = new UserSeller(existentUser, mock(Commerce.class));
+        when(userFinder.findByEmail(userLoginTo.getEmail())).thenReturn(existentUser);
+        when(userFinder.isSeller(existentUser)).thenReturn(true);
+        when(userFinder.findSellerByUser(existentUser)).thenReturn(userSeller);
 
         Object userLogged = userLoger.logIn(userLoginTo);
 
         assertThat(userLogged, instanceOf(UserSeller.class));
-        assertThat(((UserSeller) userLogged).sameUser(existentUserBasic), is(true));
+        assertThat(((UserSeller) userLogged).sameUser(existentUser), is(true));
         assertThat(((UserSeller) userLogged).getCommerceOrThrow(), notNullValue());
     }
 }

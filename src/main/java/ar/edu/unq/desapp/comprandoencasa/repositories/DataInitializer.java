@@ -6,7 +6,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import com.google.maps.model.LatLng;
@@ -51,20 +51,20 @@ public class DataInitializer
         Commerce otherCommerce = commerceRepository.getAll().get(1);
 
         Address casaMarcos = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
-        UserBasic userBasicBuyer = UserBasic.create("Marcos", "Alvarenga", "marcos@10pines.com", "password", casaMarcos);
-        UserBuyer userBuyer1 = new UserBuyer(userBasicBuyer);
+        User userBuyer = User.create("Marcos", "Alvarenga", "marcos@10pines.com", "password", casaMarcos);
+        UserBuyer userBuyer1 = new UserBuyer(userBuyer);
 
-        UserBasic userBasicSellerWithCommerce = UserBasic.create("Daniel", "Alvarenga", "marcos+2@10pines.com", "password", casaMarcos);
-        UserSeller userSeller = new UserSeller(userBasicSellerWithCommerce, otherCommerce);
+        User userSellerWithCommerce = User.create("Daniel", "Alvarenga", "marcos+2@10pines.com", "password", casaMarcos);
+        UserSeller userSeller = new UserSeller(userSellerWithCommerce, otherCommerce);
 
-        String userBuyerId = "ID DEL USUARIO BUYER************ -> " + userBuyer1.getUserBasic().getUid();
-        String userSellerId = "ID DEL USUARIO SELLER************ -> " + userSeller.getUserBasic().getUid();
+        String userBuyerId = "ID DEL USUARIO BUYER************ -> " + userBuyer1.getUser().getUid();
+        String userSellerId = "ID DEL USUARIO SELLER************ -> " + userSeller.getUser().getUid();
         logger.info(userBuyerId);
         logger.info(userSellerId);
         userBuyerRepository.save(userBuyer1);
         userSellerRepository.save(userSeller);
-        userRepository.addUser(userBasicBuyer);
-        userRepository.addUser(userBasicSellerWithCommerce);
+        userRepository.addUser(userBuyer);
+        userRepository.addUser(userSellerWithCommerce);
     }
 
     private void simulateCommerceFakeData() {

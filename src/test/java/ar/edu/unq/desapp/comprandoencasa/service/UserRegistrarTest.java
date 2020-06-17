@@ -3,7 +3,7 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class UserBasicRegistrarTest extends SpringIntegrationTest {
+public class UserRegistrarTest extends SpringIntegrationTest {
 
     private UserRegistrar userRegistrar;
 
@@ -46,7 +46,7 @@ public class UserBasicRegistrarTest extends SpringIntegrationTest {
     private ObjectConverter converter;
 
     @Captor
-    private ArgumentCaptor<UserBasic> userCaptor;
+    private ArgumentCaptor<User> userCaptor;
 
     @Captor
     private ArgumentCaptor<UserBuyer> userBuyerCaptor;
@@ -71,7 +71,7 @@ public class UserBasicRegistrarTest extends SpringIntegrationTest {
         verify(userRepository, times(1)).addUser(userCaptor.capture());
         verify(userBuyerRepository, times(1)).save(userBuyerCaptor.capture());
         assertThat(userCaptor.getValue().getEmail(), is(registerUserTO.getEmail()));
-        assertThat(userBuyerCaptor.getValue().getUserBasic(), is(userCaptor.getValue()));
+        assertThat(userBuyerCaptor.getValue().getUser(), is(userCaptor.getValue()));
     }
 
     @Test

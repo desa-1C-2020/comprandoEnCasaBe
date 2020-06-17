@@ -4,7 +4,7 @@ import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
@@ -29,34 +29,34 @@ public class UserRegistrar {
     }
 
     public UserBuyer registerNewUser(RegisterUserTO registerUserTO) {
-        UserBasic newUserBasic = converter.convertTo(UserBasic.class, registerUserTO);
-        UserBasic userBasic = registerUser(newUserBasic);
-        return registerBuyer(userBasic);
+        User newUser = converter.convertTo(User.class, registerUserTO);
+        User user = registerUser(newUser);
+        return registerBuyer(user);
     }
 
     public UserSeller registerSellerCommerce(SellerTO sellerTo) {
-        UserBasic userBasic = userFinder.findUserById(sellerTo.getUserId());
-        return registerSeller(userBasic, sellerTo);
+        User user = userFinder.findUserById(sellerTo.getUserId());
+        return registerSeller(user, sellerTo);
     }
 
-    private UserBuyer registerBuyer(UserBasic userBasic) {
-        UserBuyer userBuyer = new UserBuyer(userBasic);
+    private UserBuyer registerBuyer(User user) {
+        UserBuyer userBuyer = new UserBuyer(user);
         buyerRepository.save(userBuyer);
         return userBuyer;
     }
 
-    private UserBasic registerUser(UserBasic userBasic) {
-        if (userFinder.existsUser(userBasic)) {
-            String errorMessage = "No se puede registrar debido a que existe en el sistema un usuario con el email: [" + userBasic.getEmail() + "].";
+    private User registerUser(User user) {
+        if (userFinder.existsUser(user)) {
+            String errorMessage = "No se puede registrar debido a que existe en el sistema un usuario con el email: [" + user.getEmail() + "].";
             throw new RuntimeException(errorMessage);
         }
-        userRepository.addUser(userBasic);
-        return userBasic;
+        userRepository.addUser(user);
+        return user;
     }
 
-    private UserSeller registerSeller(UserBasic userBasic, SellerTO sellerTo) {
+    private UserSeller registerSeller(User user, SellerTO sellerTo) {
         Commerce commerce = converter.convertTo(Commerce.class, sellerTo);
-        UserSeller userSeller = new UserSeller(userBasic, commerce);
+        UserSeller userSeller = new UserSeller(user, commerce);
         userSellerRepository.save(userSeller);
         return userSeller;
     }

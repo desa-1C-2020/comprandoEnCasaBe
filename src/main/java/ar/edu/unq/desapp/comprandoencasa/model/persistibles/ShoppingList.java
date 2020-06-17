@@ -8,26 +8,26 @@ import static java.util.UUID.randomUUID;
 
 public class ShoppingList {
     public static final String itemsByCommerce_FIELD = "itemsByCommerce";
-    private UserBasic userBasic;
+    private User user;
     private List<ItemsByCommerce> itemsByCommerce;
     private Date creationDateTime;
     private BigDecimal total;
     private String id;
 
-    public ShoppingList(UserBasic userBasic, List<ItemsByCommerce> itemsByCommerce, BigDecimal total, Date creationDateTime) {
-        this.userBasic = userBasic;
+    public ShoppingList(User user, List<ItemsByCommerce> itemsByCommerce, BigDecimal total, Date creationDateTime) {
+        this.user = user;
         this.itemsByCommerce = itemsByCommerce;
         this.total = total;
         this.creationDateTime = creationDateTime;
         this.id = randomUUID().toString();
     }
 
-    public UserBasic getUserBasic() {
-        return userBasic;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserBasic(UserBasic userBasic) {
-        this.userBasic = userBasic;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<ItemsByCommerce> getItemsByCommerce() {
@@ -62,12 +62,12 @@ public class ShoppingList {
         this.total = total;
     }
 
-    public boolean itIsFrom(UserBasic userBasic) {
-        return userBasic.same(userBasic);
+    public boolean itIsFrom(User user) {
+        return user.same(user);
     }
 
     public String getUserId() {
-        return userBasic.getUid();
+        return user.getUid();
     }
 
     public boolean sameId(String shoppingListToDeleteId) {

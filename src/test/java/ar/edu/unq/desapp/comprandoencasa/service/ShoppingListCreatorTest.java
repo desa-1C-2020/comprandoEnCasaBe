@@ -8,7 +8,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import org.junit.Before;
@@ -102,24 +102,24 @@ public class ShoppingListCreatorTest {
 
     @Test
     public void whenWantGetAllListsForUser_thenGetsTheListForTheUser() {
-        UserBasic userBasic = UserBasic.create("aName", "aSurname", "anEmail@email.com", "password", null);
-        ShoppingList shoppingList = createShoppingList(userBasic);
+        User user = User.create("aName", "aSurname", "anEmail@email.com", "password", null);
+        ShoppingList shoppingList = createShoppingList(user);
         List<ShoppingList> shoppingLists = new ArrayList<>();
         shoppingLists.add(shoppingList);
-        when(shoppingListRepository.getAllByUser(userBasic)).thenReturn(shoppingLists);
-        when(userFinder.findUserById(anyString())).thenReturn(userBasic);
+        when(shoppingListRepository.getAllByUser(user)).thenReturn(shoppingLists);
+        when(userFinder.findUserById(anyString())).thenReturn(user);
 
-        List<ShoppingList> recoveredShoppingLists = creator.recreateAllListsForUserWithId(userBasic.getUid());
+        List<ShoppingList> recoveredShoppingLists = creator.recreateAllListsForUserWithId(user.getUid());
 
-        verify(shoppingListRepository, times(1)).getAllByUser(userBasic);
+        verify(shoppingListRepository, times(1)).getAllByUser(user);
         verify(userFinder, times(1)).findUserById(anyString());
         assertThat(recoveredShoppingLists.size(), is(1));
         assertThat(recoveredShoppingLists.get(0), is(shoppingList));
     }
 
-    private ShoppingList createShoppingList(UserBasic userBasic) {
+    private ShoppingList createShoppingList(User user) {
         List<ItemsByCommerce> itemsByCommerces = new ArrayList<>();
-        return new ShoppingList(userBasic, itemsByCommerces, BigDecimal.TEN, new Date());
+        return new ShoppingList(user, itemsByCommerces, BigDecimal.TEN, new Date());
     }
 
     private ShoppingListTo getShoppingListTo(String commerceId, String productId, String userId) {
