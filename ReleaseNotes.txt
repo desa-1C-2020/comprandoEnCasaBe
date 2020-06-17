@@ -1,4 +1,18 @@
 ---------------------------------------------------------------------
+TAG Entrega-3.0
+---------------------------------------------------------------------
+NEW FEATURES:
+* Agregada conexión a postgress en heroku de producción y de H2 de manera local.
+
+NOTES:
+* Implementamos algunas partes del modelo, no está completo por el momento.
+
+KNOWN ISSUES:
+* Las excepciones de google connector no se manejan correctamente.
+* Quitar referencias al id en mensajes del modelo.
+* Falta manejar errores sobre la creación de lista de compras si por ejemplo, un producto o comercio o usuario no existen.
+
+---------------------------------------------------------------------
 TAG Entrega-2.0
 ---------------------------------------------------------------------
 NEW FEATURES:
