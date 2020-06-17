@@ -1,19 +1,40 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import static java.util.UUID.randomUUID;
 
-public class User {
+@Entity
+@Table(name = "basic_user")
+public class UserBasic {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Transient
     private String uid;
+    @Column(name = "name")
     private String name;
+    @Column(name = "surname")
     private String surname;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
-    public User() {
+    public UserBasic() {
     }
 
-    private User(String name, String surname, String email, String password, Address address) {
+    private UserBasic(String name, String surname, String email, String password, Address address) {
         validateEmailIsWellFormed(email);
         this.uid = randomUUID().toString();
         this.name = name;
@@ -23,8 +44,8 @@ public class User {
         this.address = address;
     }
 
-    public static User create(String name, String surname, String email, String password, Address address) {
-        return new User(name, surname, email, password, address);
+    public static UserBasic create(String name, String surname, String email, String password, Address address) {
+        return new UserBasic(name, surname, email, password, address);
     }
 
     public static void validateEmailIsWellFormed(String email) {
@@ -33,8 +54,8 @@ public class User {
         }
     }
 
-    public boolean same(User userToFind) {
-        return sameEmailRegistered(userToFind.getEmail());
+    public boolean same(UserBasic userBasicToFind) {
+        return sameEmailRegistered(userBasicToFind.getEmail());
     }
 
     public String getName() {
@@ -91,5 +112,13 @@ public class User {
 
     public boolean samePassword(String password) {
         return this.password.equals(password);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
