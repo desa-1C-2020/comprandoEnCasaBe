@@ -1,17 +1,17 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
 public class UserBuyer {
-    private User user;
+    private UserBasic userBasic;
 
-    public UserBuyer(User user) {
-        this.user = user;
+    public UserBuyer(UserBasic userBasic) {
+        this.userBasic = userBasic;
     }
 
-    public User getUser() {
-        return user;
+    public UserBasic getUserBasic() {
+        return userBasic;
     }
 
-    public boolean sameUser(User user) {
-        return this.user.same(user);
+    public boolean sameUser(UserBasic userBasic) {
+        return this.userBasic.same(userBasic);
     }
 }

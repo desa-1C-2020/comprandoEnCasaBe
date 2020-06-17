@@ -9,15 +9,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserTest {
+public class UserBasicTest {
 
     @Test
     public void whenWantCreateUserWithWellformedMail_thenTheUserIsCreated() {
-        User user = userCarlos();
+        UserBasic userBasic = userCarlos();
 
-        assertThat(user.getName(), is("carlos"));
-        assertThat(user.getSurname(), is("gonzalez"));
-        assertThat(user.getEmail(), is("carlos@gmail.com"));
+        assertThat(userBasic.getName(), is("carlos"));
+        assertThat(userBasic.getSurname(), is("gonzalez"));
+        assertThat(userBasic.getEmail(), is("carlos@gmail.com"));
     }
 
     @Test
@@ -32,26 +32,26 @@ public class UserTest {
 
     @Test
     public void whenCheckIfSameIdThatSameUser_thenReturnTrue() {
-        User user = userCarlos();
+        UserBasic userBasic = userCarlos();
 
-        assertThat(user.sameId(user.getUid()), is(true));
+        assertThat(userBasic.sameId(userBasic.getUid()), is(true));
     }
 
     @Test
     public void whenCheckIfSameIdForDifferentUser_thenReturnFalse() {
-        User user = userCarlos();
-        User otherUser = User.create("martin", "gonzalez", "martin@gmail.com", "password", null);
+        UserBasic userBasic = userCarlos();
+        UserBasic otherUserBasic = UserBasic.create("martin", "gonzalez", "martin@gmail.com", "password", null);
 
-        assertThat(user.sameId(otherUser.getUid()), is(false));
+        assertThat(userBasic.sameId(otherUserBasic.getUid()), is(false));
     }
 
     private void assertInvalidEmail(String email) {
-        Exception thrown = TestUtils.assertThrows(() -> User.create("carlos", "gonzalez", email, "password", null), RuntimeException.class);
+        Exception thrown = TestUtils.assertThrows(() -> UserBasic.create("carlos", "gonzalez", email, "password", null), RuntimeException.class);
 
         assertThat(thrown.getMessage(), is("El email: [" + email + "] no es válido."));
     }
 
-    private User userCarlos() {
-        return User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+    private UserBasic userCarlos() {
+        return UserBasic.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
     }
 }

@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.CommerceWithFoundProducts;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
 import ar.edu.unq.desapp.comprandoencasa.service.ProductFinder;
 import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,8 @@ public class ProductsController {
     public List<CommerceWithFoundProducts> findByName(@RequestParam("maxDistance") String maxDistanceMeters,
                                                       @RequestParam("productToFind") String productToFind,
                                                       @RequestParam("userId") String userId) {
-        User user = userFinder.findUserById(userId);
-        return productFinder.findByNameInRangeForUser(productToFind, maxDistanceMeters, user.getAddress());
+        UserBasic userBasic = userFinder.findUserById(userId);
+        return productFinder.findByNameInRangeForUser(productToFind, maxDistanceMeters, userBasic.getAddress());
     }
 }
 

@@ -9,13 +9,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserSellerTest {
+public class UserBasicSellerTest {
 
     @Test
     public void whenWantCreateUserWithCommerce_thenTheUserIsCreated() {
         Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
-        User user = userCarlos();
-        UserSeller userSeller = new UserSeller(user, commerce);
+        UserBasic userBasic = userCarlos();
+        UserSeller userSeller = new UserSeller(userBasic, commerce);
 
         Commerce userCommerce = userSeller.getCommerceOrThrow();
         assertThat(userCommerce.equals(commerce), is(true));
@@ -23,8 +23,8 @@ public class UserSellerTest {
 
     @Test
     public void whenWantGetCommerceAndNotExist_thenThrowsAnException() {
-        User user = userCarlos();
-        UserSeller userSeller = new UserSeller(user, null);
+        UserBasic userBasic = userCarlos();
+        UserSeller userSeller = new UserSeller(userBasic, null);
 
         assertThatExceptionOfType(RuntimeException.class)
             .isThrownBy(() -> userSeller.getCommerceOrThrow())
@@ -33,26 +33,26 @@ public class UserSellerTest {
 
     @Test
     public void sameUserWithTheUserOfTheUserSeller_returnsTrue() {
-        User user = userCarlos();
-        UserSeller userSeller = new UserSeller(user, null);
+        UserBasic userBasic = userCarlos();
+        UserSeller userSeller = new UserSeller(userBasic, null);
 
-        boolean isSameUser = userSeller.sameUser(user);
+        boolean isSameUser = userSeller.sameUser(userBasic);
 
         assertThat(isSameUser, is(true));
     }
 
     @Test
     public void sameUserWithDifferentUserOfTheUserSeller_returnsFalse() {
-        User user = userCarlos();
-        User otherUser = User.create("martin", "gonzalez", "martins@gmail.com", "password", null);
-        UserSeller userSeller = new UserSeller(user, null);
+        UserBasic userBasic = userCarlos();
+        UserBasic otherUserBasic = UserBasic.create("martin", "gonzalez", "martins@gmail.com", "password", null);
+        UserSeller userSeller = new UserSeller(userBasic, null);
 
-        boolean isSameUser = userSeller.sameUser(otherUser);
+        boolean isSameUser = userSeller.sameUser(otherUserBasic);
 
         assertThat(isSameUser, is(false));
     }
 
-    private User userCarlos() {
-        return User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+    private UserBasic userCarlos() {
+        return UserBasic.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
     }
 }

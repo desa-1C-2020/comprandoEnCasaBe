@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
@@ -23,55 +23,55 @@ public class UserFinder {
     }
 
     public UserSeller findSellerByUserId(String userId) {
-        User user = findUserById(userId);
-        return findSellerByUser(user);
+        UserBasic userBasic = findUserById(userId);
+        return findSellerByUser(userBasic);
     }
 
-    public UserBuyer findBuyerByUser(User user) {
-        Optional<UserBuyer> userBuyer = userBuyerRepository.findByUser(user);
+    public UserBuyer findBuyerByUser(UserBasic userBasic) {
+        Optional<UserBuyer> userBuyer = userBuyerRepository.findByUser(userBasic);
         if (userBuyer.isAbsent()) {
-            throw new RuntimeException("Usuario no registrado como comprador. ID [" + user.getUid() + "]");
+            throw new RuntimeException("Usuario no registrado como comprador. ID [" + userBasic.getUid() + "]");
         }
         return userBuyer.get();
     }
 
-    public UserSeller findSellerByUser(User user) {
-        Optional<UserSeller> userSeller = userSellerRepository.findByUser(user);
+    public UserSeller findSellerByUser(UserBasic userBasic) {
+        Optional<UserSeller> userSeller = userSellerRepository.findByUser(userBasic);
         if (userSeller.isAbsent()) {
-            throw new RuntimeException("Usuario no registrado como vendedor. ID [" + user.getUid() + "]");
+            throw new RuntimeException("Usuario no registrado como vendedor. ID [" + userBasic.getUid() + "]");
         }
         return userSeller.get();
     }
 
-    public User findUserById(String userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
+    public UserBasic findUserById(String userId) {
+        Optional<UserBasic> userOptional = userRepository.findById(userId);
         return getUserOrThrow(userOptional, "No existe el usuario con id: [" + userId + "]");
     }
 
-    public boolean existsUser(User user) {
-        List<User> users = userRepository.getAll();
-        return users.stream().anyMatch(userPersited -> userPersited.same(user));
+    public boolean existsUser(UserBasic userBasic) {
+        List<UserBasic> userBasics = userRepository.getAll();
+        return userBasics.stream().anyMatch(userPersited -> userPersited.same(userBasic));
     }
 
-    private User getUserOrThrow(Optional<User> userOptional, String message) {
+    private UserBasic getUserOrThrow(Optional<UserBasic> userOptional, String message) {
         if (userOptional.isAbsent()) {
             throw new RuntimeException(message);
         }
         return userOptional.get();
     }
 
-    public User findByEmail(String email) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
+    public UserBasic findByEmail(String email) {
+        Optional<UserBasic> userOptional = userRepository.findByEmail(email);
         return getUserOrThrow(userOptional, "Usuario o contraseña incorrectos.");
     }
 
-    public boolean isSeller(User user) {
-        Optional<UserSeller> userSeller = userSellerRepository.findByUser(user);
+    public boolean isSeller(UserBasic userBasic) {
+        Optional<UserSeller> userSeller = userSellerRepository.findByUser(userBasic);
         return !userSeller.isAbsent();
     }
 
-    public boolean isBuyer(User user) {
-        Optional<UserBuyer> userBuyer = userBuyerRepository.findByUser(user);
+    public boolean isBuyer(UserBasic userBasic) {
+        Optional<UserBuyer> userBuyer = userBuyerRepository.findByUser(userBasic);
         return !userBuyer.isAbsent();
     }
 }

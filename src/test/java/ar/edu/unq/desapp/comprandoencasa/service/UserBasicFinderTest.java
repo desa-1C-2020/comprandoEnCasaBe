@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserFinderTest {
+public class UserBasicFinderTest {
 
     private UserFinder userFinder;
 
@@ -43,15 +43,15 @@ public class UserFinderTest {
 
     @Test
     public void whenFindAnExistingSellerUserInRepositoryById_ThenReturnsTheExistentUser() {
-        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+        UserBasic savedUserBasic = UserBasic.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
         Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
-        UserSeller userSeller = new UserSeller(savedUser, commerce);
-        when(userRepository.findById(anyString())).thenReturn(Optional.of(savedUser));
+        UserSeller userSeller = new UserSeller(savedUserBasic, commerce);
+        when(userRepository.findById(anyString())).thenReturn(Optional.of(savedUserBasic));
         when(userSellerRepository.findByUser(any())).thenReturn(Optional.of(userSeller));
 
-        UserSeller foundUser = userFinder.findSellerByUserId(savedUser.getUid());
+        UserSeller foundUser = userFinder.findSellerByUserId(savedUserBasic.getUid());
 
-        assertThat(foundUser.getUser(), is(savedUser));
+        assertThat(foundUser.getUserBasic(), is(savedUserBasic));
     }
 
     @Test
@@ -66,66 +66,66 @@ public class UserFinderTest {
 
     @Test
     public void whenFindAExistingUserInRepositoryByIdButIsNotRegisterdAsSeller_ThenFailsWithException() {
-        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
-        when(userRepository.findById(anyString())).thenReturn(Optional.of(savedUser));
-        when(userSellerRepository.findByUser(savedUser)).thenReturn(Optional.empty());
+        UserBasic savedUserBasic = UserBasic.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+        when(userRepository.findById(anyString())).thenReturn(Optional.of(savedUserBasic));
+        when(userSellerRepository.findByUser(savedUserBasic)).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> userFinder.findSellerByUserId(savedUser.getUid()))
-            .withMessage("Usuario no registrado como vendedor. ID [" + savedUser.getUid() + "]");
+            .isThrownBy(() -> userFinder.findSellerByUserId(savedUserBasic.getUid()))
+            .withMessage("Usuario no registrado como vendedor. ID [" + savedUserBasic.getUid() + "]");
     }
 
     @Test
     public void whenWantKnowIfAnUserSellerIsSeller_thenReturnsTrue() {
-        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+        UserBasic savedUserBasic = UserBasic.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
         Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
-        UserSeller userSeller = new UserSeller(savedUser, commerce);
+        UserSeller userSeller = new UserSeller(savedUserBasic, commerce);
         when(userSellerRepository.findByUser(any())).thenReturn(Optional.of(userSeller));
 
-        boolean isSeller = userFinder.isSeller(savedUser);
+        boolean isSeller = userFinder.isSeller(savedUserBasic);
 
         assertThat(isSeller, is(true));
     }
 
     @Test
     public void whenWantKnowIfAnUserBuyerIsSeller_thenReturnsFalse() {
-        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+        UserBasic savedUserBasic = UserBasic.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
         when(userSellerRepository.findByUser(any())).thenReturn(Optional.empty());
 
-        boolean isSeller = userFinder.isSeller(savedUser);
+        boolean isSeller = userFinder.isSeller(savedUserBasic);
 
         assertThat(isSeller, is(false));
     }
 
     @Test
     public void whenWantKnowIfAnUserBuyerIsBuyer_thenReturnsTrue() {
-        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
-        UserBuyer userBuyer = new UserBuyer(savedUser);
+        UserBasic savedUserBasic = UserBasic.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+        UserBuyer userBuyer = new UserBuyer(savedUserBasic);
         when(userBuyerRepository.findByUser(any())).thenReturn(Optional.of(userBuyer));
 
-        boolean isBuyer = userFinder.isBuyer(savedUser);
+        boolean isBuyer = userFinder.isBuyer(savedUserBasic);
 
         assertThat(isBuyer, is(true));
     }
 
     @Test
     public void whenWantKnowIfAnUserSellerIsBuyer_thenReturnsFalse() {
-        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+        UserBasic savedUserBasic = UserBasic.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
         when(userBuyerRepository.findByUser(any())).thenReturn(Optional.empty());
 
-        boolean isBuyer = userFinder.isBuyer(savedUser);
+        boolean isBuyer = userFinder.isBuyer(savedUserBasic);
 
         assertThat(isBuyer, is(false));
     }
 
     @Test
     public void whenWantFindByExistentEmail_thenReturnsTheExistentUser() {
-        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
-        when(userRepository.findByEmail(savedUser.getEmail())).thenReturn(Optional.of(savedUser));
+        UserBasic savedUserBasic = UserBasic.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+        when(userRepository.findByEmail(savedUserBasic.getEmail())).thenReturn(Optional.of(savedUserBasic));
 
-        User userFounded = userFinder.findByEmail(savedUser.getEmail());
+        UserBasic userBasicFounded = userFinder.findByEmail(savedUserBasic.getEmail());
 
-        assertThat(userFounded, is(savedUser));
+        assertThat(userBasicFounded, is(savedUserBasic));
     }
 
     @Test
@@ -140,23 +140,23 @@ public class UserFinderTest {
 
     @Test
     public void whenFindAnExistingSellerUserInRepositoryByUser_ThenReturnsTheExistentUser() {
-        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+        UserBasic savedUserBasic = UserBasic.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
         Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
-        UserSeller userSeller = new UserSeller(savedUser, commerce);
+        UserSeller userSeller = new UserSeller(savedUserBasic, commerce);
         when(userSellerRepository.findByUser(any())).thenReturn(Optional.of(userSeller));
 
-        UserSeller foundUser = userFinder.findSellerByUser(savedUser);
+        UserSeller foundUser = userFinder.findSellerByUser(savedUserBasic);
 
-        assertThat(foundUser.getUser(), is(savedUser));
+        assertThat(foundUser.getUserBasic(), is(savedUserBasic));
     }
 
     @Test
     public void whenFindAExistingUserInRepositoryByUserButIsNotRegisterdAsSeller_ThenFailsWithException() {
-        User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
-        when(userSellerRepository.findByUser(savedUser)).thenReturn(Optional.empty());
+        UserBasic savedUserBasic = UserBasic.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+        when(userSellerRepository.findByUser(savedUserBasic)).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> userFinder.findSellerByUser(savedUser))
-            .withMessage("Usuario no registrado como vendedor. ID [" + savedUser.getUid() + "]");
+            .isThrownBy(() -> userFinder.findSellerByUser(savedUserBasic))
+            .withMessage("Usuario no registrado como vendedor. ID [" + savedUserBasic.getUid() + "]");
     }
 }

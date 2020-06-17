@@ -3,11 +3,11 @@ package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 import ar.com.kfgodel.nary.api.optionals.Optional;
 
 public class UserSeller {
-    private User user;
+    private UserBasic userBasic;
     private Commerce commerce;
 
-    public UserSeller(User user, Commerce commerce) {
-        this.user = user;
+    public UserSeller(UserBasic userBasic, Commerce commerce) {
+        this.userBasic = userBasic;
         this.commerce = commerce;
     }
 
@@ -19,12 +19,12 @@ public class UserSeller {
         return commerceOptional.get();
     }
 
-    public User getUser() {
-        return user;
+    public UserBasic getUserBasic() {
+        return userBasic;
     }
 
-    public boolean sameUser(User user) {
-        return this.user.same(user);
+    public boolean sameUser(UserBasic userBasic) {
+        return this.userBasic.same(userBasic);
     }
 
     private Optional<Commerce> getCommerce() {
