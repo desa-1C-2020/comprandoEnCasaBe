@@ -1,6 +1,7 @@
-package ar.edu.unq.desapp.comprandoencasa.repositories;
+package ar.edu.unq.desapp.comprandoencasa.repositories.mem;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
 
 import java.util.ArrayList;
 import java.util.List;
