@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.repositories.mem;
+package ar.edu.unq.desapp.comprandoencasa.repositories.memoria;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;

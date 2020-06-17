@@ -1,7 +1,7 @@
-package ar.edu.unq.desapp.comprandoencasa.repositories.mem;
+package ar.edu.unq.desapp.comprandoencasa.repositories.memoria;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBasic;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 
 import java.util.ArrayList;
@@ -23,10 +23,10 @@ public class ShoppingListRepositoryMem implements ShoppingListRepository {
     }
 
     @Override
-    public List<ShoppingList> getAllByUser(User user) {
+    public List<ShoppingList> getAllByUser(UserBasic userBasic) {
         return repo
             .stream()
-            .filter(shoppingList -> shoppingList.itIsFrom(user))
+            .filter(shoppingList -> shoppingList.itIsFrom(userBasic))
             .collect(Collectors.toList());
     }
 

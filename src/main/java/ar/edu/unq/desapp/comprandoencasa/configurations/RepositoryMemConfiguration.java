@@ -1,22 +1,24 @@
 package ar.edu.unq.desapp.comprandoencasa.configurations;
 
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.mem.CommerceRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.mem.SaleableItemRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.mem.ShoppingListRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.mem.UserBuyerRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.mem.UserRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.mem.UserSellerRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.CommerceRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.SaleableItemRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.ShoppingListRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.UserBuyerRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.UserRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.UserSellerRepositoryMem;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
-public class RepositoryConfiguration {
+@Profile("test")
+public class RepositoryMemConfiguration {
     @Bean
     public CommerceRepository commerceRepository() {
         return new CommerceRepositoryMem();
