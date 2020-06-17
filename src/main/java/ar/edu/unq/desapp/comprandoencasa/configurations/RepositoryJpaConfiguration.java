@@ -24,7 +24,6 @@ public class RepositoryJpaConfiguration {
     public UserRepository userRepository(UserRepositoryJpa userRepositoryJpa) {
         return UserRepositoryImpl.create(userRepositoryJpa);
     }
-
     //Reemplazar estos a medida que se hacen los mapeos
     @Bean
     public CommerceRepository commerceRepository() {
