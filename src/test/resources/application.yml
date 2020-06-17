@@ -1,1 +1,4 @@
 google.api.key: un_api_key
+spring:
+  profiles:
+    active: test
