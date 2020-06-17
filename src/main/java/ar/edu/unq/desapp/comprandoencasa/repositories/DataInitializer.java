@@ -43,8 +43,8 @@ public class DataInitializer
      */
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
-        simulateCommerceFakeData();
-        simulateUserFakeData();
+//        simulateCommerceFakeData();
+//        simulateUserFakeData();
     }
 
     private void simulateUserFakeData() {

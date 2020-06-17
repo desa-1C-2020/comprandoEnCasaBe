@@ -1,13 +1,25 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import static java.util.UUID.randomUUID;
 
-public class User {
+@Entity
+@Table(name = "basic_user")
+public class User extends PersistibleSupport {
+    @Transient
     private String uid;
     private String name;
     private String surname;
     private String email;
     private String password;
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
     public User() {

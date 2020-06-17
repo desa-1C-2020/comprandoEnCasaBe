@@ -1,7 +1,8 @@
-package ar.edu.unq.desapp.comprandoencasa.repositories;
+package ar.edu.unq.desapp.comprandoencasa.repositories.memoria;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

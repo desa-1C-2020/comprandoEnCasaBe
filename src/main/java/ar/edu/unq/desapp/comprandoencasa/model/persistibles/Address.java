@@ -1,8 +1,14 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 import com.google.maps.model.LatLng;
 
-public class Address {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "address")
+public class Address extends PersistibleSupport {
     private String street;
     private LatLng latLng;
 

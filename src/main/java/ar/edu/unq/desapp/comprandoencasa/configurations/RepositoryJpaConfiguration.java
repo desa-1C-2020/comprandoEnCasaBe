@@ -1,30 +1,34 @@
 package ar.edu.unq.desapp.comprandoencasa.configurations;
 
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserRepositoryImpl;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.CommerceRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.SaleableItemRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.ShoppingListRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.UserBuyerRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.UserSellerRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.spring.UserRepositoryJpa;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
-public class RepositoryConfiguration {
+@Profile("!test")
+public class RepositoryJpaConfiguration {
+    @Bean
+    public UserRepository userRepository(UserRepositoryJpa userRepositoryJpa) {
+        return UserRepositoryImpl.create(userRepositoryJpa);
+    }
+
+    //Reemplazar estos a medida que se hacen los mapeos
     @Bean
     public CommerceRepository commerceRepository() {
         return new CommerceRepositoryMem();
-    }
-
-    @Bean
-    public UserRepository userRepository() {
-        return new UserRepositoryMem();
     }
 
     @Bean

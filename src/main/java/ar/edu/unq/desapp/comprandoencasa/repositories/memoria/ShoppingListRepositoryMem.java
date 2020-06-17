@@ -1,7 +1,8 @@
-package ar.edu.unq.desapp.comprandoencasa.repositories;
+package ar.edu.unq.desapp.comprandoencasa.repositories.memoria;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 
 import java.util.ArrayList;
 import java.util.List;

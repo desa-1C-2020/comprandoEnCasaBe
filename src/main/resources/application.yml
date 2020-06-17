@@ -1,2 +1,12 @@
-spring.application.name: comprandoencasa
+spring:
+  application.name: comprandoencasa
+  datasource:
+    url: ${JDBC_DATABASE_URL}
+    username: ${DATASOURCE_HEROKU_USERNAME}
+    password: ${DATASOURCE_HEROKU_PASSWORD}
+  jpa:
+    properties.hibernate.jdbc.lob.non_contextual_creation: true
+    hibernate:
+      ddl-auto: update
+
 google.api.key: ${GOOGLE_API_KEY}
