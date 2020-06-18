@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ShoppingListTo {
     public static final String itemByCommerceTo_FIELD = "itemByCommerceTo";
-    private String userId;
+    private Long userId;
     private List<ItemByCommerceTo> itemByCommerceTo;
     private Date creationDateTime;
     private BigDecimal total;
@@ -19,11 +19,11 @@ public class ShoppingListTo {
         this.itemByCommerceTo = itemByCommerceTo;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

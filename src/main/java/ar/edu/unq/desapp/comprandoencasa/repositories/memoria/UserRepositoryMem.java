@@ -17,7 +17,7 @@ public class UserRepositoryMem implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(String userId) {
+    public Optional<User> findById(Long userId) {
         java.util.Optional<User> first = repo.stream().filter(user -> user.sameId(userId)).findFirst();
         return Optional.create(first);
     }

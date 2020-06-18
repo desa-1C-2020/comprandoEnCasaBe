@@ -18,13 +18,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(String userId) {
-        return null;
+    public Optional<User> findById(Long userId) {
+        return Optional.create(repoJpa.findById(userId));
     }
 
     @Override
     public void addUser(User user) {
-        repoJpa.save(user);
+        repoJpa.saveAndFlush(user);
     }
 
     @Override
@@ -34,6 +34,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return null;
+        return Optional.of(repoJpa.findByEmail(email));
     }
 }

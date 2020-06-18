@@ -6,7 +6,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import java.util.List;
 
 public interface UserRepository {
-    Optional<User> findById(String userId);
+    Optional<User> findById(Long userId);
 
     void addUser(User user);
 

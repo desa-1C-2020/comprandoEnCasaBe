@@ -34,15 +34,14 @@ public class UserTest {
     public void whenCheckIfSameIdThatSameUser_thenReturnTrue() {
         User user = userCarlos();
 
-        assertThat(user.sameId(user.getUid()), is(true));
+        assertThat(user.sameId(user.getId()), is(true));
     }
 
     @Test
     public void whenCheckIfSameIdForDifferentUser_thenReturnFalse() {
         User user = userCarlos();
-        User otherUser = User.create("martin", "gonzalez", "martin@gmail.com", "password", null);
 
-        assertThat(user.sameId(otherUser.getUid()), is(false));
+        assertThat(user.sameId(Long.MIN_VALUE), is(false));
     }
 
     private void assertInvalidEmail(String email) {
@@ -52,6 +51,8 @@ public class UserTest {
     }
 
     private User userCarlos() {
-        return User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+        User user = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+        user.setId(Long.MAX_VALUE);
+        return user;
     }
 }

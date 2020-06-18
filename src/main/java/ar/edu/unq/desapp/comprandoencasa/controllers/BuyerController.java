@@ -40,7 +40,7 @@ public class BuyerController {
     }
 
     @GetMapping(value = "shoppingList")
-    public List<ShoppingListTo> getShoppingList(@RequestParam String userId) {
+    public List<ShoppingListTo> getShoppingList(@RequestParam Long userId) {
         List<ShoppingList> shoppingList = shoppingListCreator.recreateAllListsForUserWithId(userId);
         return objectMapper.mapToShoppingListsTo(shoppingList);
     }

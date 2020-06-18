@@ -34,7 +34,7 @@ public class ShoppingListCreator {
     public ShoppingList createAndSave(ShoppingListTo shoppingListTo) {
         //Aca deberia ver de guardar los errores, pero si crear la lista con los que no fallaron.
         //Revisar esto pero por ahora si falla uno, fallan todos.
-        String userId = shoppingListTo.getUserId();
+        Long userId = shoppingListTo.getUserId();
         User user = userFinder.findUserById(userId);
         Date creationDateTime = shoppingListTo.getCreationDateTime();
         BigDecimal total = shoppingListTo.getTotal();
@@ -83,7 +83,7 @@ public class ShoppingListCreator {
         return commerceOptional.get();
     }
 
-    public List<ShoppingList> recreateAllListsForUserWithId(String userId) {
+    public List<ShoppingList> recreateAllListsForUserWithId(Long userId) {
         User user = userFinder.findUserById(userId);
         return shoppingListRepository.getAllByUser(user);
     }
