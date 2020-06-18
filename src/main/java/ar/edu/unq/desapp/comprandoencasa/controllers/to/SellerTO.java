@@ -7,7 +7,7 @@ public class SellerTO {
     public static final String commerceName_FIELD = "commerceName";
     public static final String commerceAddress_FIELD = "commerceAddress";
     @NotNull
-    private String userId;
+    private Long userId;
     @NotNull
     private String commerceName;
     @NotNull
@@ -18,11 +18,11 @@ public class SellerTO {
     private List<String> daysAndHoursOpen;
     private String arrivalRange;
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

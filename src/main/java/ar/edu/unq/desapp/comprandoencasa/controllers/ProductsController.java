@@ -26,7 +26,7 @@ public class ProductsController {
     @GetMapping("find")
     public List<CommerceWithFoundProducts> findByName(@RequestParam("maxDistance") String maxDistanceMeters,
                                                       @RequestParam("productToFind") String productToFind,
-                                                      @RequestParam("userId") String userId) {
+                                                      @RequestParam("userId") Long userId) {
         User user = userFinder.findUserById(userId);
         return productFinder.findByNameInRangeForUser(productToFind, maxDistanceMeters, user.getAddress());
     }

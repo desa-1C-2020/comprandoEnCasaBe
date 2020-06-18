@@ -18,8 +18,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(String userId) {
-        return null;
+    public Optional<User> findById(Long userId) {
+        return Optional.create(repoJpa.findById(userId));
     }
 
     @Override

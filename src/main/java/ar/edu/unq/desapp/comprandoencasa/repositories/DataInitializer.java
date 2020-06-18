@@ -57,8 +57,8 @@ public class DataInitializer
         User userSellerWithCommerce = User.create("Daniel", "Alvarenga", "marcos+2@10pines.com", "password", casaMarcos);
         UserSeller userSeller = new UserSeller(userSellerWithCommerce, otherCommerce);
 
-        String userBuyerId = "ID DEL USUARIO BUYER************ -> " + userBuyer1.getUser().getUid();
-        String userSellerId = "ID DEL USUARIO SELLER************ -> " + userSeller.getUser().getUid();
+        String userBuyerId = "ID DEL USUARIO BUYER************ -> " + userBuyer1.getUser().getId();
+        String userSellerId = "ID DEL USUARIO SELLER************ -> " + userSeller.getUser().getId();
         logger.info(userBuyerId);
         logger.info(userSellerId);
         userBuyerRepository.save(userBuyer1);

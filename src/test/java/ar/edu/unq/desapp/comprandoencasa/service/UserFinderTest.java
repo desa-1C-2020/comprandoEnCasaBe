@@ -19,6 +19,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOf
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -44,20 +45,21 @@ public class UserFinderTest {
     @Test
     public void whenFindAnExistingSellerUserInRepositoryById_ThenReturnsTheExistentUser() {
         User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
+        savedUser.setId(Long.MAX_VALUE);
         Commerce commerce = new Commerce("un nombre de comercio", null, null, null, null, null);
         UserSeller userSeller = new UserSeller(savedUser, commerce);
-        when(userRepository.findById(anyString())).thenReturn(Optional.of(savedUser));
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(savedUser));
         when(userSellerRepository.findByUser(any())).thenReturn(Optional.of(userSeller));
 
-        UserSeller foundUser = userFinder.findSellerByUserId(savedUser.getUid());
+        UserSeller foundUser = userFinder.findSellerByUserId(Long.MAX_VALUE);
 
         assertThat(foundUser.getUser(), is(savedUser));
     }
 
     @Test
     public void whenFindANonExistingUserInRepositoryById_ThenFailsWithException() {
-        String userUid = randomUUID().toString();
-        when(userRepository.findById(anyString())).thenReturn(Optional.empty());
+        Long userUid = Long.MAX_VALUE;
+        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(RuntimeException.class)
             .isThrownBy(() -> userFinder.findSellerByUserId(userUid))
@@ -67,12 +69,13 @@ public class UserFinderTest {
     @Test
     public void whenFindAExistingUserInRepositoryByIdButIsNotRegisterdAsSeller_ThenFailsWithException() {
         User savedUser = User.create("carlos", "gonzalez", "carlos@gmail.com", "password", null);
-        when(userRepository.findById(anyString())).thenReturn(Optional.of(savedUser));
+        savedUser.setId(Long.MAX_VALUE);
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(savedUser));
         when(userSellerRepository.findByUser(savedUser)).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> userFinder.findSellerByUserId(savedUser.getUid()))
-            .withMessage("Usuario no registrado como vendedor. ID [" + savedUser.getUid() + "]");
+            .isThrownBy(() -> userFinder.findSellerByUserId(Long.MAX_VALUE))
+            .withMessage("Usuario no registrado como vendedor. ID [" + savedUser.getId() + "]");
     }
 
     @Test
@@ -157,6 +160,6 @@ public class UserFinderTest {
 
         assertThatExceptionOfType(RuntimeException.class)
             .isThrownBy(() -> userFinder.findSellerByUser(savedUser))
-            .withMessage("Usuario no registrado como vendedor. ID [" + savedUser.getUid() + "]");
+            .withMessage("Usuario no registrado como vendedor. ID [" + savedUser.getId() + "]");
     }
 }

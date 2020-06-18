@@ -22,7 +22,7 @@ public class UserFinder {
         this.userBuyerRepository = userBuyerRepository;
     }
 
-    public UserSeller findSellerByUserId(String userId) {
+    public UserSeller findSellerByUserId(Long userId) {
         User user = findUserById(userId);
         return findSellerByUser(user);
     }
@@ -30,7 +30,7 @@ public class UserFinder {
     public UserBuyer findBuyerByUser(User user) {
         Optional<UserBuyer> userBuyer = userBuyerRepository.findByUser(user);
         if (userBuyer.isAbsent()) {
-            throw new RuntimeException("Usuario no registrado como comprador. ID [" + user.getUid() + "]");
+            throw new RuntimeException("Usuario no registrado como comprador. ID [" + user.getId() + "]");
         }
         return userBuyer.get();
     }
@@ -38,12 +38,12 @@ public class UserFinder {
     public UserSeller findSellerByUser(User user) {
         Optional<UserSeller> userSeller = userSellerRepository.findByUser(user);
         if (userSeller.isAbsent()) {
-            throw new RuntimeException("Usuario no registrado como vendedor. ID [" + user.getUid() + "]");
+            throw new RuntimeException("Usuario no registrado como vendedor. ID [" + user.getId() + "]");
         }
         return userSeller.get();
     }
 
-    public User findUserById(String userId) {
+    public User findUserById(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         return getUserOrThrow(userOptional, "No existe el usuario con id: [" + userId + "]");
     }

@@ -66,8 +66,8 @@ public class ShoppingList {
         return user.same(user);
     }
 
-    public String getUserId() {
-        return user.getUid();
+    public Long getUserId() {
+        return user.getId();
     }
 
     public boolean sameId(String shoppingListToDeleteId) {

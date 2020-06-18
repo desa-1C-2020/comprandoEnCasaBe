@@ -6,15 +6,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import static java.util.UUID.randomUUID;
 
 @Entity
 @Table(name = "basic_user")
 public class User extends PersistibleSupport {
-    @Transient
-    private String uid;
     private String name;
     private String surname;
     private String email;
@@ -27,7 +22,6 @@ public class User extends PersistibleSupport {
 
     private User(String name, String surname, String email, String password, Address address) {
         validateEmailIsWellFormed(email);
-        this.uid = randomUUID().toString();
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -89,17 +83,14 @@ public class User extends PersistibleSupport {
         this.address = address;
     }
 
-    public boolean sameId(String userId) {
-        return uid.equals(userId);
+    public boolean sameId(Long userId) {
+        return getId().equals(userId);
     }
 
     public boolean sameEmailRegistered(String emailToFind) {
         return email.equals(emailToFind);
     }
 
-    public String getUid() {
-        return uid;
-    }
 
     public boolean samePassword(String password) {
         return this.password.equals(password);

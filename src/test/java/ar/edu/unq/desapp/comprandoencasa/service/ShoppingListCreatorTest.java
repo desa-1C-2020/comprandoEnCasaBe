@@ -28,6 +28,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOf
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -59,7 +60,7 @@ public class ShoppingListCreatorTest {
 
     @Test
     public void whenCreatesAShoppingListWithValidValus_thenSavesTheCreatedShoppingList() {
-        ShoppingListTo shoppingListTo = getShoppingListTo("unComercio", "unProductId", "unId");
+        ShoppingListTo shoppingListTo = getShoppingListTo("unComercio", "unProductId", Long.MAX_VALUE);
         simulatesRightOperationForCommerceAndCommerceRepository();
 
         ShoppingList shoppingList = creator.createAndSave(shoppingListTo);
@@ -72,7 +73,7 @@ public class ShoppingListCreatorTest {
     @Test
     public void whenWantCreateAShoppingListWithACommerceThatNotExists_thenFailsWithExceptionAndNotSaveTheShoppingList() {
         String commerceId = "unComercio";
-        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, "unProductId", "unId");
+        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, "unProductId", Long.MAX_VALUE);
         when(commerceRepository.getById(anyString())).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(RuntimeException.class)
@@ -87,7 +88,7 @@ public class ShoppingListCreatorTest {
     public void whenWantCreateAShoppingListWithAProductThatNotExistsInCommerce_thenFailsWithExceptionAndNotSaveTheShoppingList() {
         String commerceId = "unComercio";
         String productId = "unProductId";
-        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, productId, "unId");
+        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, productId, Long.MAX_VALUE);
         Commerce anyCommerce = new Commerce("name", null, null, null, null, null);
         when(commerceRepository.getById(anyString())).thenReturn(Optional.of(anyCommerce));
 
@@ -103,16 +104,17 @@ public class ShoppingListCreatorTest {
     @Test
     public void whenWantGetAllListsForUser_thenGetsTheListForTheUser() {
         User user = User.create("aName", "aSurname", "anEmail@email.com", "password", null);
+        user.setId(Long.MAX_VALUE);
         ShoppingList shoppingList = createShoppingList(user);
         List<ShoppingList> shoppingLists = new ArrayList<>();
         shoppingLists.add(shoppingList);
         when(shoppingListRepository.getAllByUser(user)).thenReturn(shoppingLists);
-        when(userFinder.findUserById(anyString())).thenReturn(user);
+        when(userFinder.findUserById(anyLong())).thenReturn(user);
 
-        List<ShoppingList> recoveredShoppingLists = creator.recreateAllListsForUserWithId(user.getUid());
+        List<ShoppingList> recoveredShoppingLists = creator.recreateAllListsForUserWithId(user.getId());
 
         verify(shoppingListRepository, times(1)).getAllByUser(user);
-        verify(userFinder, times(1)).findUserById(anyString());
+        verify(userFinder, times(1)).findUserById(anyLong());
         assertThat(recoveredShoppingLists.size(), is(1));
         assertThat(recoveredShoppingLists.get(0), is(shoppingList));
     }
@@ -122,7 +124,7 @@ public class ShoppingListCreatorTest {
         return new ShoppingList(user, itemsByCommerces, BigDecimal.TEN, new Date());
     }
 
-    private ShoppingListTo getShoppingListTo(String commerceId, String productId, String userId) {
+    private ShoppingListTo getShoppingListTo(String commerceId, String productId, Long userId) {
         List<ItemByCommerceTo> itemsByCommerce = getItemByCommerceTos(commerceId, productId);
 
         ShoppingListTo shoppingListTo = new ShoppingListTo();

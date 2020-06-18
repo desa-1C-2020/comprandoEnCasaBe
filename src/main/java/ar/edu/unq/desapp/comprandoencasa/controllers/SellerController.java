@@ -29,18 +29,18 @@ public class SellerController {
     private ObjectConverter converter;
 
     @PostMapping(value = "product")
-    public List<SaleableItem> addSaleableProduct(@RequestParam String userId, @RequestBody SaleableItemTO saleableItemTo) {
+    public List<SaleableItem> addSaleableProduct(@RequestParam Long userId, @RequestBody SaleableItemTO saleableItemTo) {
         SaleableItem saleableItem = converter.convertTo(SaleableItem.class, saleableItemTo);
         return saleableItemService.addSaleableProductByUserId(saleableItem, userId);
     }
 
     @DeleteMapping("product")
-    public List<SaleableItem> removeSaleableProduct(@RequestParam String userId, @RequestParam String productId) {
+    public List<SaleableItem> removeSaleableProduct(@RequestParam Long userId, @RequestParam String productId) {
         return saleableItemService.removeSaleableProductForUser(productId, userId);
     }
 
     @PatchMapping("product")
-    public List<SaleableItem> updateSaleableProduct(@RequestParam String userId, @RequestBody SaleableItemTO saleableItemTo) {
+    public List<SaleableItem> updateSaleableProduct(@RequestParam Long userId, @RequestBody SaleableItemTO saleableItemTo) {
         SaleableItem saleableItem = converter.convertTo(SaleableItem.class, saleableItemTo);
         return saleableItemService.updateSaleableProduct(saleableItem, userId);
     }
