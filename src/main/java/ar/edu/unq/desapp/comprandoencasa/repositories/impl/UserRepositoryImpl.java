@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void addUser(User user) {
-        repoJpa.save(user);
+        repoJpa.saveAndFlush(user);
     }
 
     @Override
@@ -34,6 +34,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return Optional.create(repoJpa.findByEmail(email));
+        return Optional.of(repoJpa.findByEmail(email));
     }
 }
