@@ -28,12 +28,12 @@ public class UserRepositoryMem implements UserRepository {
     }
 
     @Override
-    public List<User> getAll() {
-        return repo;
+    public Optional<User> findByEmail(String email) {
+        return Optional.create(repo.stream().filter(user -> user.sameEmailRegistered(email)).findFirst());
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return Optional.create(repo.stream().filter(user -> user.sameEmailRegistered(email)).findFirst());
+    public Boolean existsByEmail(String email) {
+        return repo.stream().anyMatch(user -> user.sameEmailRegistered(email));
     }
 }

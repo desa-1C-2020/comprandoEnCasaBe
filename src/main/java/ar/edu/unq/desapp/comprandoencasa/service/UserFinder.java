@@ -47,8 +47,7 @@ public class UserFinder {
     }
 
     public boolean existsUser(User user) {
-        Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
-        return userOptional.isPresent();
+        return userRepository.existsByEmail(user.getEmail());
     }
 
     private User getUserOrThrow(Optional<User> userOptional, String message) {
