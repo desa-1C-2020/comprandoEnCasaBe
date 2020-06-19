@@ -8,5 +8,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  h2:
+    console:
+      enabled: true
 
 google.api.key: ${GOOGLE_API_KEY}
