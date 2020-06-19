@@ -12,6 +12,8 @@ public class UserBuyer extends PersistibleSupport {
     @OneToOne
     private User user;
 
+    public UserBuyer() {}
+
     public UserBuyer(User user) {
         this.user = user;
     }

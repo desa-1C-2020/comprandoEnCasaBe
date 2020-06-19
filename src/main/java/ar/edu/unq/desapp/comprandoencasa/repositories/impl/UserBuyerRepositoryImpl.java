@@ -23,6 +23,6 @@ public class UserBuyerRepositoryImpl implements UserBuyerRepository {
 
     @Override
     public Optional<UserBuyer> findByUser(User user) {
-        return null;
+        return Optional.ofNullable(repoJpa.findByUser(user));
     }
 }
