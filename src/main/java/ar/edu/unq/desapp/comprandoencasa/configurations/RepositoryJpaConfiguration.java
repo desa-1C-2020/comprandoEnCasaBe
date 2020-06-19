@@ -6,12 +6,13 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserBuyerRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.CommerceRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.SaleableItemRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.ShoppingListRepositoryMem;
-import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.UserBuyerRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.UserSellerRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.spring.UserBuyerRepositoryJpa;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.UserRepositoryJpa;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,22 @@ public class RepositoryJpaConfiguration {
         return UserRepositoryImpl.create(userRepositoryJpa);
     }
 
+    @Bean
+    public UserBuyerRepository userBuyerRepository(UserBuyerRepositoryJpa userBuyerRepositoryJpa) {
+        return UserBuyerRepositoryImpl.create(userBuyerRepositoryJpa);
+    }
+
+//    @Bean
+//    public UserSellerRepository userSellerRepository(UserSellerRepositoryJpa userSellerRepositoryJpa) {
+//        return UserSellerRepositoryImpl.create(userSellerRepositoryJpa);
+//    }
+
     //Reemplazar estos a medida que se hacen los mapeos
+    @Bean
+    public UserSellerRepository userSellerRepository() {
+        return new UserSellerRepositoryMem();
+    }
+
     @Bean
     public CommerceRepository commerceRepository() {
         return new CommerceRepositoryMem();
@@ -34,16 +50,6 @@ public class RepositoryJpaConfiguration {
     @Bean
     public ShoppingListRepository shoppingListRepository() {
         return new ShoppingListRepositoryMem();
-    }
-
-    @Bean
-    public UserBuyerRepository userBuyerRepository() {
-        return new UserBuyerRepositoryMem();
-    }
-
-    @Bean
-    public UserSellerRepository userSellerRepository() {
-        return new UserSellerRepositoryMem();
     }
 
     @Bean
