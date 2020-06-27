@@ -3,14 +3,14 @@ package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 import java.util.List;
 
 public class ItemByCommerceTo {
-    private String commerceId;
+    private Long commerceId;
     private List<ShoppingListItemTO> items;
 
-    public String getCommerceId() {
+    public Long getCommerceId() {
         return commerceId;
     }
 
-    public void setCommerceId(String commerceId) {
+    public void setCommerceId(Long commerceId) {
         this.commerceId = commerceId;
     }
 

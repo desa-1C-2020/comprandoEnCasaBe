@@ -50,8 +50,8 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    public boolean sameId(String productId) {
-        return id.equals(productId);
+    public boolean sameId(Long productId) {
+        return getId().equals(productId);
     }
 
     public boolean sameProduct(Product product) {

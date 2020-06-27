@@ -30,7 +30,7 @@ public class ShoppingListItem {
         this.product = product;
     }
 
-    public String getProductId() {
+    public Long getProductId() {
         return product.getId();
     }
 

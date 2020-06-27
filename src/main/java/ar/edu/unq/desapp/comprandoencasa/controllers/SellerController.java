@@ -35,7 +35,7 @@ public class SellerController {
     }
 
     @DeleteMapping("product")
-    public List<SaleableItem> removeSaleableProduct(@RequestParam Long userId, @RequestParam String productId) {
+    public List<SaleableItem> removeSaleableProduct(@RequestParam Long userId, @RequestParam Long productId) {
         return saleableItemService.removeSaleableProductForUser(productId, userId);
     }
 

@@ -31,7 +31,7 @@ public class ObjectMapper {
     }
 
     private ItemByCommerceTo mapToItemByCommerceTo(ItemsByCommerce itemByCommerce) {
-        String commerceId = itemByCommerce.getCommerce().getId();
+        Long commerceId = itemByCommerce.getCommerce().getId();
         List<ShoppingListItemTO> shoppingListItemTOS = itemByCommerce
             .getItems()
             .stream()

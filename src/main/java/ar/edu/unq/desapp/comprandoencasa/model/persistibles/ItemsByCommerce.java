@@ -19,7 +19,7 @@ public class ItemsByCommerce {
         this.commerce = commerce;
     }
 
-    public String getCommerceId() {
+    public Long getCommerceId() {
         return commerce.getId();
     }
 

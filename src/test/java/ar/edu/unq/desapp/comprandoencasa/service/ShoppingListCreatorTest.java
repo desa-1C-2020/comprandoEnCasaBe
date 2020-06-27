@@ -60,7 +60,7 @@ public class ShoppingListCreatorTest {
 
     @Test
     public void whenCreatesAShoppingListWithValidValus_thenSavesTheCreatedShoppingList() {
-        ShoppingListTo shoppingListTo = getShoppingListTo("unComercio", "unProductId", Long.MAX_VALUE);
+        ShoppingListTo shoppingListTo = getShoppingListTo(123L, 1234L, Long.MAX_VALUE);
         simulatesRightOperationForCommerceAndCommerceRepository();
 
         ShoppingList shoppingList = creator.createAndSave(shoppingListTo);
@@ -72,9 +72,9 @@ public class ShoppingListCreatorTest {
 
     @Test
     public void whenWantCreateAShoppingListWithACommerceThatNotExists_thenFailsWithExceptionAndNotSaveTheShoppingList() {
-        String commerceId = "unComercio";
-        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, "unProductId", Long.MAX_VALUE);
-        when(commerceRepository.getById(anyString())).thenReturn(Optional.empty());
+        Long commerceId = 123L;
+        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, 1234L, Long.MAX_VALUE);
+        when(commerceRepository.getById(anyLong())).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(RuntimeException.class)
             .isThrownBy(() -> creator.createAndSave(shoppingListTo))
@@ -86,11 +86,11 @@ public class ShoppingListCreatorTest {
 
     @Test
     public void whenWantCreateAShoppingListWithAProductThatNotExistsInCommerce_thenFailsWithExceptionAndNotSaveTheShoppingList() {
-        String commerceId = "unComercio";
-        String productId = "unProductId";
+        Long commerceId = 123L;
+        Long productId = 1234L;
         ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, productId, Long.MAX_VALUE);
         Commerce anyCommerce = new Commerce("name", null, null, null, null, null);
-        when(commerceRepository.getById(anyString())).thenReturn(Optional.of(anyCommerce));
+        when(commerceRepository.getById(anyLong())).thenReturn(Optional.of(anyCommerce));
 
         String errorMessage = "No existe el producto con id: [" + productId + "] en el comercio [" +
             anyCommerce.getName() + "]. No se puede crear la lista de compras";
@@ -124,7 +124,7 @@ public class ShoppingListCreatorTest {
         return new ShoppingList(user, itemsByCommerces, BigDecimal.TEN, new Date());
     }
 
-    private ShoppingListTo getShoppingListTo(String commerceId, String productId, Long userId) {
+    private ShoppingListTo getShoppingListTo(Long commerceId, Long productId, Long userId) {
         List<ItemByCommerceTo> itemsByCommerce = getItemByCommerceTos(commerceId, productId);
 
         ShoppingListTo shoppingListTo = new ShoppingListTo();
@@ -135,7 +135,7 @@ public class ShoppingListCreatorTest {
         return shoppingListTo;
     }
 
-    private List<ItemByCommerceTo> getItemByCommerceTos(String commerceId, String productId) {
+    private List<ItemByCommerceTo> getItemByCommerceTos(Long commerceId, Long productId) {
         List<ShoppingListItemTO> items = getAShoppingListItemTo(productId);
         List<ItemByCommerceTo> itemsByCommerce = new ArrayList<>();
         ItemByCommerceTo itemByCommerceTo = new ItemByCommerceTo();
@@ -145,7 +145,7 @@ public class ShoppingListCreatorTest {
         return itemsByCommerce;
     }
 
-    private List<ShoppingListItemTO> getAShoppingListItemTo(String unProductID) {
+    private List<ShoppingListItemTO> getAShoppingListItemTo(Long unProductID) {
         List<ShoppingListItemTO> shoppingListItemTOS = new ArrayList<>();
         ShoppingListItemTO itemTo = new ShoppingListItemTO();
         itemTo.setPrice(BigDecimal.ONE);
@@ -157,9 +157,9 @@ public class ShoppingListCreatorTest {
 
     private void simulatesRightOperationForCommerceAndCommerceRepository() {
         Commerce anyCommerce = mock(Commerce.class);
-        when(anyCommerce.containsProductWithId(anyString())).thenReturn(true);
+        when(anyCommerce.containsProductWithId(anyLong())).thenReturn(true);
         Product product = new Product("a Product", null, null);
-        when(anyCommerce.getProductById(anyString())).thenReturn(product);
-        when(commerceRepository.getById(anyString())).thenReturn(Optional.of(anyCommerce));
+        when(anyCommerce.getProductById(anyLong())).thenReturn(product);
+        when(commerceRepository.getById(anyLong())).thenReturn(Optional.of(anyCommerce));
     }
 }

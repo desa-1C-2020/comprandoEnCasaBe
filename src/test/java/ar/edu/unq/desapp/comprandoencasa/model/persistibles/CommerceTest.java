@@ -38,6 +38,7 @@ public class CommerceTest {
     @Test
     public void whenCheckIfContainsProductById_returnsTrue() {
         Product product = new Product("Lays", "Lays", "www.imagenes.com/lays");
+        product.setId(1L);
         Commerce kiosco = createCommerceWith(product);
 
         boolean containsProductWithId = kiosco.containsProductWithId(product.getId());
@@ -68,7 +69,9 @@ public class CommerceTest {
     @Test
     public void whenWantUpdateAnExistingProductWithNewValues_thenTheCommerceContainsTheProductWithValueChanges() {
         Product product = new Product("un nombre de producto", "una marca", "www.imagenes.com/imagen");
+        product.setId(1L);
         Product productToUpdate = new Product("un nuevo nombre de producto", "una nueva marca", "www.imagenes.com/imagenNueva");
+        productToUpdate.setId(1L);
         productToUpdate.setId(product.getId());
         SaleableItem saleableItemToUpdate = new SaleableItem(30, 10.00, productToUpdate);
         Commerce kiosco = createCommerceWith(product);
@@ -94,6 +97,7 @@ public class CommerceTest {
     @Test
     public void whenWantRemovesAnExistingProductBy_thenTheCommerceNotContainsTheRemovedProduct() {
         Product product = new Product("Lays", "Lays", "www.imagenes.com/lays");
+        product.setId(1L);
         Commerce kiosco = createCommerceWith(product);
 
         kiosco.removeSaleableItemByProductId(product.getId());
@@ -104,6 +108,7 @@ public class CommerceTest {
     @Test
     public void whenWantGetProductByIdAndExists_theReturnsTheCorrectProduct() {
         Product product = new Product("Lays", "Lays", "www.imagenes.com/lays");
+        product.setId(1L);
         Commerce kiosco = createCommerceWith(product);
 
         Product foundProduct = kiosco.getProductById(product.getId());

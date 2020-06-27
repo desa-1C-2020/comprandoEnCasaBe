@@ -52,7 +52,7 @@ public class ShoppingListCreator {
     }
 
     private ItemsByCommerce getItemByCommerce(ItemByCommerceTo itemByCommerceTo) {
-        String commerceId = itemByCommerceTo.getCommerceId();
+        Long commerceId = itemByCommerceTo.getCommerceId();
         List<ShoppingListItemTO> itemsTo = itemByCommerceTo.getItems();
         Commerce commerce = getCommerceOrThrow(commerceId);
         List<ShoppingListItem> shoppingList = itemsTo
@@ -64,7 +64,7 @@ public class ShoppingListCreator {
     }
 
     private ShoppingListItem getShoppingListItem(ShoppingListItemTO shoppingListItemTo, Commerce commerce) {
-        String productId = shoppingListItemTo.getProductId();
+        Long productId = shoppingListItemTo.getProductId();
         if (!commerce.containsProductWithId(productId)) {
             String errorMessage = "No existe el producto con id: [" + productId + "] en el comercio [" +
                 commerce.getName() + "]. No se puede crear la lista de compras";
@@ -74,7 +74,7 @@ public class ShoppingListCreator {
         return new ShoppingListItem(product, shoppingListItemTo.getQuantity(), shoppingListItemTo.getPrice());
     }
 
-    private Commerce getCommerceOrThrow(String commerceId) {
+    private Commerce getCommerceOrThrow(Long commerceId) {
         Optional<Commerce> commerceOptional = commerceRepository.getById(commerceId);
         if (commerceOptional.isAbsent()) {
             throw new RuntimeException("No existe el comercio con id: [" + commerceId + "]. No se puede crear la lista de compras");

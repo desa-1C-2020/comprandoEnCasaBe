@@ -13,7 +13,8 @@ public interface SellerTO2Commerce extends MapperFunction<SellerTO, Commerce> {
         @Mapping(source = SellerTO.commerceName_FIELD, target = Commerce.name_FIELD),
         @Mapping(source = SellerTO.commerceAddress_FIELD, target = Commerce.address_FIELD),
         @Mapping(target = Commerce.id_FIELD, ignore = true),
-        @Mapping(target = Commerce.saleableItems_FIELD, ignore = true)
+        @Mapping(target = Commerce.saleableItems_FIELD, ignore = true),
+        @Mapping(target = Commerce.persistenceVersion_FIELD, ignore = true)
     })
     @Override
     Commerce apply(SellerTO sellerTO);

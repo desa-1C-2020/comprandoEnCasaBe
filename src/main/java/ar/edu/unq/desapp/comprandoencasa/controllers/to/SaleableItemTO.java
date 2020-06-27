@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
  * Models the product added createAndSave frontend
  */
 public class SaleableItemTO {
-    private String productId;
+    private Long productId;
     @NotNull
     private String name;
     @NotNull
@@ -57,11 +57,11 @@ public class SaleableItemTO {
         this.imageUrl = imageUrl;
     }
 
-    public String getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 }

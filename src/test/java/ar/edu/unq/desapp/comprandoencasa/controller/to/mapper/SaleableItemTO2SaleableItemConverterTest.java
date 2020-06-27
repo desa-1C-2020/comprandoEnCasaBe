@@ -22,7 +22,7 @@ public class SaleableItemTO2SaleableItemConverterTest extends SpringIntegrationT
     @Before
     public void setUp() {
         saleableItemTO = new SaleableItemTO();
-        saleableItemTO.setProductId("un id");
+        saleableItemTO.setProductId(123L);
         saleableItemTO.setName("nombre");
         saleableItemTO.setBrand("marca");
         saleableItemTO.setImageUrl("url");

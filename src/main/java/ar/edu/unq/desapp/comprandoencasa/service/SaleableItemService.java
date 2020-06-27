@@ -24,7 +24,7 @@ public class SaleableItemService {
         return commerce.getSaleableItems();
     }
 
-    public List<SaleableItem> removeSaleableProductForUser(String productId, Long userId) {
+    public List<SaleableItem> removeSaleableProductForUser(Long productId, Long userId) {
         UserSeller seller = userFinder.findSellerByUserId(userId);
         Commerce commerce = seller.getCommerceOrThrow();
         SaleableItem removedItem = commerce.removeSaleableItemByProductId(productId);

@@ -48,15 +48,15 @@ public class SaleableItem {
         this.price = price;
     }
 
-    public boolean sameId(String saleableId) {
-        return id.equals(saleableId);
+    public boolean sameId(Long saleableId) {
+        return getId().equals(saleableId);
     }
 
     public boolean sameProduct(Product product) {
         return this.product.sameProduct(product);
     }
 
-    public boolean sameProductId(String productId) {
+    public boolean sameProductId(Long productId) {
         return this.product.sameId(productId);
     }
 
@@ -66,7 +66,7 @@ public class SaleableItem {
         this.product.updateWith(toUpdate.getProduct());
     }
 
-    public String getProductId() {
+    public Long getProductId() {
         return product.getId();
     }
 

@@ -21,7 +21,7 @@ public class CommerceRepositoryMem implements CommerceRepository {
     }
 
     @Override
-    public Optional<Commerce> getById(String id) {
+    public Optional<Commerce> getById(Long id) {
         return Optional.create(repo.stream().filter(commerce -> commerce.getId().equals(id)).findFirst());
     }
 
