@@ -1,9 +1,19 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
+import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 
-public class UserSeller {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user_seller")
+public class UserSeller extends PersistibleSupport {
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
+    @OneToOne(cascade = CascadeType.ALL)
     private Commerce commerce;
 
     public UserSeller(User user, Commerce commerce) {

@@ -1,16 +1,20 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
-import static java.util.UUID.randomUUID;
+import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 
-public class SaleableItem {
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-    private String id;
+@Entity
+@Table(name = "saleable_item")
+public class SaleableItem extends PersistibleSupport {
     private int stock;
     private double price;
+    @OneToOne
     private Product product;
 
     public SaleableItem(int stock, double price, Product product) {
-        this.id = randomUUID().toString();
         this.stock = stock;
         this.price = price;
         this.product = product;
@@ -22,14 +26,6 @@ public class SaleableItem {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public int getStock() {

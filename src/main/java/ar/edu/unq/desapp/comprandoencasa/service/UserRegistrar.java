@@ -35,7 +35,9 @@ public class UserRegistrar {
     }
 
     public UserSeller registerSellerCommerce(SellerTO sellerTo) {
-        User user = userFinder.findUserById(sellerTo.getUserId());
+        User newUser = converter.convertTo(User.class, sellerTo);
+        User user = registerUser(newUser);
+
         return registerSeller(user, sellerTo);
     }
 
