@@ -5,7 +5,6 @@ import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import com.google.maps.model.LatLng;
 import org.junit.Before;
 import org.junit.Test;
@@ -136,7 +135,7 @@ public class DistanceCalculatorTest {
 
     public List<Commerce> createCommerces(LatLng aCommerceLatLng, LatLng otherCommerceLatLng) {
         Efectivo efectivo = new Efectivo("pesos");
-        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        List<Efectivo> paymentMethods = new ArrayList<>();
         paymentMethods.add(efectivo);
         List<String> horarios = new ArrayList<>();
         horarios.add("Lunes a viernes de 10 a 18hs");

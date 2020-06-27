@@ -3,7 +3,6 @@ package ar.edu.unq.desapp.comprandoencasa.repositories;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
@@ -70,7 +69,7 @@ public class DataInitializer
     private void simulateCommerceFakeData() {
         createFakeProducts();
         Efectivo efectivo = new Efectivo("pesos");
-        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        List<Efectivo> paymentMethods = new ArrayList<>();
         paymentMethods.add(efectivo);
         List<String> horarios = new ArrayList<>();
         horarios.add("Lunes a viernes de 10 a 18hs");

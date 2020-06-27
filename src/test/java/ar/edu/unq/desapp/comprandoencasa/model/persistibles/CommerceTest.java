@@ -139,7 +139,7 @@ public class CommerceTest {
 
     private Commerce createCommerceWith(Product product) {
         Efectivo efectivo = new Efectivo("pesos");
-        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        List<Efectivo> paymentMethods = new ArrayList<>();
         paymentMethods.add(efectivo);
         List<String> horarios = new ArrayList<>();
         horarios.add("Lunes a viernes de 10 a 18hs");
