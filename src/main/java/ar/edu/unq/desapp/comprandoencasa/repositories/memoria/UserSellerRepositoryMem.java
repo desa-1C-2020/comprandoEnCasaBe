@@ -25,10 +25,4 @@ public class UserSellerRepositoryMem implements UserSellerRepository {
         java.util.Optional<UserSeller> first = repo.stream().filter(userSeller -> userSeller.sameUser(user)).findFirst();
         return Optional.create(first);
     }
-
-    @Override
-    public void update(UserSeller seller) {
-        //Revisar esto, porque no está bien..
-        repo.add(seller);
-    }
 }
