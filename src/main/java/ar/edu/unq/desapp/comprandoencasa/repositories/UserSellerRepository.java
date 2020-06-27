@@ -8,6 +8,4 @@ public interface UserSellerRepository {
     void save(UserSeller userSeller);
 
     Optional<UserSeller> findByUser(User user);
-
-    void update(UserSeller seller);
 }
