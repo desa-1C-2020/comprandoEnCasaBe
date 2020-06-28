@@ -38,4 +38,10 @@ public class SaleableItemService {
         commerce.updateSaleableItem(saleableItem);
         return commerce.getSaleableItems();
     }
+
+    public List<SaleableItem> getProductsFor(Long userId) {
+        UserSeller seller = userFinder.findSellerByUserId(userId);
+        Commerce commerce = seller.getCommerce();
+        return commerce.getSaleableItems();
+    }
 }
