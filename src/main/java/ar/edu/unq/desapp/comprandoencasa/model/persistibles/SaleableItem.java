@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
 import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 public class SaleableItem extends PersistibleSupport {
     private int stock;
     private double price;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Product product;
 
     public SaleableItem() {
@@ -45,10 +46,6 @@ public class SaleableItem extends PersistibleSupport {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public boolean sameId(Long saleableId) {
-        return getId().equals(saleableId);
     }
 
     public boolean sameProduct(Product product) {

@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.repositories;
+package ar.edu.unq.desapp.comprandoencasa.support;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
@@ -8,6 +8,11 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
+import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 import com.google.maps.model.LatLng;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
