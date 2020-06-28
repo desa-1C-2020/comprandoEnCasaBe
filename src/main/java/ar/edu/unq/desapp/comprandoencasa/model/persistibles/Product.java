@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "payment_method")
+@Table(name = "product")
 public class Product extends PersistibleSupport {
     private String name;
     private String brand;
