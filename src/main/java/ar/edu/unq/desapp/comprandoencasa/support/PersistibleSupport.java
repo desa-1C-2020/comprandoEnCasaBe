@@ -31,6 +31,7 @@ import javax.persistence.Version;
 @MappedSuperclass
 public class PersistibleSupport implements Persistible<Long> {
     public static final String id_FIELD = "id";
+    public static final String persistenceVersion_FIELD = "persistenceVersion";
     private static final Logger LOG = LoggerFactory.getLogger(PersistibleSupport.class);
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

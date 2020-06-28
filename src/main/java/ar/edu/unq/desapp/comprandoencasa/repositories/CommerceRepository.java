@@ -8,10 +8,7 @@ import java.util.List;
 public interface CommerceRepository {
     List<Commerce> getAll();
 
-    Optional<Commerce> getById(String id);
-
-    //Tiene que reemplazar el que viene basicamente
-    void update(Commerce commerce);
+    Optional<Commerce> getById(Long id);
 
     void add(Commerce commerce);
 }

@@ -21,7 +21,7 @@ public class SaleableItemTO2ProductConverterTest extends SpringIntegrationTest {
     @Before
     public void setUp() {
         saleableItemTO = new SaleableItemTO();
-        saleableItemTO.setProductId("un id");
+        saleableItemTO.setProductId(123L);
         saleableItemTO.setName("nombre");
         saleableItemTO.setBrand("marca");
         saleableItemTO.setImageUrl("url");

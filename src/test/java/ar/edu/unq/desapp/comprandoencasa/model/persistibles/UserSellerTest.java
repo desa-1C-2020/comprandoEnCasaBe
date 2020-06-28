@@ -17,7 +17,7 @@ public class UserSellerTest {
         User user = userCarlos();
         UserSeller userSeller = new UserSeller(user, commerce);
 
-        Commerce userCommerce = userSeller.getCommerceOrThrow();
+        Commerce userCommerce = userSeller.getCommerce();
         assertThat(userCommerce.equals(commerce), is(true));
     }
 
@@ -27,7 +27,7 @@ public class UserSellerTest {
         UserSeller userSeller = new UserSeller(user, null);
 
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> userSeller.getCommerceOrThrow())
+            .isThrownBy(() -> userSeller.getCommerce())
             .withMessage("No posee un comercio registrado.");
     }
 

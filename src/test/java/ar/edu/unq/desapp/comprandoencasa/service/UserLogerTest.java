@@ -83,6 +83,6 @@ public class UserLogerTest {
 
         assertThat(userLogged, instanceOf(UserSeller.class));
         assertThat(((UserSeller) userLogged).sameUser(existentUser), is(true));
-        assertThat(((UserSeller) userLogged).getCommerceOrThrow(), notNullValue());
+        assertThat(((UserSeller) userLogged).getCommerce(), notNullValue());
     }
 }

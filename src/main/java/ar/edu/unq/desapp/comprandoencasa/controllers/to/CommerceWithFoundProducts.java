@@ -3,7 +3,7 @@ package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 import java.util.List;
 
 public class CommerceWithFoundProducts {
-    private String commerceId;
+    private Long commerceId;
     private String commerceName;
     private Long distance;
     private List<SaleableItemTO> saleableItems;
@@ -16,11 +16,11 @@ public class CommerceWithFoundProducts {
         this.saleableItems = saleableItems;
     }
 
-    public String getCommerceId() {
+    public Long getCommerceId() {
         return commerceId;
     }
 
-    public void setCommerceId(String id) {
+    public void setCommerceId(Long id) {
         this.commerceId = id;
     }
 

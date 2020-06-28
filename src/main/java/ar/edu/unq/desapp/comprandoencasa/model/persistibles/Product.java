@@ -1,29 +1,25 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 import org.apache.commons.lang3.StringUtils;
 
-import static java.util.UUID.randomUUID;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-public class Product {
-
-    private String id;
+@Entity
+@Table(name = "product")
+public class Product extends PersistibleSupport {
     private String name;
     private String brand;
     private String imageUrl;
 
+    public Product() {
+    }
+
     public Product(String name, String brand, String url) {
-        this.id = randomUUID().toString();
         this.name = name;
         this.brand = brand;
         this.imageUrl = url;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -50,8 +46,8 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    public boolean sameId(String productId) {
-        return id.equals(productId);
+    public boolean sameId(Long productId) {
+        return getId().equals(productId);
     }
 
     public boolean sameProduct(Product product) {

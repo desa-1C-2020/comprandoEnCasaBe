@@ -1,10 +1,9 @@
 package ar.edu.unq.desapp.comprandoencasa.repositories.spring;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepositoryJpa extends JpaRepository<User, Long> {
-    User findByEmail(String email);
-
-    Boolean existsByEmail(String email);
+public interface UserBuyerRepositoryJpa extends JpaRepository<UserBuyer, Long> {
+    UserBuyer findByUser(User user);
 }

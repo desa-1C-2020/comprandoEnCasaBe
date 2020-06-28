@@ -31,7 +31,7 @@ public class UserController {
 
     @PostMapping("buyer")
     public UserBuyer registerBuyer(@RequestBody RegisterUserTO registerUserTO) {
-        UserBuyer userBuyer = userRegistrar.registerNewUser(registerUserTO);
+        UserBuyer userBuyer = userRegistrar.registerBuyerUser(registerUserTO);
         //Aca mappearlo a un to para quitar por ejemplo el password en este caso.
         logger.info("Se creo el usuario comprador con id: [" + userBuyer.getUser().getId() + "]");
         return userBuyer;
@@ -39,7 +39,7 @@ public class UserController {
 
     @PostMapping("seller")
     public UserSeller registerSeller(@RequestBody SellerTO sellerTo) {
-        UserSeller userSeller = userRegistrar.registerSellerCommerce(sellerTo);
+        UserSeller userSeller = userRegistrar.registerSellerUser(sellerTo);
         //Aca mappearlo a un to para quitar por ejemplo el password en este caso.
         logger.info("Se creo el usuario vendedor con id: [" + userSeller.getUser().getId() + "]");
         return userSeller;

@@ -28,15 +28,16 @@ public class UserRegistrar {
         converter = objectConverter;
     }
 
-    public UserBuyer registerNewUser(RegisterUserTO registerUserTO) {
+    public UserSeller registerSellerUser(SellerTO sellerTo) {
+        User newUser = converter.convertTo(User.class, sellerTo.getUser());
+        User user = registerUser(newUser);
+        return registerSellerCommerce(user, sellerTo);
+    }
+
+    public UserBuyer registerBuyerUser(RegisterUserTO registerUserTO) {
         User newUser = converter.convertTo(User.class, registerUserTO);
         User user = registerUser(newUser);
         return registerBuyer(user);
-    }
-
-    public UserSeller registerSellerCommerce(SellerTO sellerTo) {
-        User user = userFinder.findUserById(sellerTo.getUserId());
-        return registerSeller(user, sellerTo);
     }
 
     private UserBuyer registerBuyer(User user) {
@@ -54,7 +55,7 @@ public class UserRegistrar {
         return user;
     }
 
-    private UserSeller registerSeller(User user, SellerTO sellerTo) {
+    private UserSeller registerSellerCommerce(User user, SellerTO sellerTo) {
         Commerce commerce = converter.convertTo(Commerce.class, sellerTo);
         UserSeller userSeller = new UserSeller(user, commerce);
         userSellerRepository.save(userSeller);

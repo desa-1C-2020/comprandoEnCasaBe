@@ -2,32 +2,41 @@ package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
 import ar.com.kfgodel.nary.api.Nary;
 import ar.com.kfgodel.nary.api.optionals.Optional;
+import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 import com.google.maps.model.LatLng;
 
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.UUID.randomUUID;
-
-public class Commerce {
+@Entity
+@Table(name = "commerce")
+public class Commerce extends PersistibleSupport {
     public static final String name_FIELD = "name";
-    public static final String id_FIELD = "id";
     public static final String address_FIELD = "address";
     public static final String saleableItems_FIELD = "saleableItems";
-    private String id;
     private String name;
     private String businessSector;
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-    private List<PaymentMethod> paymentMethods;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Efectivo> paymentMethods;
+    @ElementCollection(targetClass = String.class)
     private List<String> daysAndHoursOpen;
     private String arrivalRange;
+    @OneToMany(cascade = CascadeType.ALL)
     private List<SaleableItem> saleableItems;
 
     //For springboot serializer
     public Commerce() {
     }
 
-    public Commerce(String name, String businessSector, Address address, List<PaymentMethod> paymentMethods,
+    public Commerce(String name, String businessSector, Address address, List<Efectivo> paymentMethods,
                     List<String> daysAndHoursOpen, String arrivalRange) {
         this.name = name;
         this.businessSector = businessSector;
@@ -36,15 +45,6 @@ public class Commerce {
         this.daysAndHoursOpen = daysAndHoursOpen;
         this.arrivalRange = arrivalRange;
         this.saleableItems = new ArrayList<>();
-        this.id = randomUUID().toString();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getBusinessSector() {
@@ -63,11 +63,11 @@ public class Commerce {
         this.address = address;
     }
 
-    public List<PaymentMethod> getPaymentMethods() {
+    public List<Efectivo> getPaymentMethods() {
         return paymentMethods;
     }
 
-    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+    public void setPaymentMethods(List<Efectivo> paymentMethods) {
         this.paymentMethods = paymentMethods;
     }
 
@@ -111,7 +111,7 @@ public class Commerce {
         return saleableItems.stream().anyMatch(saleableItem -> saleableItem.sameProduct(product));
     }
 
-    public boolean containsProductWithId(String productId) {
+    public boolean containsProductWithId(Long productId) {
         return saleableItems.stream().anyMatch(saleableItem -> saleableItem.sameProductId(productId));
     }
 
@@ -128,7 +128,7 @@ public class Commerce {
             .get();
     }
 
-    private SaleableItem findByProductId(String productId) {
+    private SaleableItem findByProductId(Long productId) {
         return saleableItems
             .stream()
             .filter(saleableItem -> saleableItem.sameProductId(productId))
@@ -136,7 +136,7 @@ public class Commerce {
             .get();
     }
 
-    public SaleableItem removeSaleableItemByProductId(String productId) {
+    public SaleableItem removeSaleableItemByProductId(Long productId) {
         SaleableItem saleableItem = findByProductId(productId);
         saleableItems.remove(saleableItem);
         return saleableItem;
@@ -154,7 +154,7 @@ public class Commerce {
         saleableItem.updateWith(toUpdate);
     }
 
-    public Product getProductById(String saleableId) {
+    public Product getProductById(Long saleableId) {
         Optional<SaleableItem> saleableItemOptional = Nary
             .create(saleableItems)
             .filterOptional(saleableItem -> saleableItem.sameProductId(saleableId));

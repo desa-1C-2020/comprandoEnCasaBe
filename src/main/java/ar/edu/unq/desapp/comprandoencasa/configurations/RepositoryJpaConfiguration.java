@@ -6,13 +6,17 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.impl.CommerceRepositoryImpl;
+import ar.edu.unq.desapp.comprandoencasa.repositories.impl.SaleableItemRepositoryImpl;
+import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserBuyerRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserRepositoryImpl;
-import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.CommerceRepositoryMem;
-import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.SaleableItemRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserSellerRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.ShoppingListRepositoryMem;
-import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.UserBuyerRepositoryMem;
-import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.UserSellerRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.spring.CommerceRepositoryJpa;
+import ar.edu.unq.desapp.comprandoencasa.repositories.spring.SaleableItemRepositoryJpa;
+import ar.edu.unq.desapp.comprandoencasa.repositories.spring.UserBuyerRepositoryJpa;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.UserRepositoryJpa;
+import ar.edu.unq.desapp.comprandoencasa.repositories.spring.UserSellerRepositoryJpa;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -25,29 +29,29 @@ public class RepositoryJpaConfiguration {
         return UserRepositoryImpl.create(userRepositoryJpa);
     }
 
-    //Reemplazar estos a medida que se hacen los mapeos
     @Bean
-    public CommerceRepository commerceRepository() {
-        return new CommerceRepositoryMem();
+    public UserBuyerRepository userBuyerRepository(UserBuyerRepositoryJpa userBuyerRepositoryJpa) {
+        return UserBuyerRepositoryImpl.create(userBuyerRepositoryJpa);
     }
 
+    @Bean
+    public UserSellerRepository userSellerRepository(UserSellerRepositoryJpa userSellerRepositoryJpa) {
+        return UserSellerRepositoryImpl.create(userSellerRepositoryJpa);
+    }
+
+    @Bean
+    public CommerceRepository commerceRepository(CommerceRepositoryJpa commerceRepositoryJpa) {
+        return CommerceRepositoryImpl.create(commerceRepositoryJpa);
+    }
+
+    @Bean
+    public SaleableItemRepository saleableItemRepository(SaleableItemRepositoryJpa saleableItemRepositoryJpa) {
+        return SaleableItemRepositoryImpl.create(saleableItemRepositoryJpa);
+    }
+
+    //Reemplazar estos a medida que se hacen los mapeos
     @Bean
     public ShoppingListRepository shoppingListRepository() {
         return new ShoppingListRepositoryMem();
-    }
-
-    @Bean
-    public UserBuyerRepository userBuyerRepository() {
-        return new UserBuyerRepositoryMem();
-    }
-
-    @Bean
-    public UserSellerRepository userSellerRepository() {
-        return new UserSellerRepositoryMem();
-    }
-
-    @Bean
-    public SaleableItemRepository saleableItemRepository() {
-        return new SaleableItemRepositoryMem();
     }
 }

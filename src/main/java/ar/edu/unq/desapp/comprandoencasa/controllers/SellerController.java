@@ -7,6 +7,7 @@ import ar.edu.unq.desapp.comprandoencasa.service.SaleableItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +36,7 @@ public class SellerController {
     }
 
     @DeleteMapping("product")
-    public List<SaleableItem> removeSaleableProduct(@RequestParam Long userId, @RequestParam String productId) {
+    public List<SaleableItem> removeSaleableProduct(@RequestParam Long userId, @RequestParam Long productId) {
         return saleableItemService.removeSaleableProductForUser(productId, userId);
     }
 
@@ -43,6 +44,11 @@ public class SellerController {
     public List<SaleableItem> updateSaleableProduct(@RequestParam Long userId, @RequestBody SaleableItemTO saleableItemTo) {
         SaleableItem saleableItem = converter.convertTo(SaleableItem.class, saleableItemTo);
         return saleableItemService.updateSaleableProduct(saleableItem, userId);
+    }
+
+    @GetMapping("products")
+    public List<SaleableItem> products(@RequestParam Long userId) {
+        return saleableItemService.getProductsFor(userId);
     }
 }
 

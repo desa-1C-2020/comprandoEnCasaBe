@@ -65,7 +65,7 @@ public class UserRegistrarTest extends SpringIntegrationTest {
         addressTo.setLongitud(Double.parseDouble("-123"));
         RegisterUserTO registerUserTO = new RegisterUserTO("carlos", "gonzalez", "carlos@gmail.com", "password", addressTo);
 
-        userRegistrar.registerNewUser(registerUserTO);
+        userRegistrar.registerBuyerUser(registerUserTO);
 
         verify(userFinder, times(1)).existsUser(userCaptor.capture());
         verify(userRepository, times(1)).addUser(userCaptor.capture());
@@ -85,7 +85,7 @@ public class UserRegistrarTest extends SpringIntegrationTest {
 
         String errorMessage = "No se puede registrar debido a que existe en el sistema un usuario con el email: [" + newRegisterUserTO.getEmail() + "].";
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> userRegistrar.registerNewUser(newRegisterUserTO))
+            .isThrownBy(() -> userRegistrar.registerBuyerUser(newRegisterUserTO))
             .withMessage(errorMessage);
         verify(userRepository, never()).addUser(ArgumentMatchers.any());
     }

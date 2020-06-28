@@ -3,7 +3,7 @@ package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 import java.math.BigDecimal;
 
 public class ShoppingListItemTO {
-    private String productId;
+    private Long productId;
     private int quantity;
     private BigDecimal price;
 
@@ -15,11 +15,11 @@ public class ShoppingListItemTO {
         this.price = price;
     }
 
-    public String getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 

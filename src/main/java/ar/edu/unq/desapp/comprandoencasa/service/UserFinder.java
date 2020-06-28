@@ -8,8 +8,6 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 
-import java.util.List;
-
 public class UserFinder {
     private UserRepository userRepository;
     private UserSellerRepository userSellerRepository;
@@ -49,8 +47,7 @@ public class UserFinder {
     }
 
     public boolean existsUser(User user) {
-        List<User> users = userRepository.getAll();
-        return users.stream().anyMatch(userPersited -> userPersited.same(user));
+        return userRepository.existsByEmail(user.getEmail());
     }
 
     private User getUserOrThrow(Optional<User> userOptional, String message) {

@@ -17,8 +17,7 @@ public class User extends PersistibleSupport {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
-    public User() {
-    }
+    public User() {}
 
     private User(String name, String surname, String email, String password, Address address) {
         validateEmailIsWellFormed(email);

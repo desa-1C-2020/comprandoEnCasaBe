@@ -1,16 +1,24 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
-import static java.util.UUID.randomUUID;
+import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 
-public class SaleableItem {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-    private String id;
+@Entity
+@Table(name = "saleable_item")
+public class SaleableItem extends PersistibleSupport {
     private int stock;
     private double price;
+    @OneToOne(cascade = CascadeType.ALL)
     private Product product;
 
+    public SaleableItem() {
+    }
+
     public SaleableItem(int stock, double price, Product product) {
-        this.id = randomUUID().toString();
         this.stock = stock;
         this.price = price;
         this.product = product;
@@ -22,14 +30,6 @@ public class SaleableItem {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public int getStock() {
@@ -48,15 +48,11 @@ public class SaleableItem {
         this.price = price;
     }
 
-    public boolean sameId(String saleableId) {
-        return id.equals(saleableId);
-    }
-
     public boolean sameProduct(Product product) {
         return this.product.sameProduct(product);
     }
 
-    public boolean sameProductId(String productId) {
+    public boolean sameProductId(Long productId) {
         return this.product.sameId(productId);
     }
 
@@ -66,7 +62,7 @@ public class SaleableItem {
         this.product.updateWith(toUpdate.getProduct());
     }
 
-    public String getProductId() {
+    public Long getProductId() {
         return product.getId();
     }
 

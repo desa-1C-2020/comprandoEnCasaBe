@@ -1,14 +1,18 @@
-package ar.edu.unq.desapp.comprandoencasa.repositories;
+package ar.edu.unq.desapp.comprandoencasa.support;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
+import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 import com.google.maps.model.LatLng;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +74,7 @@ public class DataInitializer
     private void simulateCommerceFakeData() {
         createFakeProducts();
         Efectivo efectivo = new Efectivo("pesos");
-        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        List<Efectivo> paymentMethods = new ArrayList<>();
         paymentMethods.add(efectivo);
         List<String> horarios = new ArrayList<>();
         horarios.add("Lunes a viernes de 10 a 18hs");

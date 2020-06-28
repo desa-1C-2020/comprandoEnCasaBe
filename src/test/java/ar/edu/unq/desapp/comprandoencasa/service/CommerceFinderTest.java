@@ -5,7 +5,6 @@ import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import com.google.maps.model.LatLng;
 import org.junit.Before;
@@ -67,7 +66,7 @@ public class CommerceFinderTest {
 
     public List<Commerce> commercesSaved() {
         Efectivo efectivo = new Efectivo("pesos");
-        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        List<Efectivo> paymentMethods = new ArrayList<>();
         paymentMethods.add(efectivo);
         List<String> horarios = new ArrayList<>();
         horarios.add("Lunes a viernes de 10 a 18hs");
