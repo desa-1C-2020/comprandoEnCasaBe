@@ -29,7 +29,7 @@ public class UserRegistrar {
     }
 
     public UserSeller registerSellerUser(SellerTO sellerTo) {
-        User newUser = converter.convertTo(User.class, sellerTo.getRegisterUserTO());
+        User newUser = converter.convertTo(User.class, sellerTo.getUser());
         User user = registerUser(newUser);
         return registerSellerCommerce(user, sellerTo);
     }

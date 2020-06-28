@@ -13,6 +13,9 @@ public class Product extends PersistibleSupport {
     private String brand;
     private String imageUrl;
 
+    public Product() {
+    }
+
     public Product(String name, String brand, String url) {
         this.name = name;
         this.brand = brand;

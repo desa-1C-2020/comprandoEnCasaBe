@@ -18,7 +18,7 @@ public class UserSellerRepositoryImpl implements UserSellerRepository {
 
     @Override
     public void save(UserSeller userSeller) {
-        repoJpa.save(userSeller);
+        repoJpa.saveAndFlush(userSeller);
     }
 
     @Override

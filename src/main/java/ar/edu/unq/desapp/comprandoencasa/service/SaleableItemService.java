@@ -18,7 +18,7 @@ public class SaleableItemService {
 
     public List<SaleableItem> addSaleableProductByUserId(SaleableItem saleableItem, Long userId) {
         UserSeller seller = userFinder.findSellerByUserId(userId);
-        Commerce commerce = seller.getCommerceOrThrow();
+        Commerce commerce = seller.getCommerce();
         commerce.addSaleableItem(saleableItem);
         saleableItemRepository.save(saleableItem);
         return commerce.getSaleableItems();
@@ -26,7 +26,7 @@ public class SaleableItemService {
 
     public List<SaleableItem> removeSaleableProductForUser(Long productId, Long userId) {
         UserSeller seller = userFinder.findSellerByUserId(userId);
-        Commerce commerce = seller.getCommerceOrThrow();
+        Commerce commerce = seller.getCommerce();
         SaleableItem removedItem = commerce.removeSaleableItemByProductId(productId);
         saleableItemRepository.delete(removedItem);
         return commerce.getSaleableItems();
@@ -34,7 +34,7 @@ public class SaleableItemService {
 
     public List<SaleableItem> updateSaleableProduct(SaleableItem saleableItem, Long userId) {
         UserSeller seller = userFinder.findSellerByUserId(userId);
-        Commerce commerce = seller.getCommerceOrThrow();
+        Commerce commerce = seller.getCommerce();
         commerce.updateSaleableItem(saleableItem);
         return commerce.getSaleableItems();
     }

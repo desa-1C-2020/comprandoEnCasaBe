@@ -5,6 +5,7 @@ import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 import com.google.maps.model.LatLng;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -21,14 +22,14 @@ public class Commerce extends PersistibleSupport {
     public static final String saleableItems_FIELD = "saleableItems";
     private String name;
     private String businessSector;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Efectivo> paymentMethods;
     @ElementCollection(targetClass = String.class)
     private List<String> daysAndHoursOpen;
     private String arrivalRange;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<SaleableItem> saleableItems;
 
     //For springboot serializer

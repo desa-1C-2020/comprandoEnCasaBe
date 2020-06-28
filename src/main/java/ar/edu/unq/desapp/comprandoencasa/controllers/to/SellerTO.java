@@ -65,11 +65,11 @@ public class SellerTO {
         this.arrivalRange = arrivalRange;
     }
 
-    public RegisterUserTO getRegisterUserTO() {
+    public RegisterUserTO getUser() {
         return user;
     }
 
-    public void setRegisterUserTO(RegisterUserTO registerUserTO) {
+    public void setUser(RegisterUserTO registerUserTO) {
         this.user = registerUserTO;
     }
 }

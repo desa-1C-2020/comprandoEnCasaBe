@@ -52,7 +52,7 @@ public class SellerTO2CommerceConverterTest extends SpringIntegrationTest {
         paymentMethodTO.setType("Efectivo");
         paymentMethods.add(paymentMethodTO);
         sellerTO.setPaymentMethods(paymentMethods);
-        sellerTO.setRegisterUserTO(registerUserTO);
+        sellerTO.setUser(registerUserTO);
     }
 
     @Test

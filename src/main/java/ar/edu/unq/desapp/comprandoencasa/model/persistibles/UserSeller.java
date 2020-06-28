@@ -16,13 +16,15 @@ public class UserSeller extends PersistibleSupport {
     @OneToOne(cascade = CascadeType.ALL)
     private Commerce commerce;
 
+    public UserSeller(){}//For jpa
+
     public UserSeller(User user, Commerce commerce) {
         this.user = user;
         this.commerce = commerce;
     }
 
-    public Commerce getCommerceOrThrow() {
-        Optional<Commerce> commerceOptional = getCommerce();
+    public Commerce getCommerce() {
+        Optional<Commerce> commerceOptional = getMaybeCommerce();
         if (commerceOptional.isAbsent()) {
             throw new RuntimeException("No posee un comercio registrado.");
         }
@@ -37,7 +39,7 @@ public class UserSeller extends PersistibleSupport {
         return this.user.same(user);
     }
 
-    private Optional<Commerce> getCommerce() {
+    private Optional<Commerce> getMaybeCommerce() {
         return Optional.ofNullable(commerce);
     }
 }

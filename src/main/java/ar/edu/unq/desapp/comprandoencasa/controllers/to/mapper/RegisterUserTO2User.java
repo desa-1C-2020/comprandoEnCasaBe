@@ -18,7 +18,11 @@ public class RegisterUserTO2User implements MapperFunction<RegisterUserTO, User>
             return null;
         }
 
-        Address address = addressTO2Address.apply(registerUserTO.getAddress());
+        Address address = null;
+        if (registerUserTO.getAddress() != null) {
+            address = addressTO2Address.apply(registerUserTO.getAddress());
+        }
+
         return User.create(registerUserTO.getName(), registerUserTO.getSurname(), registerUserTO.getEmail(),
             registerUserTO.getPassword(), address);
     }

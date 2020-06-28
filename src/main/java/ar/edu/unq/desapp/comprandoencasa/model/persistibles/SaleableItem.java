@@ -14,6 +14,9 @@ public class SaleableItem extends PersistibleSupport {
     @OneToOne
     private Product product;
 
+    public SaleableItem() {
+    }
+
     public SaleableItem(int stock, double price, Product product) {
         this.stock = stock;
         this.price = price;
