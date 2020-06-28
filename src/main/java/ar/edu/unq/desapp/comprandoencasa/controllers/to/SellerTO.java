@@ -6,8 +6,7 @@ import java.util.List;
 public class SellerTO {
     public static final String commerceName_FIELD = "commerceName";
     public static final String commerceAddress_FIELD = "commerceAddress";
-    @NotNull
-    private Long userId;
+    private RegisterUserTO user;
     @NotNull
     private String commerceName;
     @NotNull
@@ -17,14 +16,6 @@ public class SellerTO {
     private List<PaymentMethodTO> paymentMethods;
     private List<String> daysAndHoursOpen;
     private String arrivalRange;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public String getCommerceName() {
         return commerceName;
@@ -72,6 +63,14 @@ public class SellerTO {
 
     public void setArrivalRange(String arrivalRange) {
         this.arrivalRange = arrivalRange;
+    }
+
+    public RegisterUserTO getRegisterUserTO() {
+        return user;
+    }
+
+    public void setRegisterUserTO(RegisterUserTO registerUserTO) {
+        this.user = registerUserTO;
     }
 }
 

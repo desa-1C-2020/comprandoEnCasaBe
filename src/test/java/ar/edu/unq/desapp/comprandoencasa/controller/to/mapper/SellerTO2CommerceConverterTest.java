@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.controller.to.mapper;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.PaymentMethodTO;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
@@ -25,9 +26,11 @@ public class SellerTO2CommerceConverterTest extends SpringIntegrationTest {
     private SellerTO sellerTO;
     private LatLng latLng;
     private AddressTO addressTO;
+    private RegisterUserTO registerUserTO;
 
     @Before
     public void setUp() {
+        registerUserTO = new RegisterUserTO("nombre", "apellido", "mail@mail.com", "password", null);
         long lat = 10L;
         long lng = 20L;
         latLng = new LatLng(lat, lng);
@@ -49,7 +52,7 @@ public class SellerTO2CommerceConverterTest extends SpringIntegrationTest {
         paymentMethodTO.setType("Efectivo");
         paymentMethods.add(paymentMethodTO);
         sellerTO.setPaymentMethods(paymentMethods);
-        sellerTO.setUserId(Long.MAX_VALUE);
+        sellerTO.setRegisterUserTO(registerUserTO);
     }
 
     @Test
