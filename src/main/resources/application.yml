@@ -1,7 +1,3 @@
-server:
-  servlet:
-    context-path: /api
-
 spring:
   application.name: comprandoencasa
   datasource:
@@ -12,14 +8,37 @@ spring:
     properties.hibernate.jdbc.lob.non_contextual_creation: true
     hibernate:
       ddl-auto: update
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: ${GOOGLE_CLIENT_ID}
+            clientSecret: ${GOOGLE_CLIENT_SECRET}
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+            - email
+            - profile
+  #        provider:
+  #            google: No hace falta porque lo crea por defecto
+  #            authorizationUri:
+  #            tokenUri: ${OAUTH2_JWT_URI}
+  #            userInfoUri:
+
 
 google.api.key: ${GOOGLE_API_KEY}
 
-auth0:
-  domain: ${AUTH0_DOMAIN}
-  clientId: ${AUTH0_CLIENT_ID}
-security:
+app:
+  auth:
+    tokenSecret: ${TOKEN_SECRET}
+    tokenExpirationMsec: ${TOKEN_EXPIRATION_M_SEC}
   oauth2:
-    resource:
-      id: ${OAUTH2_RESOURCE_ID}
-      jwk.keySetUri: ${OAUTH2_JWT_URI}
+    # After successfully authenticating with the OAuth2 Provider,
+    # we'll be generating an auth token for the user and sending the token to the
+    # redirectUri mentioned by the client in the /oauth2/authorize request.
+    # We're not using cookies because they won't work well in mobile clients.
+    authorizedRedirectUris: ${OAUTH2_AUTHORIZED_REDIRECT_URIS}
