@@ -173,7 +173,10 @@ dependencies {
 
     //Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    compile('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.6.RELEASE')
+    compile group: 'org.springframework.security', name: 'spring-security-oauth2-core', version: '5.3.3.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.2.1.RELEASE'
+
+
     // For take from classpath the configuration properties
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
