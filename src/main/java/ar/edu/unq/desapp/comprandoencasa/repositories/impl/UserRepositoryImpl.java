@@ -21,8 +21,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void addUser(User user) {
+    public User addUser(User user) {
         repoJpa.saveAndFlush(user);
+        return user;
     }
 
     @Override

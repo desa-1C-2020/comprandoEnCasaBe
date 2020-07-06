@@ -23,8 +23,9 @@ public class UserRepositoryMem implements UserRepository {
     }
 
     @Override
-    public void addUser(User user) {
+    public User addUser(User user) {
         repo.add(user);
+        return user;
     }
 
     @Override
