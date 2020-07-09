@@ -4,6 +4,7 @@ package ar.edu.unq.desapp.comprandoencasa.security;
 import ar.edu.unq.desapp.comprandoencasa.exception.ResourceNotFoundException;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,11 +12,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserFinder userFinder;
 
     @Override
     @Transactional
@@ -25,8 +32,17 @@ public class CustomUserDetailsService implements UserDetailsService {
             .orElseThrow(() ->
                 new UsernameNotFoundException("User not found with email : " + email)
             );
-
-        return UserPrincipal.create(user);
+        boolean isSeller = userFinder.isSeller(user);
+        boolean isBuyer = userFinder.isBuyer(user);
+        List<String> roles = new ArrayList<>();
+        roles.add("ROLE_USER");
+        if (isBuyer) {
+            roles.add("ROLE_BUYER");
+        }
+        if (isSeller) {
+            roles.add("ROLE_SELLER");
+        }
+        return UserPrincipal.create(user, roles);
     }
 
     @Transactional

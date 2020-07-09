@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class UserPrincipal implements OAuth2User, UserDetails {
     private Long id;
@@ -34,6 +35,20 @@ public class UserPrincipal implements OAuth2User, UserDetails {
             user.getEmail(),
             user.getPassword(),
             authorities
+        );
+    }
+
+    public static UserPrincipal create(User user, List<String> roles) {
+        List<GrantedAuthority> grantedAuthorities = roles
+            .stream()
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList());
+
+        return new UserPrincipal(
+            user.getId(),
+            user.getEmail(),
+            user.getPassword(),
+            grantedAuthorities
         );
     }
 
