@@ -42,7 +42,7 @@ public class UserRegistrar {
         return registerBuyer(user);
     }
 
-    public UserBuyer registerBuyer(User user) {
+    private UserBuyer registerBuyer(User user) {
         UserBuyer userBuyer = new UserBuyer(user);
         buyerRepository.save(userBuyer);
         return userBuyer;

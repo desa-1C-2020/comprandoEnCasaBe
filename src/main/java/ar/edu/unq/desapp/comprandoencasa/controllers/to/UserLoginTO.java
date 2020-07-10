@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.service;
+package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 
