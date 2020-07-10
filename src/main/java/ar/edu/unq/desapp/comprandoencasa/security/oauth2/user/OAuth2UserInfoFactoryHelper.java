@@ -6,7 +6,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.AuthProvider;
 
 import java.util.Map;
 
-public class OAuth2UserInfoFactory {
+public class OAuth2UserInfoFactoryHelper {
 
     public static OAuth2UserInfo getOAuth2UserInfo(String registrationId, Map<String, Object> attributes) {
         if (registrationId.equalsIgnoreCase(AuthProvider.google.toString())) {

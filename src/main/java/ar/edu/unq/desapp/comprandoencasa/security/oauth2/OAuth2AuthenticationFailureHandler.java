@@ -19,7 +19,7 @@ import static ar.edu.unq.desapp.comprandoencasa.security.oauth2.HttpCookieOAuth2
 public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Autowired
-    HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+    private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,

@@ -19,10 +19,10 @@ import java.util.List;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    UserFinder userFinder;
+    private UserFinder userFinder;
 
     @Override
     @Transactional

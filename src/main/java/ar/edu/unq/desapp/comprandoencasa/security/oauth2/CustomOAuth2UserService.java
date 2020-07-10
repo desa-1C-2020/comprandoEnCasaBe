@@ -7,7 +7,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
 import ar.edu.unq.desapp.comprandoencasa.security.oauth2.user.OAuth2UserInfo;
-import ar.edu.unq.desapp.comprandoencasa.security.oauth2.user.OAuth2UserInfoFactory;
+import ar.edu.unq.desapp.comprandoencasa.security.oauth2.user.OAuth2UserInfoFactoryHelper;
 import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -26,9 +26,10 @@ import java.util.List;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
-    UserFinder userFinder;
+    private UserFinder userFinder;
+
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
@@ -45,7 +46,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
-        OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(oAuth2UserRequest.getClientRegistration().getRegistrationId(), oAuth2User.getAttributes());
+        OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactoryHelper.getOAuth2UserInfo(oAuth2UserRequest.getClientRegistration().getRegistrationId(), oAuth2User.getAttributes());
         if (StringUtils.isEmpty(oAuth2UserInfo.getEmail())) {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
