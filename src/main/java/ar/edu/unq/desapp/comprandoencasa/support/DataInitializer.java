@@ -47,23 +47,25 @@ public class DataInitializer
      */
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
-        Address casaMarcos = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
-        User userBuyer = User.create("Marcos", "Alvarenga", "marcos.alvarenga@10pines.com", null, casaMarcos);
-        userBuyer.setProvider(AuthProvider.google);
-        userBuyer.setProviderId("118335160242057646942");
-        userRepository.addUser(userBuyer);
+        if (!userRepository.existsByEmail("mya.alvarenga9@gmail.com")) {
+            Address casaMarcos = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
+            User userBuyer = User.create("Marcos", "Alvarenga", "marcos.alvarenga@10pines.com", null, casaMarcos);
+            userBuyer.setProvider(AuthProvider.google);
+            userBuyer.setProviderId("118335160242057646942");
+            userRepository.addUser(userBuyer);
 
-        Address otraDir = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
-        User userSellerWithCommerce = User.create("Daniel", "Alvarenga", "mya.alvarenga9@gmail.com", null, otraDir);
-        userSellerWithCommerce.setProvider(AuthProvider.google);
-        userSellerWithCommerce.setProviderId("118335160242057646942");
-        userSellerWithCommerce.setImageUrl("https://lh3.googleusercontent.com/a-/AOh14GjcmqYqLd7ZR8zm6yEu2nwFS2V1n_XF32Ysx2JVVw");
-        userRepository.addUser(userSellerWithCommerce);
+            Address otraDir = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
+            User userSellerWithCommerce = User.create("Daniel", "Alvarenga", "mya.alvarenga9@gmail.com", null, otraDir);
+            userSellerWithCommerce.setProvider(AuthProvider.google);
+            userSellerWithCommerce.setProviderId("118335160242057646942");
+            userSellerWithCommerce.setImageUrl("https://lh3.googleusercontent.com/a-/AOh14GjcmqYqLd7ZR8zm6yEu2nwFS2V1n_XF32Ysx2JVVw");
+            userRepository.addUser(userSellerWithCommerce);
 
-        UserSeller userSeller = simulateUserFakeData(userBuyer, userSellerWithCommerce);
-        createFakeProducts();
-        saleableItemRepository.getBetween(2, 4).forEach(userSeller.getCommerce()::addSaleableItem);
-        commerceRepository.save(userSeller.getCommerce());
+            UserSeller userSeller = simulateUserFakeData(userBuyer, userSellerWithCommerce);
+            createFakeProducts();
+            saleableItemRepository.getBetween(2, 4).forEach(userSeller.getCommerce()::addSaleableItem);
+            commerceRepository.save(userSeller.getCommerce());
+        }
     }
 
     private UserSeller simulateUserFakeData(User userBuyer, User userSellerWithCommerce) {
