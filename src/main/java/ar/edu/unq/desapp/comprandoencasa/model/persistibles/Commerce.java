@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "commerce")
@@ -143,9 +144,9 @@ public class Commerce extends PersistibleSupport {
     }
 
     public void updateSaleableItem(SaleableItem toUpdate) {
+        Stream<SaleableItem> saleableItemStream = saleableItems.stream().filter(saleableItem -> saleableItem.sameProductId(toUpdate.getProductId()));
         Optional<SaleableItem> saleableItemOptional =
-            Nary.create(saleableItems).filterOptional(saleableItem -> saleableItem.sameProductId(toUpdate.getProductId()));
-
+            Nary.create(saleableItemStream).findFirstNary();
         if (saleableItemOptional.isAbsent()) {
             String errorMessage = "No se puede actualizar. No existe el producto con id: [" + toUpdate.getProductId() + "]";
             throw new RuntimeException(errorMessage);

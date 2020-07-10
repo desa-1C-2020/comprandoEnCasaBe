@@ -63,7 +63,7 @@ public class DataInitializer
         UserSeller userSeller = simulateUserFakeData(userBuyer, userSellerWithCommerce);
         createFakeProducts();
         saleableItemRepository.getBetween(2, 4).forEach(userSeller.getCommerce()::addSaleableItem);
-        commerceRepository.add(userSeller.getCommerce());
+        commerceRepository.save(userSeller.getCommerce());
     }
 
     private UserSeller simulateUserFakeData(User userBuyer, User userSellerWithCommerce) {

@@ -10,5 +10,5 @@ public interface CommerceRepository {
 
     Optional<Commerce> getById(Long id);
 
-    void add(Commerce commerce);
+    void save(Commerce commerce);
 }

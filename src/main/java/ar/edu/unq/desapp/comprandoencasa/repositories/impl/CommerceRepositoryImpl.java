@@ -28,7 +28,7 @@ public class CommerceRepositoryImpl implements CommerceRepository {
     }
 
     @Override
-    public void add(Commerce commerce) {
+    public void save(Commerce commerce) {
         repoJpa.saveAndFlush(commerce);
     }
 }

@@ -26,7 +26,7 @@ public class CommerceRepositoryMem implements CommerceRepository {
     }
 
     @Override
-    public void add(Commerce commerce) {
+    public void save(Commerce commerce) {
         this.repo.add(commerce);
     }
 }
