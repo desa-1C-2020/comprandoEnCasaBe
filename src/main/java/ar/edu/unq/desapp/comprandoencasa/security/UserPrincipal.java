@@ -58,6 +58,12 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         return userPrincipal;
     }
 
+    public static OAuth2User create(User user, List<String> roles, Map<String, Object> attributes) {
+        UserPrincipal userPrincipal = create(user, roles);
+        userPrincipal.setAttributes(attributes);
+        return userPrincipal;
+    }
+
     public Long getId() {
         return id;
     }

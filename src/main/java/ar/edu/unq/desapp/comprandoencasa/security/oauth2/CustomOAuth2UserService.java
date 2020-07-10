@@ -8,6 +8,7 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
 import ar.edu.unq.desapp.comprandoencasa.security.oauth2.user.OAuth2UserInfo;
 import ar.edu.unq.desapp.comprandoencasa.security.oauth2.user.OAuth2UserInfoFactory;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -18,11 +19,16 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    UserFinder userFinder;
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
@@ -58,7 +64,18 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }
 
-        return UserPrincipal.create(user, oAuth2User.getAttributes());
+
+        boolean isSeller = userFinder.isSeller(user);
+        boolean isBuyer = userFinder.isBuyer(user);
+        List<String> roles = new ArrayList<>();
+        roles.add("ROLE_USER");
+        if (isBuyer) {
+            roles.add("ROLE_BUYER");
+        }
+        if (isSeller) {
+            roles.add("ROLE_SELLER");
+        }
+        return UserPrincipal.create(user, roles, oAuth2User.getAttributes());
     }
 
     private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
