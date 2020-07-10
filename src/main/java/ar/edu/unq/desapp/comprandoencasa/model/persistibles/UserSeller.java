@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user_seller")
 public class UserSeller extends PersistibleSupport {
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private User user;
     @OneToOne(cascade = CascadeType.ALL)
     private Commerce commerce;

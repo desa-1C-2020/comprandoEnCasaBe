@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.UserLoginTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.UserLoginTO;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
@@ -11,12 +11,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -33,56 +31,31 @@ public class UserLogerTest {
     }
 
     @Test
-    public void whenWantLogInWithWrongEmail_thenTrowAnError() {
-        UserLoginTo userLoginTo = new UserLoginTo("nonExistent@email.com", "password");
-        doThrow(new RuntimeException("Usuario o contraseña incorrectos."))
-            .when(userFinder)
-            .findByEmail(userLoginTo.getEmail());
-
-        assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> userLoger.logIn(userLoginTo))
-            .withMessage("Usuario o contraseña incorrectos.");
-    }
-
-    @Test
-    public void whenWantLogInWithWrongPassword_thenTrowAnError() {
-        UserLoginTo userLoginTo = new UserLoginTo("existent@email.com", "WrongPassword");
-        User existentUser = User.create("name", "surname", "existent@email.com", "password", null);
-        when(userFinder.findByEmail(userLoginTo.getEmail())).thenReturn(existentUser);
-
-        assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> userLoger.logIn(userLoginTo))
-            .withMessage("Usuario o contraseña incorrectos.");
-    }
-
-    @Test
     public void whenWantLogInForBuyer_thenReturnTheUserBuyer() {
-        UserLoginTo userLoginTo = new UserLoginTo("existent@email.com", "password");
         User existentUser = User.create("name", "surname", "existent@email.com", "password", null);
         UserBuyer userBuyer = new UserBuyer(existentUser);
-        when(userFinder.findByEmail(userLoginTo.getEmail())).thenReturn(existentUser);
+        when(userFinder.findUserById(1L)).thenReturn(existentUser);
         when(userFinder.isBuyer(existentUser)).thenReturn(true);
         when(userFinder.findBuyerByUser(existentUser)).thenReturn(userBuyer);
 
-        Object userLogged = userLoger.logIn(userLoginTo);
+        UserLoginTO userLogged = userLoger.logIn(1L);
 
-        assertThat(userLogged, instanceOf(UserBuyer.class));
-        assertThat(((UserBuyer) userLogged).sameUser(existentUser), is(true));
+        assertThat(userLogged.getRol(), instanceOf(UserBuyer.class));
+        assertThat(((UserBuyer) userLogged.getRol()).sameUser(existentUser), is(true));
     }
 
     @Test
     public void whenWantLogInForSeller_thenReturnTheUserSeller() {
-        UserLoginTo userLoginTo = new UserLoginTo("existent@email.com", "password");
         User existentUser = User.create("name", "surname", "existent@email.com", "password", null);
         UserSeller userSeller = new UserSeller(existentUser, mock(Commerce.class));
-        when(userFinder.findByEmail(userLoginTo.getEmail())).thenReturn(existentUser);
-        when(userFinder.isSeller(existentUser)).thenReturn(true);
+        when(userFinder.findUserById(1L)).thenReturn(existentUser);
         when(userFinder.findSellerByUser(existentUser)).thenReturn(userSeller);
+        when(userFinder.isSeller(existentUser)).thenReturn(true);
 
-        Object userLogged = userLoger.logIn(userLoginTo);
+        UserLoginTO userLogged = userLoger.logIn(1L);
 
-        assertThat(userLogged, instanceOf(UserSeller.class));
-        assertThat(((UserSeller) userLogged).sameUser(existentUser), is(true));
-        assertThat(((UserSeller) userLogged).getCommerce(), notNullValue());
+        assertThat(userLogged.getRol(), instanceOf(UserSeller.class));
+        assertThat(((UserSeller) userLogged.getRol()).sameUser(existentUser), is(true));
+        assertThat(((UserSeller) userLogged.getRol()).getCommerce(), notNullValue());
     }
 }

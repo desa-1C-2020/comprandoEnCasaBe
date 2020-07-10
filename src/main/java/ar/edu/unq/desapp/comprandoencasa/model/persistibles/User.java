@@ -1,23 +1,37 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import ar.edu.unq.desapp.comprandoencasa.model.AuthProvider;
 import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "basic_user")
 public class User extends PersistibleSupport {
     private String name;
     private String surname;
+    @Column(nullable = false)
     private String email;
     private String password;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
+    private String providerId;
+    @Column(nullable = false)
+    private Boolean emailVerified = false;
+    private String imageUrl;
 
-    public User() {}
+    public User() {
+    }
 
     private User(String name, String surname, String email, String password, Address address) {
         validateEmailIsWellFormed(email);
@@ -93,5 +107,37 @@ public class User extends PersistibleSupport {
 
     public boolean samePassword(String password) {
         return this.password.equals(password);
+    }
+
+    public AuthProvider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(AuthProvider provider) {
+        this.provider = provider;
+    }
+
+    public Boolean getEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(Boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+    public String getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

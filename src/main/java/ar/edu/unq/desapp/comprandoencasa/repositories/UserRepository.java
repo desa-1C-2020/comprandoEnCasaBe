@@ -6,7 +6,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 public interface UserRepository {
     Optional<User> findById(Long userId);
 
-    void addUser(User user);
+    User addUser(User user);
 
     Optional<User> findByEmail(String email);
 

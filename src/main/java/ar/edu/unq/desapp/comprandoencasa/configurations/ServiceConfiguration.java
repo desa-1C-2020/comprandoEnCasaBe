@@ -36,8 +36,9 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public SaleableItemService userSellerService(UserFinder userFinder, SaleableItemRepository saleableItemRepository) {
-        return new SaleableItemService(userFinder, saleableItemRepository);
+    public SaleableItemService userSellerService(UserFinder userFinder, SaleableItemRepository saleableItemRepository,
+                                                 CommerceRepository commerceRepository) {
+        return new SaleableItemService(userFinder, saleableItemRepository, commerceRepository);
     }
 
     @Bean

@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
+import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
 
 import java.util.List;
@@ -10,10 +11,12 @@ import java.util.List;
 public class SaleableItemService {
     private final UserFinder userFinder;
     private final SaleableItemRepository saleableItemRepository;
+    private final CommerceRepository commerceRepository;
 
-    public SaleableItemService(UserFinder userFinder, SaleableItemRepository saleableItemRepository) {
+    public SaleableItemService(UserFinder userFinder, SaleableItemRepository saleableItemRepository, CommerceRepository commerceRepository) {
         this.userFinder = userFinder;
         this.saleableItemRepository = saleableItemRepository;
+        this.commerceRepository = commerceRepository;
     }
 
     public List<SaleableItem> addSaleableProductByUserId(SaleableItem saleableItem, Long userId) {
@@ -21,6 +24,7 @@ public class SaleableItemService {
         Commerce commerce = seller.getCommerce();
         commerce.addSaleableItem(saleableItem);
         saleableItemRepository.save(saleableItem);
+        commerceRepository.save(commerce);
         return commerce.getSaleableItems();
     }
 
@@ -29,6 +33,7 @@ public class SaleableItemService {
         Commerce commerce = seller.getCommerce();
         SaleableItem removedItem = commerce.removeSaleableItemByProductId(productId);
         saleableItemRepository.delete(removedItem);
+        commerceRepository.save(commerce);
         return commerce.getSaleableItems();
     }
 
@@ -36,6 +41,7 @@ public class SaleableItemService {
         UserSeller seller = userFinder.findSellerByUserId(userId);
         Commerce commerce = seller.getCommerce();
         commerce.updateSaleableItem(saleableItem);
+        commerceRepository.save(commerce);
         return commerce.getSaleableItems();
     }
 

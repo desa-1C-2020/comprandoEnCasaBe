@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.UserLoginTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.UserLoginTO;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
@@ -12,40 +12,18 @@ public class UserLoger {
         this.userFinder = userFinder;
     }
 
-    public Object logIn(UserLoginTo userLoginTo) {
-        User user = userFinder.findByEmail(userLoginTo.getEmail());
-        if (!user.samePassword(userLoginTo.getPassword())) {
-            return throwWrongUserOrPassError();
-        }
+    public UserLoginTO logIn(Long userPrincipalId) {
+        User user = userFinder.findUserById(userPrincipalId);
 
-        Object userFound = null;
         if (userFinder.isSeller(user)) {
-            userFound = userFinder.findSellerByUser(user);
+            UserSeller rol = userFinder.findSellerByUser(user);
+            Boolean missingAddress = rol.getCommerce().getAddress() == null;
+            return new UserLoginTO(user, rol, missingAddress);
         } else if (userFinder.isBuyer(user)) {
-            userFound = userFinder.findBuyerByUser(user);
-        } else {
-            throwWrongUserOrPassError();
+            UserBuyer rol = userFinder.findBuyerByUser(user);
+            Boolean missingAddress = user.getAddress() == null;
+            return new UserLoginTO(user, rol, missingAddress);
         }
-        return userFound;
-    }
-
-    public UserBuyer logInBuyer(UserLoginTo userLoginTo) {
-        User user = userFinder.findByEmail(userLoginTo.getEmail());
-        if (user.samePassword(userLoginTo.getPassword())) {
-            throwWrongUserOrPassError();
-        }
-        return userFinder.findBuyerByUser(user);
-    }
-
-    public UserSeller logInSeller(UserLoginTo userLoginTo) {
-        User user = userFinder.findByEmail(userLoginTo.getEmail());
-        if (user.samePassword(userLoginTo.getPassword())) {
-            throwWrongUserOrPassError();
-        }
-        return userFinder.findSellerByUser(user);
-    }
-
-    private RuntimeException throwWrongUserOrPassError() {
-        throw new RuntimeException("Usuario o contraseña incorrectos.");
+        return new UserLoginTO(user, null, true);
     }
 }

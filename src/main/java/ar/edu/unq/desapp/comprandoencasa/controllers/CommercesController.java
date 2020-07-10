@@ -1,8 +1,11 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
+import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
 import ar.edu.unq.desapp.comprandoencasa.service.CommerceFinder;
-import com.google.maps.model.LatLng;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,16 +22,15 @@ public class CommercesController {
     @Autowired
     private CommerceFinder commerceFinder;
 
-    @GetMapping("findInRange")
-    public List<Commerce> getAllWithinGivenDistance(@RequestParam("maxDistance") String maxDistanceMeters,
-                                                    @RequestParam String latitud,
-                                                    @RequestParam String longitud) {
+    @Autowired
+    private UserFinder userFinder;
 
-//        String uid = principal.getName();
-        double latitudParsed = Double.parseDouble(latitud);
-        double longitudParsed = Double.parseDouble(longitud);
-        LatLng latLngFrom = new LatLng(latitudParsed, longitudParsed);
-        return commerceFinder.findAllInsideRange(maxDistanceMeters, latLngFrom);
+    @GetMapping("findInRange")
+    public List<Commerce> getAllWithinGivenDistance(@CurrentUser UserPrincipal userPrincipal,
+                                                    @RequestParam("maxDistance") String maxDistanceMeters) {
+
+        User user = userFinder.findUserById(userPrincipal.getId());
+        return commerceFinder.findAllInsideRange(maxDistanceMeters, user.getAddress().getLatLng());
     }
 }
 

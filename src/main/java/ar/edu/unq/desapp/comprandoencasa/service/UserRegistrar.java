@@ -1,8 +1,9 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.RegisterUserTO;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.SellerTO;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.CommerceTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
@@ -28,15 +29,16 @@ public class UserRegistrar {
         converter = objectConverter;
     }
 
-    public UserSeller registerSellerUser(SellerTO sellerTo) {
-        User newUser = converter.convertTo(User.class, sellerTo.getUser());
-        User user = registerUser(newUser);
-        return registerSellerCommerce(user, sellerTo);
+    public UserSeller updateSeller(Long userId, CommerceTO commerceTo) {
+        User user = userFinder.findUserById(userId);
+        return registerSellerCommerce(user, commerceTo);
     }
 
-    public UserBuyer registerBuyerUser(RegisterUserTO registerUserTO) {
-        User newUser = converter.convertTo(User.class, registerUserTO);
-        User user = registerUser(newUser);
+    public UserBuyer updateBuyer(Long userId, AddressTO addressTO) {
+        User user = userFinder.findUserById(userId);
+        Address address = converter.convertTo(Address.class, addressTO);
+        user.setAddress(address);
+        userRepository.addUser(user);
         return registerBuyer(user);
     }
 
@@ -46,17 +48,8 @@ public class UserRegistrar {
         return userBuyer;
     }
 
-    private User registerUser(User user) {
-        if (userFinder.existsUser(user)) {
-            String errorMessage = "No se puede registrar debido a que existe en el sistema un usuario con el email: [" + user.getEmail() + "].";
-            throw new RuntimeException(errorMessage);
-        }
-        userRepository.addUser(user);
-        return user;
-    }
-
-    private UserSeller registerSellerCommerce(User user, SellerTO sellerTo) {
-        Commerce commerce = converter.convertTo(Commerce.class, sellerTo);
+    private UserSeller registerSellerCommerce(User user, CommerceTO commerceTo) {
+        Commerce commerce = converter.convertTo(Commerce.class, commerceTo);
         UserSeller userSeller = new UserSeller(user, commerce);
         userSellerRepository.save(userSeller);
         return userSeller;

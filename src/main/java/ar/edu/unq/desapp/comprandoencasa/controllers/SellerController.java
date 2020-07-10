@@ -3,6 +3,8 @@ package ar.edu.unq.desapp.comprandoencasa.controllers;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleableItemTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
+import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
+import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
 import ar.edu.unq.desapp.comprandoencasa.service.SaleableItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,25 +32,25 @@ public class SellerController {
     private ObjectConverter converter;
 
     @PostMapping(value = "product")
-    public List<SaleableItem> addSaleableProduct(@RequestParam Long userId, @RequestBody SaleableItemTO saleableItemTo) {
+    public List<SaleableItem> addSaleableProduct(@CurrentUser UserPrincipal userPrincipal, @RequestBody SaleableItemTO saleableItemTo) {
         SaleableItem saleableItem = converter.convertTo(SaleableItem.class, saleableItemTo);
-        return saleableItemService.addSaleableProductByUserId(saleableItem, userId);
+        return saleableItemService.addSaleableProductByUserId(saleableItem, userPrincipal.getId());
     }
 
     @DeleteMapping("product")
-    public List<SaleableItem> removeSaleableProduct(@RequestParam Long userId, @RequestParam Long productId) {
-        return saleableItemService.removeSaleableProductForUser(productId, userId);
+    public List<SaleableItem> removeSaleableProduct(@CurrentUser UserPrincipal userPrincipal, @RequestParam Long productId) {
+        return saleableItemService.removeSaleableProductForUser(productId, userPrincipal.getId());
     }
 
     @PatchMapping("product")
-    public List<SaleableItem> updateSaleableProduct(@RequestParam Long userId, @RequestBody SaleableItemTO saleableItemTo) {
+    public List<SaleableItem> updateSaleableProduct(@CurrentUser UserPrincipal userPrincipal, @RequestBody SaleableItemTO saleableItemTo) {
         SaleableItem saleableItem = converter.convertTo(SaleableItem.class, saleableItemTo);
-        return saleableItemService.updateSaleableProduct(saleableItem, userId);
+        return saleableItemService.updateSaleableProduct(saleableItem, userPrincipal.getId());
     }
 
     @GetMapping("products")
-    public List<SaleableItem> products(@RequestParam Long userId) {
-        return saleableItemService.getProductsFor(userId);
+    public List<SaleableItem> products(@CurrentUser UserPrincipal userPrincipal) {
+        return saleableItemService.getProductsFor(userPrincipal.getId());
     }
 }
 
