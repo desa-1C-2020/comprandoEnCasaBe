@@ -28,6 +28,6 @@ public class SaleableItemRepositoryImpl implements SaleableItemRepository {
 
     @Override
     public List<SaleableItem> getBetween(int start, int end) {
-        return null;
+        return repoJpa.findAll();
     }
 }

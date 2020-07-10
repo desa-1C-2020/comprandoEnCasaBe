@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.support;
 
+import ar.edu.unq.desapp.comprandoencasa.model.AuthProvider;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
@@ -24,7 +25,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Component
 public class DataInitializer
     implements ApplicationListener<ApplicationReadyEvent> {
@@ -47,18 +47,28 @@ public class DataInitializer
      */
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
-//        simulateCommerceFakeData();
-//        simulateUserFakeData();
+        Address casaMarcos = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
+        User userBuyer = User.create("Marcos", "Alvarenga", "marcos.alvarenga@10pines.com", null, casaMarcos);
+        userBuyer.setProvider(AuthProvider.google);
+        userBuyer.setProviderId("118335160242057646942");
+        userRepository.addUser(userBuyer);
+
+        Address otraDir = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
+        User userSellerWithCommerce = User.create("Daniel", "Alvarenga", "mya.alvarenga9@gmail.com", null, otraDir);
+        userSellerWithCommerce.setProvider(AuthProvider.google);
+        userSellerWithCommerce.setProviderId("118335160242057646942");
+        userSellerWithCommerce.setImageUrl("https://lh3.googleusercontent.com/a-/AOh14GjcmqYqLd7ZR8zm6yEu2nwFS2V1n_XF32Ysx2JVVw");
+        userRepository.addUser(userSellerWithCommerce);
+
+        UserSeller userSeller = simulateUserFakeData(userBuyer, userSellerWithCommerce);
+        createFakeProducts();
+        saleableItemRepository.getBetween(2, 4).forEach(userSeller.getCommerce()::addSaleableItem);
+        commerceRepository.add(userSeller.getCommerce());
     }
 
-    private void simulateUserFakeData() {
-        Commerce otherCommerce = commerceRepository.getAll().get(1);
-
-        Address casaMarcos = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
-        User userBuyer = User.create("Marcos", "Alvarenga", "marcos@10pines.com", "password", casaMarcos);
+    private UserSeller simulateUserFakeData(User userBuyer, User userSellerWithCommerce) {
+        Commerce otherCommerce = createCommerce();
         UserBuyer userBuyer1 = new UserBuyer(userBuyer);
-
-        User userSellerWithCommerce = User.create("Daniel", "Alvarenga", "marcos+2@10pines.com", "password", casaMarcos);
         UserSeller userSeller = new UserSeller(userSellerWithCommerce, otherCommerce);
 
         String userBuyerId = "ID DEL USUARIO BUYER************ -> " + userBuyer1.getUser().getId();
@@ -67,12 +77,10 @@ public class DataInitializer
         logger.info(userSellerId);
         userBuyerRepository.save(userBuyer1);
         userSellerRepository.save(userSeller);
-        userRepository.addUser(userBuyer);
-        userRepository.addUser(userSellerWithCommerce);
+        return userSeller;
     }
 
-    private void simulateCommerceFakeData() {
-        createFakeProducts();
+    private Commerce createCommerce() {
         Efectivo efectivo = new Efectivo("pesos");
         List<Efectivo> paymentMethods = new ArrayList<>();
         paymentMethods.add(efectivo);
@@ -80,23 +88,10 @@ public class DataInitializer
         horarios.add("Lunes a viernes de 10 a 18hs");
 
         Address kioscoAddress = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
-        Address kiosco2Address = Address.create("Roque Sáenz Peña 106, Bernal, Buenos Aires", new LatLng(-34.7166345, -58.2822718));
-        Address almacenAddress = Address.create("Roque Sáenz Peña 700, Bernal, Buenos Aires", new LatLng(-34.7104061, -58.2823677));
-        Address perfumeriaAddress = Address.create("Lebensohn Nº 789, B1876 Bernal, Buenos Aires", new LatLng(-34.7105312, -58.2742587));
 
         Commerce kiosco = new Commerce("un kiosco", "Kiosco", kioscoAddress, paymentMethods, horarios, "3km");
-        Commerce kiosco2 = new Commerce("otro kiosco", "Kiosco", kiosco2Address, paymentMethods, horarios, "5km");
-        Commerce almacen = new Commerce("un almacen", "Almacen", almacenAddress, paymentMethods, horarios, "4km");
-        Commerce perfumeria = new Commerce("una perfumeria", "Perfumeria", perfumeriaAddress, paymentMethods, horarios, "2km");
-        saleableItemRepository.getBetween(0, 2).forEach(kiosco::addSaleableItem);
-        saleableItemRepository.getBetween(2, 4).forEach(kiosco2::addSaleableItem);
-        saleableItemRepository.getBetween(4, 6).forEach(almacen::addSaleableItem);
-        saleableItemRepository.getBetween(6, 8).forEach(perfumeria::addSaleableItem);
 
-        commerceRepository.add(kiosco);
-        commerceRepository.add(kiosco2);
-        commerceRepository.add(almacen);
-        commerceRepository.add(perfumeria);
+        return kiosco;
     }
 
     private void createFakeProducts() {
