@@ -12,15 +12,15 @@ import java.util.Arrays;
 
 @Aspect
 @Component
-public class RepositoryImplLoggerAspect {
-    private Logger log = LoggerFactory.getLogger(RepositoryImplLoggerAspect.class);
+public class ServiceLoggerAspect {
+    private Logger log = LoggerFactory.getLogger(ServiceLoggerAspect.class);
 
-    @Pointcut("execution(public * ar.edu.unq.desapp.comprandoencasa.repositories.impl.*.*(..))")
-    public void callsRepositoryImpl() {
+    @Pointcut("execution(public * ar.edu.unq.desapp.comprandoencasa.service.*.*(..))")
+    public void serviceMethodInvoked() {
         // This constructor is intentionally empty. Nothing special is needed here.
     }
 
-    @Around("callsRepositoryImpl()")
+    @Around("serviceMethodInvoked()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.currentTimeMillis();
         try {
@@ -31,7 +31,7 @@ public class RepositoryImplLoggerAspect {
             long elapsedTime = System.currentTimeMillis() - start;
 
             log.info("START - - - - - - - -");
-            log.info("Repository: " + className + ". Invoked Method: " + methodName);
+            log.info("Service: " + className + ". Invoked Method: " + methodName);
 
             log.debug("Invoked Method Arguments: " + Arrays.toString(methodArgs));
             log.debug("Invocation result: " + result);

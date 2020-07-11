@@ -48,4 +48,5 @@ logging:
   level:
     ar.edu.unq.desapp.comprandoencasa.aspects: DEBUG
     ar.edu.unq.desapp.comprandoencasa.controllers: INFO
+    ar.edu.unq.desapp.comprandoencasa.service: INFO
   file: logFile
