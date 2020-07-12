@@ -37,6 +37,16 @@ public class SellerController {
         return saleableItemService.addSaleableProductByUserId(saleableItem, userPrincipal.getId());
     }
 
+    @PostMapping(value = "productsBatch")
+    public List<SaleableItem> addSaleableProductsBatch(@CurrentUser UserPrincipal userPrincipal, @RequestBody List<SaleableItemTO> saleableItemsTO) {
+        saleableItemsTO.stream().forEach(saleableItemTO -> {
+            SaleableItem saleableItem = converter.convertTo(SaleableItem.class, saleableItemTO);
+            saleableItemService.addSaleableProductByUserId(saleableItem, userPrincipal.getId());
+        });
+
+        return saleableItemService.getProductsFor(userPrincipal.getId());
+    }
+
     @DeleteMapping("product")
     public List<SaleableItem> removeSaleableProduct(@CurrentUser UserPrincipal userPrincipal, @RequestParam Long productId) {
         return saleableItemService.removeSaleableProductForUser(productId, userPrincipal.getId());
