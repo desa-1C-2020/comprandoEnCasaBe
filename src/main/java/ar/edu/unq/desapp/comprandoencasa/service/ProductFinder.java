@@ -33,6 +33,11 @@ public class ProductFinder {
         return commercesWithProduct.stream().map(commerce -> mapTocommerceWithFoundProducts(commerce, latLngFrom, productToFind)).collect(Collectors.toList());
     }
 
+    public List<CommerceWithFoundProducts> productsByname(String productName) {
+        return null; //Para esto, desde el front debería dejarte poner una dire tentativa,
+        // para no buscar en todos los comercios todos los productos
+    }
+
     private List<Commerce> commercesWithProduct(String productToFind, List<Commerce> commerceNearUser) {
         return commerceNearUser
             .stream()

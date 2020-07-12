@@ -28,9 +28,14 @@ public class ProductsController {
     @GetMapping("find")
     public List<CommerceWithFoundProducts> findByName(@CurrentUser UserPrincipal userPrincipal,
                                                       @RequestParam("maxDistance") String maxDistanceMeters,
-                                                      @RequestParam("productToFind") String productToFind) {
+                                                      @RequestParam("productToFind") String productName) {
         User user = userFinder.findUserById(userPrincipal.getId());
-        return productFinder.findByNameInRangeForUser(productToFind, maxDistanceMeters, user.getAddress());
+        return productFinder.findByNameInRangeForUser(productName, maxDistanceMeters, user.getAddress());
+    }
+
+    @GetMapping("by-name")
+    public List<CommerceWithFoundProducts> find(@RequestParam("productToFind") String productName) {
+        return productFinder.productsByname(productName);
     }
 }
 
