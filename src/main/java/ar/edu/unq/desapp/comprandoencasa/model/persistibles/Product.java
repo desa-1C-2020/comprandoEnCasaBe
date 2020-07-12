@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -11,6 +12,7 @@ import javax.persistence.Table;
 public class Product extends PersistibleSupport {
     private String name;
     private String brand;
+    @Column(columnDefinition="TEXT")
     private String imageUrl;
 
     public Product() {
