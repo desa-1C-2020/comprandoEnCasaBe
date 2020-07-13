@@ -24,7 +24,6 @@ public class ObjectMapper {
 
         ShoppingListTo shoppingListTo = new ShoppingListTo();
         shoppingListTo.setTotal(shoppingList.getTotal());
-        shoppingListTo.setCreationDateTime(shoppingList.getCreationDateTime());
         shoppingListTo.setItemByCommerceTo(itemByCommerceTos);
         return null;
     }

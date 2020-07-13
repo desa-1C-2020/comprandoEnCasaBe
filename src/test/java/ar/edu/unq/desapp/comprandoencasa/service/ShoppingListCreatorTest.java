@@ -120,7 +120,7 @@ public class ShoppingListCreatorTest {
 
     private ShoppingList createShoppingList(User user) {
         List<ItemsByCommerce> itemsByCommerces = new ArrayList<>();
-        return new ShoppingList(user, itemsByCommerces, BigDecimal.TEN, new Date());
+        return new ShoppingList(user, itemsByCommerces, BigDecimal.TEN, LocalDateTime.now());
     }
 
     private ShoppingListTo getShoppingListTo(Long commerceId, Long productId) {
@@ -128,7 +128,6 @@ public class ShoppingListCreatorTest {
 
         ShoppingListTo shoppingListTo = new ShoppingListTo();
         shoppingListTo.setTotal(BigDecimal.TEN);
-        shoppingListTo.setCreationDateTime(new Date());
         shoppingListTo.setItemByCommerceTo(itemsByCommerce);
         return shoppingListTo;
     }

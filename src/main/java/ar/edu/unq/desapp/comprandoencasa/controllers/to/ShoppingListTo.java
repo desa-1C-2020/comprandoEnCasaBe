@@ -7,7 +7,6 @@ import java.util.List;
 public class ShoppingListTo {
     public static final String itemByCommerceTo_FIELD = "itemByCommerceTo";
     private List<ItemByCommerceTo> itemByCommerceTo;
-    private Date creationDateTime;
     private BigDecimal total;
 
     public List<ItemByCommerceTo> getItemByCommerceTo() {
@@ -16,14 +15,6 @@ public class ShoppingListTo {
 
     public void setItemByCommerceTo(List<ItemByCommerceTo> itemByCommerceTo) {
         this.itemByCommerceTo = itemByCommerceTo;
-    }
-
-    public Date getCreationDateTime() {
-        return creationDateTime;
-    }
-
-    public void setCreationDateTime(Date creationDateTime) {
-        this.creationDateTime = creationDateTime;
     }
 
     public BigDecimal getTotal() {
