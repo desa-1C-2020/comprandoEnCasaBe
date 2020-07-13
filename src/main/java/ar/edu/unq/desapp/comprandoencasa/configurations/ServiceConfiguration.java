@@ -3,12 +3,14 @@ package ar.edu.unq.desapp.comprandoencasa.configurations;
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.DeliveryRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 import ar.edu.unq.desapp.comprandoencasa.service.CommerceFinder;
+import ar.edu.unq.desapp.comprandoencasa.service.DeliveryService;
 import ar.edu.unq.desapp.comprandoencasa.service.ProductFinder;
 import ar.edu.unq.desapp.comprandoencasa.service.PurchaseService;
 import ar.edu.unq.desapp.comprandoencasa.service.SaleableItemService;
@@ -83,7 +85,12 @@ public class ServiceConfiguration {
 //    }
 
     @Bean
-    public PurchaseService purchaseService(CommerceFinder commerceFinder) {
-        return new PurchaseService(commerceFinder);
+    public PurchaseService purchaseService(CommerceFinder commerceFinder, UserFinder userFinder, DeliveryService deliveryService) {
+        return new PurchaseService(commerceFinder, userFinder, deliveryService);
+    }
+
+    @Bean
+    public DeliveryService deliveryService(DeliveryRepository deliveryRepository) {
+        return new DeliveryService(deliveryRepository);
     }
 }

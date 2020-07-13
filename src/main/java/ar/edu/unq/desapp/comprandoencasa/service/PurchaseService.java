@@ -3,20 +3,29 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 import ar.com.kfgodel.nary.api.optionals.InterfacedOptional;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRange;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DeliveryRegister;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.support.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PurchaseService {
+    private final LocalTime defaultDeliveryTime = LocalTime.of(18, 30);
+    private DeliveryService deliveryService;
     private CommerceFinder commerceFinder;
+    private UserFinder userFinder;
     private Logger log = LoggerFactory.getLogger(PurchaseService.class);
 
-    public PurchaseService(CommerceFinder commerceFinder) {
+    public PurchaseService(CommerceFinder commerceFinder, UserFinder userFinder, DeliveryService deliveryService) {
         this.commerceFinder = commerceFinder;
+        this.userFinder = userFinder;
+        this.deliveryService = deliveryService;
     }
 
     public LocalDateTime getTakeAwayOptionFor(List<Long> commercesId, String suggestedDay) {
@@ -53,4 +62,10 @@ public class PurchaseService {
     private boolean canWithdrawThisDay(LocalDateTime suggestedDateTime, List<Commerce> commerces) {
         return commerces.stream().allMatch(commerce -> commerce.isOpenIn(suggestedDateTime));
     }
-}
+
+    public LocalDateTime getDeliveryOption(Long userId) {
+        User user = userFinder.findUserById(userId);
+        DeliveryRegister deliveryRegister = deliveryService.reserveFor(user);
+        LocalDate deliverDate = deliveryRegister.getDeliverDate();
+        return LocalDateTime.of(deliverDate, defaultDeliveryTime);
+    }
