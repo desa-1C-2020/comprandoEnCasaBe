@@ -199,6 +199,17 @@ public class CommerceTest {
         assertThat(openIn, is(false));
     }
 
+    @Test
+    public void whenWantGetDaysAndHoursOpenAsString_thenReturnTheExpectedStringValue() {
+        DayOfWeekWithTimeRange dayOfWeekWithTimeRange = new DayOfWeekWithTimeRange(DayOfWeek.MONDAY,
+            Collections.singletonList(new TimeRange(8, 12)));
+        Commerce kiosco = createCommerceWith(null, dayOfWeekWithTimeRange);
+
+        String openAsString = kiosco.daysAndHoursOpenAsString();
+
+        assertThat(openAsString, is("Rangos abierto: \nMonday: \nDe 08:00 a 12:00 horas."));
+    }
+
     private Commerce createCommerceWith(Product product, DayOfWeekWithTimeRange horarios) {
         Efectivo efectivo = new Efectivo("pesos");
         List<Efectivo> paymentMethods = new ArrayList<>();
