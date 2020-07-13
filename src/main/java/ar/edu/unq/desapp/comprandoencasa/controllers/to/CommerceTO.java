@@ -7,8 +7,16 @@ public class CommerceTO {
     private String businessSector;
     private AddressTO address;
     private List<PaymentMethodTO> paymentMethods;
-    private List<String> daysAndHoursOpen;
+    private List<DayOfWeekWithTimeRangeTO> daysAndHoursOpen;
     private String arrivalRange;
+
+    public List<DayOfWeekWithTimeRangeTO> getDaysAndHoursOpen() {
+        return daysAndHoursOpen;
+    }
+
+    public void setDaysAndHoursOpen(List<DayOfWeekWithTimeRangeTO> daysAndHoursOpen) {
+        this.daysAndHoursOpen = daysAndHoursOpen;
+    }
 
     public String getName() {
         return name;
@@ -40,14 +48,6 @@ public class CommerceTO {
 
     public void setPaymentMethods(List<PaymentMethodTO> paymentMethods) {
         this.paymentMethods = paymentMethods;
-    }
-
-    public List<String> getDaysAndHoursOpen() {
-        return daysAndHoursOpen;
-    }
-
-    public void setDaysAndHoursOpen(List<String> daysAndHoursOpen) {
-        this.daysAndHoursOpen = daysAndHoursOpen;
     }
 
     public String getArrivalRange() {

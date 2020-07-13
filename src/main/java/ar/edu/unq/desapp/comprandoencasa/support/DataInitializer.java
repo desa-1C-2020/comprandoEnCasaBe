@@ -3,9 +3,11 @@ package ar.edu.unq.desapp.comprandoencasa.support;
 import ar.edu.unq.desapp.comprandoencasa.model.AuthProvider;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRange;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.TimeRange;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
@@ -22,7 +24,9 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -86,12 +90,12 @@ public class DataInitializer
         Efectivo efectivo = new Efectivo("pesos");
         List<Efectivo> paymentMethods = new ArrayList<>();
         paymentMethods.add(efectivo);
-        List<String> horarios = new ArrayList<>();
-        horarios.add("Lunes a viernes de 10 a 18hs");
-
         Address kioscoAddress = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
+        DayOfWeekWithTimeRange horarios = new DayOfWeekWithTimeRange(DayOfWeek.MONDAY,
+            Collections.singletonList(new TimeRange(8, 12)));
 
-        Commerce kiosco = new Commerce("un kiosco", "Kiosco", kioscoAddress, paymentMethods, horarios, "3km");
+        Commerce kiosco = new Commerce("un kiosco", "Kiosco", kioscoAddress, paymentMethods,
+            Collections.singletonList(horarios), "3km");
 
         return kiosco;
     }

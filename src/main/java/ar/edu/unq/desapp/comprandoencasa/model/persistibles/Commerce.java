@@ -6,11 +6,11 @@ import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 import com.google.maps.model.LatLng;
 
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,8 +18,6 @@ import java.util.stream.Stream;
 @Entity
 @Table(name = "commerce")
 public class Commerce extends PersistibleSupport {
-    public static final String name_FIELD = "name";
-    public static final String address_FIELD = "address";
     public static final String saleableItems_FIELD = "saleableItems";
     private String name;
     private String businessSector;
@@ -27,8 +25,8 @@ public class Commerce extends PersistibleSupport {
     private Address address;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Efectivo> paymentMethods;
-    @ElementCollection(targetClass = String.class)
-    private List<String> daysAndHoursOpen;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<DayOfWeekWithTimeRange> daysAndHoursOpen;
     private String arrivalRange;
     @OneToMany(cascade = CascadeType.ALL)
     private List<SaleableItem> saleableItems;
@@ -38,7 +36,7 @@ public class Commerce extends PersistibleSupport {
     }
 
     public Commerce(String name, String businessSector, Address address, List<Efectivo> paymentMethods,
-                    List<String> daysAndHoursOpen, String arrivalRange) {
+                    List<DayOfWeekWithTimeRange> daysAndHoursOpen, String arrivalRange) {
         this.name = name;
         this.businessSector = businessSector;
         this.address = address;
@@ -72,11 +70,11 @@ public class Commerce extends PersistibleSupport {
         this.paymentMethods = paymentMethods;
     }
 
-    public List<String> getDaysAndHoursOpen() {
+    public List<DayOfWeekWithTimeRange> getDaysAndHoursOpen() {
         return daysAndHoursOpen;
     }
 
-    public void setDaysAndHoursOpen(List<String> daysAndHoursOpen) {
+    public void setDaysAndHoursOpen(List<DayOfWeekWithTimeRange> daysAndHoursOpen) {
         this.daysAndHoursOpen = daysAndHoursOpen;
     }
 
@@ -168,5 +166,9 @@ public class Commerce extends PersistibleSupport {
             .stream()
             .filter(saleableItem -> saleableItem.containsInProductName(productToFind)).count();
         return count != 0;
+    }
+
+    public boolean isOpenIn(LocalDateTime suggestedDateTime) {
+        return daysAndHoursOpen.stream().anyMatch(rangeOpen -> rangeOpen.match(suggestedDateTime));
     }
 }

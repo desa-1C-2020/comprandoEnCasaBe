@@ -4,7 +4,9 @@ import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRange;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.TimeRange;
 import com.google.maps.model.LatLng;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +14,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -137,13 +141,15 @@ public class DistanceCalculatorTest {
         Efectivo efectivo = new Efectivo("pesos");
         List<Efectivo> paymentMethods = new ArrayList<>();
         paymentMethods.add(efectivo);
-        List<String> horarios = new ArrayList<>();
-        horarios.add("Lunes a viernes de 10 a 18hs");
         Address aCommerceAddress = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", aCommerceLatLng);
         Address otherCommerceAddress = Address.create("Roque Sáenz Peña 106, Bernal, Buenos Aires", otherCommerceLatLng);
-        Commerce aCommerce = new Commerce("Kiosco carlos", "Kiosco", aCommerceAddress, paymentMethods, horarios, "3km");
-        Commerce otherCommerce = new Commerce("Almacen pepe", "Almacen", otherCommerceAddress, paymentMethods, horarios, "5km");
+        DayOfWeekWithTimeRange horarios = new DayOfWeekWithTimeRange(DayOfWeek.MONDAY,
+            Collections.singletonList(new TimeRange(8, 12)));
 
+        Commerce aCommerce = new Commerce("Kiosco carlos", "Kiosco", aCommerceAddress, paymentMethods,
+            Collections.singletonList(horarios), "5km");
+        Commerce otherCommerce = new Commerce("Almacen pepe", "Almacen", otherCommerceAddress, paymentMethods,
+            Collections.singletonList(horarios), "5km");
         List<Commerce> repo = new ArrayList<>();
         repo.add(aCommerce);
         repo.add(otherCommerce);
