@@ -7,13 +7,12 @@ import javax.persistence.Table;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "commerce")
+@Table(name = "time_range")
 public class TimeRange extends PersistibleSupport {
     private LocalTime start;
     private LocalTime end;
 
     public TimeRange() {
-
     }
 
     public TimeRange(int starts, int ends) {
@@ -54,5 +53,10 @@ public class TimeRange extends PersistibleSupport {
     public boolean isInRange(int hour, int minute) {
         return getStartHour() <= hour
             && (getEndtHour() > hour || (getEndtHour() == hour && getEndMinute() == minute));
+    }
+
+    public String stringValue(){
+        return "De " + start.getHour() + ":" + start.getMinute() + " a "
+            + end.getHour() + ":" + end.getMinute() + " horas.";
     }
 }

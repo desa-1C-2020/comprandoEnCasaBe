@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Entity
@@ -170,5 +171,15 @@ public class Commerce extends PersistibleSupport {
 
     public boolean isOpenIn(LocalDateTime suggestedDateTime) {
         return daysAndHoursOpen.stream().anyMatch(rangeOpen -> rangeOpen.match(suggestedDateTime));
+    }
+
+    public String daysAndHoursOpenAsString() {
+        List<String> ranges = daysAndHoursOpen
+            .stream()
+            .map(DayOfWeekWithTimeRange::rangeToString)
+            .collect(Collectors.toList());
+        String startMessage = "Rangos abierto: \n";
+        String rangesJoinning = String.join("\n", ranges);
+        return startMessage + rangesJoinning;
     }
 }

@@ -10,6 +10,7 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 import ar.edu.unq.desapp.comprandoencasa.service.CommerceFinder;
 import ar.edu.unq.desapp.comprandoencasa.service.ProductFinder;
+import ar.edu.unq.desapp.comprandoencasa.service.PurchaseService;
 import ar.edu.unq.desapp.comprandoencasa.service.SaleableItemService;
 import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreator;
 import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
@@ -74,5 +75,10 @@ public class ServiceConfiguration {
     @Bean
     public ProductFinder productFinder(CommerceFinder commerceFinder, GoogleConnector googleConnector, ObjectConverter converter) {
         return new ProductFinder(commerceFinder, googleConnector, converter);
+    }
+
+    @Bean
+    public PurchaseService purchaseService(UserFinder userFinder, CommerceFinder commerceFinder){
+         return new PurchaseService(userFinder, commerceFinder);
     }
 }
