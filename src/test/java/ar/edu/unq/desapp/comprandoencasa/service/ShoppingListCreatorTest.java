@@ -29,7 +29,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -60,10 +59,10 @@ public class ShoppingListCreatorTest {
 
     @Test
     public void whenCreatesAShoppingListWithValidValus_thenSavesTheCreatedShoppingList() {
-        ShoppingListTo shoppingListTo = getShoppingListTo(123L, 1234L, Long.MAX_VALUE);
+        ShoppingListTo shoppingListTo = getShoppingListTo(123L, 1234L);
         simulatesRightOperationForCommerceAndCommerceRepository();
 
-        ShoppingList shoppingList = creator.createAndSave(shoppingListTo);
+        ShoppingList shoppingList = creator.createAndSave(shoppingListTo, Long.MAX_VALUE);
 
         assertThat(shoppingList.getTotal(), is(shoppingListTo.getTotal()));
         verify(shoppingListRepository, times(1)).save(shoppingListCaptor.capture());
@@ -73,11 +72,11 @@ public class ShoppingListCreatorTest {
     @Test
     public void whenWantCreateAShoppingListWithACommerceThatNotExists_thenFailsWithExceptionAndNotSaveTheShoppingList() {
         Long commerceId = 123L;
-        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, 1234L, Long.MAX_VALUE);
+        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, 1234L);
         when(commerceRepository.getById(anyLong())).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> creator.createAndSave(shoppingListTo))
+            .isThrownBy(() -> creator.createAndSave(shoppingListTo, Long.MAX_VALUE))
             .withMessage("No existe el comercio con id: [" + commerceId + "]. No se puede crear la lista de compras");
 
         verify(commerceRepository, times(1)).getById(commerceId);
@@ -88,14 +87,14 @@ public class ShoppingListCreatorTest {
     public void whenWantCreateAShoppingListWithAProductThatNotExistsInCommerce_thenFailsWithExceptionAndNotSaveTheShoppingList() {
         Long commerceId = 123L;
         Long productId = 1234L;
-        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, productId, Long.MAX_VALUE);
+        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, productId);
         Commerce anyCommerce = new Commerce("name", null, null, null, null, null);
         when(commerceRepository.getById(anyLong())).thenReturn(Optional.of(anyCommerce));
 
         String errorMessage = "No existe el producto con id: [" + productId + "] en el comercio [" +
             anyCommerce.getName() + "]. No se puede crear la lista de compras";
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> creator.createAndSave(shoppingListTo))
+            .isThrownBy(() -> creator.createAndSave(shoppingListTo, Long.MAX_VALUE))
             .withMessage(errorMessage);
 
         verify(shoppingListRepository, never()).save(any());
@@ -124,11 +123,10 @@ public class ShoppingListCreatorTest {
         return new ShoppingList(user, itemsByCommerces, BigDecimal.TEN, new Date());
     }
 
-    private ShoppingListTo getShoppingListTo(Long commerceId, Long productId, Long userId) {
+    private ShoppingListTo getShoppingListTo(Long commerceId, Long productId) {
         List<ItemByCommerceTo> itemsByCommerce = getItemByCommerceTos(commerceId, productId);
 
         ShoppingListTo shoppingListTo = new ShoppingListTo();
-        shoppingListTo.setUserId(userId);
         shoppingListTo.setTotal(BigDecimal.TEN);
         shoppingListTo.setCreationDateTime(new Date());
         shoppingListTo.setItemByCommerceTo(itemsByCommerce);

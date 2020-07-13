@@ -70,7 +70,6 @@ public class ControllerLoggerAspect {
         return argsList
             .stream()
             .filter(arg -> arg instanceof UserPrincipal)
-            .map(userPrincipal -> (UserPrincipal) userPrincipal)
             .findFirst();
     }
 }

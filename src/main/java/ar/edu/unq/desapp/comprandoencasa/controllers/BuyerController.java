@@ -4,6 +4,8 @@ import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
+import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
+import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
 import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -34,14 +36,14 @@ public class BuyerController {
     private ObjectMapper objectMapper;
 
     @PostMapping(value = "shoppingList")
-    public ResponseEntity addShoppingList(@RequestBody ShoppingListTo shoppingListTo) {
-        shoppingListCreator.createAndSave(shoppingListTo);
+    public ResponseEntity addShoppingList(@CurrentUser UserPrincipal userPrincipal, @RequestBody ShoppingListTo shoppingListTo) {
+        shoppingListCreator.createAndSave(shoppingListTo, userPrincipal.getId());
         return (ResponseEntity) ResponseEntity.ok();
     }
 
     @GetMapping(value = "shoppingList")
-    public List<ShoppingListTo> getShoppingList(@RequestParam Long userId) {
-        List<ShoppingList> shoppingList = shoppingListCreator.recreateAllListsForUserWithId(userId);
+    public List<ShoppingListTo> getShoppingList(@CurrentUser UserPrincipal userPrincipal) {
+        List<ShoppingList> shoppingList = shoppingListCreator.recreateAllListsForUserWithId(userPrincipal.getId());
         return objectMapper.mapToShoppingListsTo(shoppingList);
     }
 
