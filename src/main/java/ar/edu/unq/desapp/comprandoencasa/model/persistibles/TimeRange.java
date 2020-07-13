@@ -9,8 +9,12 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "commerce")
 public class TimeRange extends PersistibleSupport {
-    private final LocalTime start;
-    private final LocalTime end;
+    private LocalTime start;
+    private LocalTime end;
+
+    public TimeRange() {
+
+    }
 
     public TimeRange(int starts, int ends) {
         if (starts < 1 || starts > 23) {

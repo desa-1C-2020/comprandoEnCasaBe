@@ -2,16 +2,18 @@ package ar.edu.unq.desapp.comprandoencasa.controller.to.mapper;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.CommerceTO;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.DayOfWeekWithTimeRangeTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.PaymentMethodTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
-import com.google.maps.model.LatLng;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,15 +25,16 @@ public class CommerceTO2CommerceConverterTest extends SpringIntegrationTest {
     private ObjectConverter objectConverter;
 
     private CommerceTO commerceTO;
-    private LatLng latLng;
     private AddressTO addressTO;
 
     @Before
     public void setUp() {
-
+        DayOfWeekWithTimeRangeTO dayOfWeekWithTimeRangeTO = new DayOfWeekWithTimeRangeTO();
+        int saturday = 6;
+        dayOfWeekWithTimeRangeTO.setDayOfWeek(saturday);
+        dayOfWeekWithTimeRangeTO.setTimeRanges(Collections.singletonList(Pair.of(8, 12)));
         long lat = 10L;
         long lng = 20L;
-        latLng = new LatLng(lat, lng);
         addressTO = new AddressTO();
         addressTO.setStreet("street");
         addressTO.setLatitud(Double.longBitsToDouble(lat));
@@ -41,9 +44,7 @@ public class CommerceTO2CommerceConverterTest extends SpringIntegrationTest {
         commerceTO.setAddress(addressTO);
         commerceTO.setBusinessSector("sector");
         commerceTO.setName("a commerce");
-        List<String> daysAndHours = new ArrayList<>();
-        daysAndHours.add("an hour");
-        commerceTO.setDaysAndHoursOpen(daysAndHours);
+        commerceTO.setDaysAndHoursOpen(Collections.singletonList(dayOfWeekWithTimeRangeTO));
         List<PaymentMethodTO> paymentMethods = new ArrayList<>();
         PaymentMethodTO paymentMethodTO = new PaymentMethodTO();
         paymentMethodTO.setAccept("Efectivo");
@@ -57,9 +58,9 @@ public class CommerceTO2CommerceConverterTest extends SpringIntegrationTest {
         Commerce commerce = objectConverter.convertTo(Commerce.class, commerceTO);
 
         assertThat(commerce.getName(), is(commerceTO.getName()));
-        assertThat(commerce.getDaysAndHoursOpen(), is(commerceTO.getDaysAndHoursOpen()));
         assertThat(commerce.getAddress().getStreet(), is(commerceTO.getAddress().getStreet()));
         assertThat(commerce.getBusinessSector(), is(commerceTO.getBusinessSector()));
         assertThat(commerce.getAddress().getLatitud(), is(addressTO.getLatitud()));
+        assertThat(commerce.getDaysAndHoursOpen().get(0).getDayOfWeek(), is("Saturday"));
     }
 }

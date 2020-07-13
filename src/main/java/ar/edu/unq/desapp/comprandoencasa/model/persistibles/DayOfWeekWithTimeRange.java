@@ -24,6 +24,9 @@ public class DayOfWeekWithTimeRange extends PersistibleSupport {
         this.timeRange = timeRange;
     }
 
+    public DayOfWeekWithTimeRange() {
+    }
+
     public boolean match(LocalDateTime suggestedDateTime) {
         DayOfWeek suggestedDay = suggestedDateTime.getDayOfWeek();
         int suggestedHour = suggestedDateTime.getHour();
