@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.model;
 
-public enum  AuthProvider {
+public enum AuthProvider {
     local,
     google
 }

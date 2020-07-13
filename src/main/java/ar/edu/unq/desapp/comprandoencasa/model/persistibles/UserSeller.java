@@ -16,7 +16,8 @@ public class UserSeller extends PersistibleSupport {
     @OneToOne(cascade = CascadeType.ALL)
     private Commerce commerce;
 
-    public UserSeller(){}//For jpa
+    public UserSeller() {
+    }//For jpa
 
     public UserSeller(User user, Commerce commerce) {
         this.user = user;

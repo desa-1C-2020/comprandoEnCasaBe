@@ -1,18 +1,21 @@
 package ar.edu.unq.desapp.comprandoencasa.configurations;
 
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.DeliveryRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.CommerceRepositoryImpl;
+import ar.edu.unq.desapp.comprandoencasa.repositories.impl.DeliveryRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.SaleableItemRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserBuyerRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserSellerRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.ShoppingListRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.CommerceRepositoryJpa;
+import ar.edu.unq.desapp.comprandoencasa.repositories.spring.DeliveryRepositoryJpa;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.SaleableItemRepositoryJpa;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.UserBuyerRepositoryJpa;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.UserRepositoryJpa;
@@ -47,6 +50,11 @@ public class RepositoryJpaConfiguration {
     @Bean
     public SaleableItemRepository saleableItemRepository(SaleableItemRepositoryJpa saleableItemRepositoryJpa) {
         return SaleableItemRepositoryImpl.create(saleableItemRepositoryJpa);
+    }
+
+    @Bean
+    public DeliveryRepository deliveryRepository(DeliveryRepositoryJpa deliveryRepositoryJpa) {
+        return DeliveryRepositoryImpl.create(deliveryRepositoryJpa);
     }
 
     //Reemplazar estos a medida que se hacen los mapeos

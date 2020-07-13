@@ -30,7 +30,12 @@ spring:
   #            userInfoUri:
 
 
-google.api.key: ${GOOGLE_API_KEY}
+google:
+  api:
+    key: ${GOOGLE_API_KEY}
+
+delivery:
+  maxDeliverysPerDay: ${DELIVERY_PER_DAY}
 
 app:
   auth:

@@ -4,6 +4,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.AuthProvider;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRange;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DeliveryRegister;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
@@ -12,6 +13,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.DeliveryRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
@@ -22,14 +24,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Component
+@Profile({"dev", "production"})
 public class DataInitializer
     implements ApplicationListener<ApplicationReadyEvent> {
 
@@ -44,6 +49,8 @@ public class DataInitializer
     private UserBuyerRepository userBuyerRepository;
     @Autowired
     private UserSellerRepository userSellerRepository;
+    @Autowired
+    private DeliveryRepository deliveryRepository;
 
     /**
      * This event is executed as late as conceivably possible to indicate that
@@ -69,7 +76,17 @@ public class DataInitializer
             createFakeProducts();
             saleableItemRepository.getBetween(2, 4).forEach(userSeller.getCommerce()::addSaleableItem);
             commerceRepository.save(userSeller.getCommerce());
+            simulateDelivery();
         }
+    }
+
+    private void simulateDelivery() {
+        User user = userRepository.findByEmail("marcos.alvarenga@10pines.com").get();
+        User user2 = userRepository.findByEmail("mya.alvarenga9@gmail.com").get();
+        DeliveryRegister deliveryRegister = new DeliveryRegister(user, true, false, LocalDate.of(2020, 7, 14));
+        DeliveryRegister deliveryRegister1 = new DeliveryRegister(user2, true, false, LocalDate.of(2020, 7, 14));
+        deliveryRepository.save(deliveryRegister);
+        deliveryRepository.save(deliveryRegister1);
     }
 
     private UserSeller simulateUserFakeData(User userBuyer, User userSellerWithCommerce) {

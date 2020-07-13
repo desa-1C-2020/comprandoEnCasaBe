@@ -4,8 +4,10 @@ import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRange;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DeliveryRegister;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.TimeRange;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
 import com.google.maps.model.LatLng;
 import org.junit.Before;
@@ -13,6 +15,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,9 +32,15 @@ public class PurchaseServiceTest extends SpringIntegrationTest {
     @Mock
     private CommerceFinder commerceFinder;
 
+    @Mock
+    private UserFinder userFinder;
+
+    @Mock
+    private DeliveryService deliveryService;
+
     @Before
     public void setUp() {
-        purchaseService = new PurchaseService(commerceFinder);
+        purchaseService = new PurchaseService(commerceFinder, userFinder, deliveryService);
     }
 
     @Test
@@ -42,6 +51,18 @@ public class PurchaseServiceTest extends SpringIntegrationTest {
         LocalDateTime takeAwayOptionFor = purchaseService.getTakeAwayOptionFor(Collections.singletonList(1L), "20200713:130000");
 
         assertThat(takeAwayOptionFor.toString(), is("2020-07-20T08:00:01"));
+    }
+
+    @Test
+    public void whenGetDeliveryOptionsAndThereAreFullTomorrow_thenReturnTheNextAvaileableDay() {
+        User user = User.create("pepe", "carlos", "algo@mail.com", null, null);
+        DeliveryRegister deliveryRegister = new DeliveryRegister(user, true, false, LocalDate.of(2020, 7, 14));
+        when(userFinder.findUserById(1L)).thenReturn(user);
+        when(deliveryService.reserveFor(user)).thenReturn(deliveryRegister);
+
+        LocalDateTime deliveryOption = purchaseService.getDeliveryOption(1L);
+
+        assertThat(deliveryOption.toString(), is("2020-07-14T18:30"));
     }
 
     public Commerce commerce() {
