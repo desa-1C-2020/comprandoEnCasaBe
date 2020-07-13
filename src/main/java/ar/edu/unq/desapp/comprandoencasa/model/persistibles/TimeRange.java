@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import ar.edu.unq.desapp.comprandoencasa.support.DateUtils;
 import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 
 import javax.persistence.Entity;
@@ -56,7 +57,7 @@ public class TimeRange extends PersistibleSupport {
     }
 
     public String stringValue(){
-        return "De " + start.getHour() + ":" + start.getMinute() + " a "
-            + end.getHour() + ":" + end.getMinute() + " horas.";
+        return "De " + DateUtils.parseHourfrom(start) + ":" + DateUtils.parseMinutesfrom(start) + " a "
+            + DateUtils.parseHourfrom(end) + ":" + DateUtils.parseMinutesfrom(end) + " horas.";
     }
 }
