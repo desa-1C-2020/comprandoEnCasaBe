@@ -8,11 +8,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class DeliveryService {
-    private final int maxDeliverysPerDay = 1;
+    private int maxDeliverysPerDay;
     private DeliveryRepository deliveryRepository;
 
-    public DeliveryService(DeliveryRepository deliveryRepository) {
+    public DeliveryService(DeliveryRepository deliveryRepository, int maxDeliverysPerDay) {
         this.deliveryRepository = deliveryRepository;
+        this.maxDeliverysPerDay = maxDeliverysPerDay;
     }
 
     public DeliveryRegister reserveFor(User user) {

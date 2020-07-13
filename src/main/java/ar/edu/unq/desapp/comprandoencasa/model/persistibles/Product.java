@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Product extends PersistibleSupport {
     private String name;
     private String brand;
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     private String imageUrl;
 
     public Product() {

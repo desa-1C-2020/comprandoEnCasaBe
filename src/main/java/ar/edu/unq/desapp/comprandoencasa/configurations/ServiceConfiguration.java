@@ -27,6 +27,9 @@ public class ServiceConfiguration {
     @Value("${google.api.key}")
     private String googleApiKey;
 
+    @Value("${delivery.maxDeliverysPerDay}")
+    private int maxDeliverysPerDay;
+
     @Bean
     public GoogleConnector googleConnector() {
         return new GoogleConnector(googleApiKey);
@@ -91,6 +94,6 @@ public class ServiceConfiguration {
 
     @Bean
     public DeliveryService deliveryService(DeliveryRepository deliveryRepository) {
-        return new DeliveryService(deliveryRepository);
+        return new DeliveryService(deliveryRepository, maxDeliverysPerDay);
     }
 }

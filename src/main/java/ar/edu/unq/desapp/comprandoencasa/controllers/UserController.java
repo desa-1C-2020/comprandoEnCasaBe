@@ -2,12 +2,12 @@ package ar.edu.unq.desapp.comprandoencasa.controllers;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.CommerceTO;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.UserLoginTO;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
 import ar.edu.unq.desapp.comprandoencasa.service.UserLoger;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.UserLoginTO;
 import ar.edu.unq.desapp.comprandoencasa.service.UserRegistrar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

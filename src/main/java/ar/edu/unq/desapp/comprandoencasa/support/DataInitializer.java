@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
@@ -33,6 +34,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
+@Profile({"dev", "production"})
 public class DataInitializer
     implements ApplicationListener<ApplicationReadyEvent> {
 

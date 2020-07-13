@@ -27,4 +27,8 @@ public class DeliveryRepositoryMem implements DeliveryRepository {
             .filter(deliveryRegister -> deliveryRegister.getDeliverDate().isEqual(date))
             .collect(Collectors.toList());
     }
+
+    public void clear() {
+        repo.clear();
+    }
 }

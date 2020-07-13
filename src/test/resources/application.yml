@@ -20,3 +20,6 @@ app:
     tokenExpirationMsec: "123"
   oauth2:
     authorizedRedirectUris: "OAUTH2_AUTHORIZED_REDIRECT_URIS"
+
+delivery:
+  maxDeliverysPerDay: 1

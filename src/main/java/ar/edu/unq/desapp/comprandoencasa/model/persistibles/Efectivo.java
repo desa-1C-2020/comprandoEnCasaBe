@@ -10,7 +10,8 @@ import javax.persistence.Table;
 public class Efectivo extends PersistibleSupport {
     private String accept;
 
-    public Efectivo(){}
+    public Efectivo() {
+    }
 
     public Efectivo(String pesos) {
         accept = pesos;

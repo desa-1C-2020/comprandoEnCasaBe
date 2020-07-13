@@ -50,6 +50,13 @@ public class PurchaseService {
         return allOpenDay(suggestedDateTime, commerces.get(0).getDaysAndHoursOpen().get(0));
     }
 
+    public LocalDateTime getDeliveryOption(Long userId) {
+        User user = userFinder.findUserById(userId);
+        DeliveryRegister deliveryRegister = deliveryService.reserveFor(user);
+        LocalDate deliverDate = deliveryRegister.getDeliverDate();
+        return LocalDateTime.of(deliverDate, defaultDeliveryTime);
+    }
+
     private LocalDateTime allOpenDay(LocalDateTime suggestedDateTime, DayOfWeekWithTimeRange rangeOfFirstCommerce) {
         //Default, si el dia sugerido por el cliente es viernes, sabado o domingo
         // le sumo 3 dias para que el dia default sea o lunes, martes o miercoles.
@@ -62,10 +69,4 @@ public class PurchaseService {
     private boolean canWithdrawThisDay(LocalDateTime suggestedDateTime, List<Commerce> commerces) {
         return commerces.stream().allMatch(commerce -> commerce.isOpenIn(suggestedDateTime));
     }
-
-    public LocalDateTime getDeliveryOption(Long userId) {
-        User user = userFinder.findUserById(userId);
-        DeliveryRegister deliveryRegister = deliveryService.reserveFor(user);
-        LocalDate deliverDate = deliveryRegister.getDeliverDate();
-        return LocalDateTime.of(deliverDate, defaultDeliveryTime);
-    }
+}

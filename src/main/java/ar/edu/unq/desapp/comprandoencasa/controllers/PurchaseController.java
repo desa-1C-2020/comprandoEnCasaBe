@@ -31,5 +31,4 @@ public class PurchaseController {
     public LocalDateTime getDeliveryOptions(@CurrentUser UserPrincipal userPrincipal) {
         return purchaseService.getDeliveryOption(userPrincipal.getId());
     }
-    }
 }
