@@ -10,8 +10,8 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "time_range")
 public class TimeRange extends PersistibleSupport {
-    private LocalTime start;
-    private LocalTime end;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     public TimeRange() {
     }
@@ -27,28 +27,28 @@ public class TimeRange extends PersistibleSupport {
             throw new RuntimeException("La hora de fin debe ser mayor que la hora de comienzo.");
         }
 
-        start = LocalTime.of(starts, 0);
+        startTime = LocalTime.of(starts, 0);
         if (ends == 24) {
-            end = LocalTime.of(23, 59);
+            endTime = LocalTime.of(23, 59);
         } else {
-            end = LocalTime.of(ends, 0);
+            endTime = LocalTime.of(ends, 0);
         }
     }
 
     public int getStartHour() {
-        return start.getHour();
+        return startTime.getHour();
     }
 
     public int getStartMinute() {
-        return start.getMinute();
+        return startTime.getMinute();
     }
 
     public int getEndtHour() {
-        return end.getHour();
+        return endTime.getHour();
     }
 
     public int getEndMinute() {
-        return end.getMinute();
+        return endTime.getMinute();
     }
 
     public boolean isInRange(int hour, int minute) {
@@ -57,7 +57,7 @@ public class TimeRange extends PersistibleSupport {
     }
 
     public String stringValue() {
-        return "De " + DateUtils.parseHourfrom(start) + ":" + DateUtils.parseMinutesfrom(start) + " a "
-            + DateUtils.parseHourfrom(end) + ":" + DateUtils.parseMinutesfrom(end) + " horas.";
+        return "De " + DateUtils.parseHourfrom(startTime) + ":" + DateUtils.parseMinutesfrom(startTime) + " a "
+            + DateUtils.parseHourfrom(endTime) + ":" + DateUtils.parseMinutesfrom(endTime) + " horas.";
     }
 }
