@@ -77,8 +77,13 @@ public class ServiceConfiguration {
         return new ProductFinder(commerceFinder, googleConnector, converter);
     }
 
+//    @Bean
+//    public PurchaseService purchaseService(UserFinder userFinder, CommerceFinder commerceFinder){
+//         return new PurchaseService(userFinder, commerceFinder);
+//    }
+
     @Bean
-    public PurchaseService purchaseService(UserFinder userFinder, CommerceFinder commerceFinder){
-         return new PurchaseService(userFinder, commerceFinder);
+    public PurchaseService purchaseService(CommerceFinder commerceFinder) {
+        return new PurchaseService(commerceFinder);
     }
 }

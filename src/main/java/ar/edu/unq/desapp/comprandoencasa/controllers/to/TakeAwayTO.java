@@ -3,8 +3,8 @@ package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 import java.util.List;
 
 public class TakeAwayTO {
-    List<Long> commercesId;
-    String suggestedDay;
+    private List<Long> commercesId;
+    private String suggestedDay;
 
     public List<Long> getCommercesId() {
         return commercesId;

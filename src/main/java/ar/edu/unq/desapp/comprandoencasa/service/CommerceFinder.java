@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
+import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
 import ar.edu.unq.desapp.comprandoencasa.model.DistanceCalculator;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
@@ -24,5 +25,9 @@ public class CommerceFinder {
         DistanceCalculator distanceCalculator = new DistanceCalculator(googleConnector);
 
         return distanceCalculator.getByLatLngInRange(latLngFrom, maxDistanceLong, commerceList);
+    }
+
+    public Optional<Commerce> findById(Long commerceId) {
+        return commerceRepository.getById(commerceId);
     }
 }

@@ -1,11 +1,8 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.com.kfgodel.nary.api.optionals.InterfacedOptional;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.PurchaseTO;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRange;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.support.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PurchaseService {
-    private UserFinder userFinder;
     private CommerceFinder commerceFinder;
     private Logger log = LoggerFactory.getLogger(PurchaseService.class);
 
-    public PurchaseService(UserFinder userFinder, CommerceFinder commerceFinder) {
-        this.userFinder = userFinder;
+    public PurchaseService(CommerceFinder commerceFinder) {
         this.commerceFinder = commerceFinder;
     }
 
@@ -43,10 +38,10 @@ public class PurchaseService {
         if (canWithdrawThisDay(nextDay, commerces)) {
             return nextDay;
         }
-        return AllOpenDay(suggestedDateTime, commerces.get(0).getDaysAndHoursOpen().get(0));
+        return allOpenDay(suggestedDateTime, commerces.get(0).getDaysAndHoursOpen().get(0));
     }
 
-    private LocalDateTime AllOpenDay(LocalDateTime suggestedDateTime, DayOfWeekWithTimeRange rangeOfFirstCommerce) {
+    private LocalDateTime allOpenDay(LocalDateTime suggestedDateTime, DayOfWeekWithTimeRange rangeOfFirstCommerce) {
         //Default, si el dia sugerido por el cliente es viernes, sabado o domingo
         // le sumo 3 dias para que el dia default sea o lunes, martes o miercoles.
         if (suggestedDateTime.getDayOfWeek().getValue() > 5) {
