@@ -24,4 +24,9 @@ public class PurchaseController {
     public LocalDateTime getTakeAwayOptions(@RequestBody TakeAwayTO takeAwayTO) {
         return purchaseService.getTakeAwayOptionFor(takeAwayTO.getCommercesId(), takeAwayTO.getSuggestedDay());
     }
+
+    @GetMapping(value = "delivery")
+    public LocalDateTime getDeliveryOptions(@RequestBody TakeAwayTO takeAwayTO) {
+        return purchaseService.getTakeAwayOptionFor(takeAwayTO.getCommercesId(), takeAwayTO.getSuggestedDay());
+    }
 }

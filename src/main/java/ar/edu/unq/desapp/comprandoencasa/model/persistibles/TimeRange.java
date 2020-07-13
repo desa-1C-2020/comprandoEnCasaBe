@@ -56,7 +56,7 @@ public class TimeRange extends PersistibleSupport {
             && (getEndtHour() > hour || (getEndtHour() == hour && getEndMinute() == minute));
     }
 
-    public String stringValue(){
+    public String stringValue() {
         return "De " + DateUtils.parseHourfrom(start) + ":" + DateUtils.parseMinutesfrom(start) + " a "
             + DateUtils.parseHourfrom(end) + ":" + DateUtils.parseMinutesfrom(end) + " horas.";
     }
