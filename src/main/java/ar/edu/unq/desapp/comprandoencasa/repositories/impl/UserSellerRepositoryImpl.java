@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.repositories.impl;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
@@ -24,5 +25,10 @@ public class UserSellerRepositoryImpl implements UserSellerRepository {
     @Override
     public Optional<UserSeller> findByUser(User user) {
         return Optional.ofNullable(repoJpa.findByUser(user));
+    }
+
+    @Override
+    public UserSeller findByCommerce(Commerce commerce) {
+        return repoJpa.findByCommerce(commerce);
     }
 }

@@ -55,3 +55,7 @@ logging:
     ar.edu.unq.desapp.comprandoencasa.controllers: INFO
     ar.edu.unq.desapp.comprandoencasa.service: INFO
   file: logFile
+
+sendgrid:
+  apiKey: ${SENDGRID_API_KEY}
+  email: ${SENDGRID_EMAIL}

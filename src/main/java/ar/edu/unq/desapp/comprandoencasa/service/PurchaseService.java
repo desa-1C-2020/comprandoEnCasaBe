@@ -35,16 +35,18 @@ public class PurchaseService {
     private Logger log = LoggerFactory.getLogger(PurchaseService.class);
     private PurchaseRepository purchaseRepository;
     private SaleRegisterService saleRegisterService;
+    private EmailSender emailSender;
 
     public PurchaseService(CommerceFinder commerceFinder, UserFinder userFinder, DeliveryService deliveryService,
                            ShoppingListCreator shoppingListCreator, PurchaseRepository purchaseRepository,
-                           SaleRegisterService saleRegisterService) {
+                           SaleRegisterService saleRegisterService, EmailSender emailSender) {
         this.commerceFinder = commerceFinder;
         this.userFinder = userFinder;
         this.deliveryService = deliveryService;
         this.shoppingListCreator = shoppingListCreator;
         this.purchaseRepository = purchaseRepository;
         this.saleRegisterService = saleRegisterService;
+        this.emailSender = emailSender;
     }
 
     public LocalDateTime getTakeAwayOptionFor(List<Long> commercesId, String suggestedDay) {
@@ -91,17 +93,9 @@ public class PurchaseService {
         Purchase purchase = new Purchase(shoppingList, paymentMethod, deliveryOption, total, LocalDateTime.now(), user);
         purchaseRepository.save(purchase);
 
-        sendEmailToSellers(saleRegisters, purchase);
-        sendEmailToBuyer(user, purchase);
+        emailSender.sendEmailToSellers(saleRegisters, purchase);
+        emailSender.sendEmailToBuyer(user, purchase);
         return purchase;
-    }
-
-    private void sendEmailToBuyer(User user, Purchase purchase) {
-        // howdy is not used
-    }
-
-    private void sendEmailToSellers(List<SaleRegister> saleRegisters, Purchase purchase) {
-        // howdy is not used
     }
 
     private DeliveryOption getDeliveryOption(PurchaseTO purchaseTO) {
@@ -126,20 +120,3 @@ public class PurchaseService {
         return commerces.stream().allMatch(commerce -> commerce.isOpenIn(suggestedDateTime));
     }
 }
-
-
-// por cada comercio, se crea un objeto venta productos, total, etc... SaleRegister HECHO
-//por cada comercio se crea el estado de la venta en pendiente -> esto va a decrementar el stock.. HECHO
-
-// cuando se hace la compra, aca recien se guarda la shopping list. para el comprador HECHO
-
-//guardar la compra propiamente dicha para el comprador ESTA ES LA MISMA PARA AMBOS -> PURCHASE REGISTER
-//la compra va a tener al usuario comprador. HECHO
-
-//Se tacha el espacio de delivery dado  Esto ya se reservo antes.. habria que ver la parte de que un usuario puede ir y volver,
-// y reservar varias fechas, pero para después.
-//13/07/2020 -> 15 pedidos de delivery
-//13/07/2020 -> 14 pedidos de delivery
-
-//enviar mail de que le compraron al vendedor.
-//enviar mail de compra al usuario comprador

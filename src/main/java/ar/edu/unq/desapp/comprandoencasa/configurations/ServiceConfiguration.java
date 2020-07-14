@@ -11,8 +11,10 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
+import ar.edu.unq.desapp.comprandoencasa.sendgrid.SendGridClient;
 import ar.edu.unq.desapp.comprandoencasa.service.CommerceFinder;
 import ar.edu.unq.desapp.comprandoencasa.service.DeliveryService;
+import ar.edu.unq.desapp.comprandoencasa.service.EmailSender;
 import ar.edu.unq.desapp.comprandoencasa.service.ProductFinder;
 import ar.edu.unq.desapp.comprandoencasa.service.PurchaseService;
 import ar.edu.unq.desapp.comprandoencasa.service.SaleRegisterService;
@@ -88,9 +90,10 @@ public class ServiceConfiguration {
     @Bean
     public PurchaseService purchaseService(CommerceFinder commerceFinder, UserFinder userFinder,
                                            DeliveryService deliveryService, ShoppingListCreator shoppingListCreator,
-                                           PurchaseRepository purchaseRepository, SaleRegisterService saleRegisterService) {
+                                           PurchaseRepository purchaseRepository, SaleRegisterService saleRegisterService,
+                                           EmailSender emailSender) {
         return new PurchaseService(commerceFinder, userFinder, deliveryService, shoppingListCreator,
-            purchaseRepository, saleRegisterService);
+            purchaseRepository, saleRegisterService, emailSender);
     }
 
     @Bean
@@ -102,5 +105,10 @@ public class ServiceConfiguration {
     @Bean
     public DeliveryService deliveryService(DeliveryRepository deliveryRepository) {
         return new DeliveryService(deliveryRepository, maxDeliverysPerDay);
+    }
+
+    @Bean
+    public EmailSender emailSender(SendGridClient sendGridClient, UserFinder userFinder) {
+        return new EmailSender(sendGridClient, userFinder);
     }
 }
