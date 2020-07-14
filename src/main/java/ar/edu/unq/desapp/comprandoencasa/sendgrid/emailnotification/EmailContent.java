@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.comprandoencasa.sendgrid.emailNotification;
+package ar.edu.unq.desapp.comprandoencasa.sendgrid.emailnotification;
 
 import com.sendgrid.Content;
 import com.sendgrid.Email;

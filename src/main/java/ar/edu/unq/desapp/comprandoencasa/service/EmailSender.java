@@ -7,7 +7,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleRegister;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.sendgrid.SendGridClient;
-import ar.edu.unq.desapp.comprandoencasa.sendgrid.emailNotification.EmailContent;
+import ar.edu.unq.desapp.comprandoencasa.sendgrid.emailnotification.EmailContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

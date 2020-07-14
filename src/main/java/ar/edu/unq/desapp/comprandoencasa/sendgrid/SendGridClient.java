@@ -1,8 +1,8 @@
 package ar.edu.unq.desapp.comprandoencasa.sendgrid;
 
 import ar.edu.unq.desapp.comprandoencasa.configurations.SendGridProperties;
-import ar.edu.unq.desapp.comprandoencasa.sendgrid.emailNotification.EmailContent;
-import ar.edu.unq.desapp.comprandoencasa.sendgrid.emailNotification.MailSenderError;
+import ar.edu.unq.desapp.comprandoencasa.sendgrid.emailnotification.EmailContent;
+import ar.edu.unq.desapp.comprandoencasa.sendgrid.emailnotification.MailSenderError;
 import com.sendgrid.Mail;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
