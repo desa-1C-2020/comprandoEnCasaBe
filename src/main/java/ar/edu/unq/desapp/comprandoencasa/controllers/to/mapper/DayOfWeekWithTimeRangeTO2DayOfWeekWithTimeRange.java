@@ -4,7 +4,7 @@ import ar.edu.unq.desapp.comprandoencasa.controllers.to.DayOfWeekWithTimeRangeTO
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.MapperFunction;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRange;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.TimeRange;
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.MutablePair;
 import org.mapstruct.Mapper;
 
 import java.time.DayOfWeek;
@@ -24,7 +24,7 @@ public class DayOfWeekWithTimeRangeTO2DayOfWeekWithTimeRange implements MapperFu
         return new DayOfWeekWithTimeRange(dayOfWeek, getTimeRangesFrom(dayOfWeekWithTimeRangeTO.getTimeRanges()));
     }
 
-    private List<TimeRange> getTimeRangesFrom(List<Pair> ranges) {
+    private List<TimeRange> getTimeRangesFrom(List<MutablePair> ranges) {
         return ranges
             .stream()
             .map(pair -> new TimeRange((Integer) pair.getLeft(), (Integer) pair.getRight()))

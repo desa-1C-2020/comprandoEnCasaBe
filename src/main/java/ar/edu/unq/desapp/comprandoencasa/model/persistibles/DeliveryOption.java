@@ -3,12 +3,15 @@ package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "delivery_option")
 public class DeliveryOption extends PersistibleSupport {
+    @Enumerated(EnumType.STRING)
     private DeliveryOptionType deliveryOptionType;
     private LocalDateTime suggestedDay;
 

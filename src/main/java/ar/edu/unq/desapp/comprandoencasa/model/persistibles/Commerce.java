@@ -8,6 +8,8 @@ import com.google.maps.model.LatLng;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -27,6 +29,7 @@ public class Commerce extends PersistibleSupport {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
     @ElementCollection
+    @Enumerated(EnumType.STRING)
     private List<PaymentMethod> paymentMethods;
     @OneToMany(cascade = CascadeType.ALL)
     private List<DayOfWeekWithTimeRange> daysAndHoursOpen;
