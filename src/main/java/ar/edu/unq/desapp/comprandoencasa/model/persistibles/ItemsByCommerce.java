@@ -1,10 +1,24 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
-public class ItemsByCommerce {
+@Entity
+@Table(name = "items_by_commerce")
+public class ItemsByCommerce extends PersistibleSupport {
+    @ManyToOne
     private Commerce commerce;
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ShoppingListItem> items;
+
+    public ItemsByCommerce() {
+    }
 
     public ItemsByCommerce(Commerce commerce, List<ShoppingListItem> shoppingList) {
         this.commerce = commerce;

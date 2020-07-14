@@ -1,14 +1,24 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
-public class ShoppingListItem {
+@Entity
+@Table(name = "shopping_list_item")
+public class ShoppingListItem extends PersistibleSupport {
+    @OneToOne
     private Product product;
     private int quantity;
     private BigDecimal price;//precio que valia cuando se creo la lista de compras. Hay que quitar el precio del producto.
 
-    public ShoppingListItem(Product product, int quantity, BigDecimal price) {
+    public ShoppingListItem() {
+    }
 
+    public ShoppingListItem(Product product, int quantity, BigDecimal price) {
         this.product = product;
         this.quantity = quantity;
         this.price = price;

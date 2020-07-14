@@ -20,8 +20,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
@@ -59,10 +59,12 @@ public class ShoppingListCreatorTest {
 
     @Test
     public void whenCreatesAShoppingListWithValidValus_thenSavesTheCreatedShoppingList() {
+        User user = User.create("aName", "aSurname", "anEmail@email.com", "password", null);
+        user.setId(Long.MAX_VALUE);
         ShoppingListTo shoppingListTo = getShoppingListTo(123L, 1234L);
         simulatesRightOperationForCommerceAndCommerceRepository();
 
-        ShoppingList shoppingList = creator.createAndSave(shoppingListTo, Long.MAX_VALUE);
+        ShoppingList shoppingList = creator.createAndSave(shoppingListTo, user);
 
         assertThat(shoppingList.getTotal(), is(shoppingListTo.getTotal()));
         verify(shoppingListRepository, times(1)).save(shoppingListCaptor.capture());
@@ -71,12 +73,14 @@ public class ShoppingListCreatorTest {
 
     @Test
     public void whenWantCreateAShoppingListWithACommerceThatNotExists_thenFailsWithExceptionAndNotSaveTheShoppingList() {
+        User user = User.create("aName", "aSurname", "anEmail@email.com", "password", null);
+        user.setId(Long.MAX_VALUE);
         Long commerceId = 123L;
         ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, 1234L);
         when(commerceRepository.getById(anyLong())).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> creator.createAndSave(shoppingListTo, Long.MAX_VALUE))
+            .isThrownBy(() -> creator.createAndSave(shoppingListTo, user))
             .withMessage("No existe el comercio con id: [" + commerceId + "]. No se puede crear la lista de compras");
 
         verify(commerceRepository, times(1)).getById(commerceId);
@@ -85,6 +89,8 @@ public class ShoppingListCreatorTest {
 
     @Test
     public void whenWantCreateAShoppingListWithAProductThatNotExistsInCommerce_thenFailsWithExceptionAndNotSaveTheShoppingList() {
+        User user = User.create("aName", "aSurname", "anEmail@email.com", "password", null);
+        user.setId(Long.MAX_VALUE);
         Long commerceId = 123L;
         Long productId = 1234L;
         ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, productId);
@@ -94,7 +100,7 @@ public class ShoppingListCreatorTest {
         String errorMessage = "No existe el producto con id: [" + productId + "] en el comercio [" +
             anyCommerce.getName() + "]. No se puede crear la lista de compras";
         assertThatExceptionOfType(RuntimeException.class)
-            .isThrownBy(() -> creator.createAndSave(shoppingListTo, Long.MAX_VALUE))
+            .isThrownBy(() -> creator.createAndSave(shoppingListTo, user))
             .withMessage(errorMessage);
 
         verify(shoppingListRepository, never()).save(any());

@@ -31,10 +31,9 @@ public class ShoppingListCreator {
         this.commerceRepository = commerceRepository;
     }
 
-    public ShoppingList createAndSave(ShoppingListTo shoppingListTo, Long userId) {
+    public ShoppingList createAndSave(ShoppingListTo shoppingListTo, User user) {
         //Aca deberia ver de guardar los errores, pero si crear la lista con los que no fallaron.
         //Revisar esto pero por ahora si falla uno, fallan todos.
-        User user = userFinder.findUserById(userId);
         BigDecimal total = shoppingListTo.getTotal();
 
         List<ItemByCommerceTo> itemByCommerceTo = shoppingListTo.getItemByCommerceTo();

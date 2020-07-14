@@ -38,9 +38,12 @@ public class PurchaseServiceTest extends SpringIntegrationTest {
     @Mock
     private DeliveryService deliveryService;
 
+    @Mock
+    private ShoppingListCreator creator;
+
     @Before
     public void setUp() {
-        purchaseService = new PurchaseService(commerceFinder, userFinder, deliveryService);
+        purchaseService = new PurchaseService(commerceFinder, userFinder, deliveryService, creator);
     }
 
     @Test

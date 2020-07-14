@@ -1,25 +1,35 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static java.util.UUID.randomUUID;
-
-public class ShoppingList {
+@Entity
+@Table(name = "shopping_list")
+public class ShoppingList extends PersistibleSupport {
     public static final String itemsByCommerce_FIELD = "itemsByCommerce";
+    @ManyToOne
     private User user;
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ItemsByCommerce> itemsByCommerce;
     private LocalDateTime creationDateTime;
     private BigDecimal total;
-    private String id;
+
+    public ShoppingList() {
+    }
 
     public ShoppingList(User user, List<ItemsByCommerce> itemsByCommerce, BigDecimal total, LocalDateTime creationDateTime) {
         this.user = user;
         this.itemsByCommerce = itemsByCommerce;
         this.total = total;
         this.creationDateTime = creationDateTime;
-        this.id = randomUUID().toString();
     }
 
     public User getUser() {
@@ -36,14 +46,6 @@ public class ShoppingList {
 
     public void setItemsByCommerce(List<ItemsByCommerce> itemsByCommerce) {
         this.itemsByCommerce = itemsByCommerce;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public BigDecimal getTotal() {
@@ -63,7 +65,7 @@ public class ShoppingList {
     }
 
     public boolean sameId(String shoppingListToDeleteId) {
-        return id.equals(shoppingListToDeleteId);
+        return getId().equals(shoppingListToDeleteId);
     }
 
     public LocalDateTime getCreationDateTime() {
