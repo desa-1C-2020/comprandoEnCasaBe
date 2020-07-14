@@ -23,6 +23,7 @@ public class ShoppingList extends PersistibleSupport {
     private BigDecimal total;
 
     public ShoppingList() {
+        //Used for hibernate
     }
 
     public ShoppingList(User user, List<ItemsByCommerce> itemsByCommerce, BigDecimal total, LocalDateTime creationDateTime) {

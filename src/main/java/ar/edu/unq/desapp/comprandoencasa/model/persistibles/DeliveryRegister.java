@@ -19,6 +19,7 @@ public class DeliveryRegister extends PersistibleSupport {
     private LocalDate deliverDate;
 
     public DeliveryRegister() {
+        //Used for hibernate
     }
 
     public DeliveryRegister(User user, Boolean reserved, Boolean delivered, LocalDate deliverDate) {

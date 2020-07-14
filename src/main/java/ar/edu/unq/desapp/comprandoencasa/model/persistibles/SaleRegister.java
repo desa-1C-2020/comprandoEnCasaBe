@@ -23,6 +23,7 @@ public class SaleRegister extends PersistibleSupport {
     private User user;
 
     public SaleRegister() {
+        //Used for hibernate
     }
 
     public static SaleRegister create(Commerce commerce, ShoppingList shoppingList, List<ShoppingListItem> items,

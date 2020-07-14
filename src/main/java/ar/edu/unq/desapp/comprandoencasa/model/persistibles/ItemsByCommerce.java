@@ -18,6 +18,7 @@ public class ItemsByCommerce extends PersistibleSupport {
     private List<ShoppingListItem> items;
 
     public ItemsByCommerce() {
+        //Used for hibernate
     }
 
     public ItemsByCommerce(Commerce commerce, List<ShoppingListItem> shoppingList) {

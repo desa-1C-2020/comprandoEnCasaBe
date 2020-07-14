@@ -16,6 +16,7 @@ public class SaleableItem extends PersistibleSupport {
     private Product product;
 
     public SaleableItem() {
+        //Used for hibernate
     }
 
     public SaleableItem(int stock, double price, Product product) {

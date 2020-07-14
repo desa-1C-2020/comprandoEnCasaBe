@@ -16,6 +16,7 @@ public class Product extends PersistibleSupport {
     private String imageUrl;
 
     public Product() {
+        //Used for hibernate
     }
 
     public Product(String name, String brand, String url) {

@@ -14,6 +14,7 @@ public class TimeRange extends PersistibleSupport {
     private LocalTime endTime;
 
     public TimeRange() {
+        //Used for hibernate
     }
 
     public TimeRange(int starts, int ends) {

@@ -16,6 +16,7 @@ public class DeliveryOption extends PersistibleSupport {
     private LocalDateTime suggestedDay;
 
     public DeliveryOption() {
+        //Used for hibernate
     }
 
     public DeliveryOption(DeliveryOptionType deliveryOptionType, LocalDateTime suggestedDay) {

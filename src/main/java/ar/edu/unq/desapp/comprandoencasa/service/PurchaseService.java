@@ -34,7 +34,7 @@ public class PurchaseService {
     private UserFinder userFinder;
     private Logger log = LoggerFactory.getLogger(PurchaseService.class);
     private PurchaseRepository purchaseRepository;
-    private SaleRegisterService saleRegisterServie;
+    private SaleRegisterService saleRegisterService;
 
     public PurchaseService(CommerceFinder commerceFinder, UserFinder userFinder, DeliveryService deliveryService,
                            ShoppingListCreator shoppingListCreator, PurchaseRepository purchaseRepository,
@@ -44,6 +44,7 @@ public class PurchaseService {
         this.deliveryService = deliveryService;
         this.shoppingListCreator = shoppingListCreator;
         this.purchaseRepository = purchaseRepository;
+        this.saleRegisterService = saleRegisterService;
     }
 
     public LocalDateTime getTakeAwayOptionFor(List<Long> commercesId, String suggestedDay) {
@@ -84,7 +85,7 @@ public class PurchaseService {
         ShoppingListTo shoppingListTo = purchaseTO.getShoppingListTo();
         ShoppingList shoppingList = shoppingListCreator.createAndSave(shoppingListTo, user);
 
-        List<SaleRegister> saleRegisters = saleRegisterServie.createAndSaveSale(shoppingList);
+        List<SaleRegister> saleRegisters = saleRegisterService.createAndSaveSale(shoppingList);
         BigDecimal total = purchaseTO.getTotal();
 
         Purchase purchase = new Purchase(shoppingList, paymentMethod, deliveryOption, total, LocalDateTime.now(), user);
