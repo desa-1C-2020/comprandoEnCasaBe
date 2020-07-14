@@ -25,7 +25,7 @@ public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
 
-    @GetMapping(value = "takeAway")
+    @PostMapping(value = "takeAway")
     public LocalDateTime getTakeAwayOptions(@RequestBody TakeAwayTO takeAwayTO) {
         return purchaseService.getTakeAwayOptionFor(takeAwayTO.getCommercesId(), takeAwayTO.getSuggestedDay());
     }
