@@ -8,6 +8,9 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DeliveryRegister;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.TimeRange;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRegisterRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRepository;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
 import com.google.maps.model.LatLng;
 import org.junit.Before;
@@ -26,24 +29,26 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
 
 public class PurchaseServiceTest extends SpringIntegrationTest {
-
     private PurchaseService purchaseService;
-
     @Mock
     private CommerceFinder commerceFinder;
-
     @Mock
     private UserFinder userFinder;
-
     @Mock
     private DeliveryService deliveryService;
-
     @Mock
     private ShoppingListCreator creator;
+    @Mock
+    private PurchaseRegisterRepository purchaseRegisterRepository;
+    @Mock
+    private CommerceRepository commerceRepository;
+    @Mock
+    private PurchaseRepository purchaseRepository;
 
     @Before
     public void setUp() {
-        purchaseService = new PurchaseService(commerceFinder, userFinder, deliveryService, creator);
+        purchaseService = new PurchaseService(commerceFinder, userFinder, deliveryService, creator,
+            purchaseRegisterRepository, commerceRepository, purchaseRepository);
     }
 
     @Test
