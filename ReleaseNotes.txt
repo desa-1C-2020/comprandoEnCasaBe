@@ -3,14 +3,24 @@ TAG Entrega-3.0
 ---------------------------------------------------------------------
 NEW FEATURES:
 * Agregada conexión a postgress en heroku de producción y de H2 de manera local.
+* Concern de compras completado
+* Envio de mail al realizar la compra al comprador y vendedor
+* Historial de ventas de un vendedor.
+* Un vendedor puede cancelar una compra y el stok de un producto se restaura.
+* Se procesa la subida masiva de productos para un vendedor
+* Se integra con google como authentication provider.
+* No hace falta pasar el id del usuario logeado en cada requests, porque se obtiene del token.
 
 NOTES:
-* Implementamos algunas partes del modelo, no está completo por el momento.
+* Implementamos algunas partes del modelo.
+* Falta test de arquitectura
+* Falta paginación
 
 KNOWN ISSUES:
-* Las excepciones de google connector no se manejan correctamente.
-* Quitar referencias al id en mensajes del modelo.
-* Falta manejar errores sobre la creación de lista de compras si por ejemplo, un producto o comercio o usuario no existen.
+* El dia y horario sugerido para retirar los productos no funciona por turnos. Tiene un comportamiento defectuoso
+si los comercios no coinciden en horarios de apertura.
+* Si una compra rompe por algún motivo, queda en estado inconsistente.
+* Tenemos una reificación para comprador y vendedor que no suma nada.
 
 ---------------------------------------------------------------------
 TAG Entrega-2.0
