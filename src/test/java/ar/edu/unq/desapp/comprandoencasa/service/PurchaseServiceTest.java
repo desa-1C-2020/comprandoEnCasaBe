@@ -5,9 +5,12 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRange;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DeliveryRegister;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.TimeRange;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
+import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRegisterRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRepository;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
 import com.google.maps.model.LatLng;
 import org.junit.Before;
@@ -26,21 +29,26 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
 
 public class PurchaseServiceTest extends SpringIntegrationTest {
-
     private PurchaseService purchaseService;
-
     @Mock
     private CommerceFinder commerceFinder;
-
     @Mock
     private UserFinder userFinder;
-
     @Mock
     private DeliveryService deliveryService;
+    @Mock
+    private ShoppingListCreator creator;
+    @Mock
+    private PurchaseRegisterRepository purchaseRegisterRepository;
+    @Mock
+    private CommerceRepository commerceRepository;
+    @Mock
+    private PurchaseRepository purchaseRepository;
 
     @Before
     public void setUp() {
-        purchaseService = new PurchaseService(commerceFinder, userFinder, deliveryService);
+        purchaseService = new PurchaseService(commerceFinder, userFinder, deliveryService, creator,
+            purchaseRegisterRepository, commerceRepository, purchaseRepository);
     }
 
     @Test
@@ -48,6 +56,7 @@ public class PurchaseServiceTest extends SpringIntegrationTest {
         Commerce commerce = commerce();
         when(commerceFinder.findById(1L)).thenReturn(Optional.of(commerce));
 
+        //Este test va a romper por el now(), cambiar estos strings en funcion del now().
         LocalDateTime takeAwayOptionFor = purchaseService.getTakeAwayOptionFor(Collections.singletonList(1L), "20200713:130000");
 
         assertThat(takeAwayOptionFor.toString(), is("2020-07-20T08:00:01"));
@@ -66,9 +75,8 @@ public class PurchaseServiceTest extends SpringIntegrationTest {
     }
 
     public Commerce commerce() {
-        Efectivo efectivo = new Efectivo("pesos");
-        List<Efectivo> paymentMethods = new ArrayList<>();
-        paymentMethods.add(efectivo);
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        paymentMethods.add(PaymentMethod.CASH);
         LatLng aCommerceLatLng = new LatLng(-34.7066345, -58.2819718);
         Address aCommerceAddress = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", aCommerceLatLng);
         DayOfWeekWithTimeRange horarios = new DayOfWeekWithTimeRange(DayOfWeek.MONDAY,

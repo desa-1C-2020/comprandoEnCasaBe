@@ -5,7 +5,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRange;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DeliveryRegister;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.TimeRange;
@@ -104,9 +104,10 @@ public class DataInitializer
     }
 
     private Commerce createCommerce() {
-        Efectivo efectivo = new Efectivo("pesos");
-        List<Efectivo> paymentMethods = new ArrayList<>();
-        paymentMethods.add(efectivo);
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        paymentMethods.add(PaymentMethod.CASH);
+        paymentMethods.add(PaymentMethod.CREDIT);
+        paymentMethods.add(PaymentMethod.DEBIT);
         Address kioscoAddress = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
         DayOfWeekWithTimeRange horarios = new DayOfWeekWithTimeRange(DayOfWeek.MONDAY,
             Collections.singletonList(new TimeRange(8, 12)));

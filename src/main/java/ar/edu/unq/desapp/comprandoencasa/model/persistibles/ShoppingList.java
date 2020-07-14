@@ -1,25 +1,35 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
-import static java.util.UUID.randomUUID;
-
-public class ShoppingList {
+@Entity
+@Table(name = "shopping_list")
+public class ShoppingList extends PersistibleSupport {
     public static final String itemsByCommerce_FIELD = "itemsByCommerce";
+    @ManyToOne
     private User user;
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ItemsByCommerce> itemsByCommerce;
-    private Date creationDateTime;
+    private LocalDateTime creationDateTime;
     private BigDecimal total;
-    private String id;
 
-    public ShoppingList(User user, List<ItemsByCommerce> itemsByCommerce, BigDecimal total, Date creationDateTime) {
+    public ShoppingList() {
+    }
+
+    public ShoppingList(User user, List<ItemsByCommerce> itemsByCommerce, BigDecimal total, LocalDateTime creationDateTime) {
         this.user = user;
         this.itemsByCommerce = itemsByCommerce;
         this.total = total;
         this.creationDateTime = creationDateTime;
-        this.id = randomUUID().toString();
     }
 
     public User getUser() {
@@ -38,22 +48,6 @@ public class ShoppingList {
         this.itemsByCommerce = itemsByCommerce;
     }
 
-    public Date getCreationDateTime() {
-        return creationDateTime;
-    }
-
-    public void setCreationDateTime(Date creationDateTime) {
-        this.creationDateTime = creationDateTime;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public BigDecimal getTotal() {
         return total;
     }
@@ -70,7 +64,15 @@ public class ShoppingList {
         return user.getId();
     }
 
-    public boolean sameId(String shoppingListToDeleteId) {
-        return id.equals(shoppingListToDeleteId);
+    public boolean sameId(Long shoppingListToDeleteId) {
+        return getId().equals(shoppingListToDeleteId);
+    }
+
+    public LocalDateTime getCreationDateTime() {
+        return creationDateTime;
+    }
+
+    public void setCreationDateTime(LocalDateTime creationDateTime) {
+        this.creationDateTime = creationDateTime;
     }
 }

@@ -1,14 +1,24 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
+
 import java.util.List;
 
 public class CommerceTO {
     private String name;
     private String businessSector;
     private AddressTO address;
-    private List<PaymentMethodTO> paymentMethods;
+    private List<PaymentMethod> paymentMethods;
     private List<DayOfWeekWithTimeRangeTO> daysAndHoursOpen;
     private String arrivalRange;
+
+    public List<PaymentMethod> getPaymentMethods() {
+        return paymentMethods;
+    }
+
+    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+        this.paymentMethods = paymentMethods;
+    }
 
     public List<DayOfWeekWithTimeRangeTO> getDaysAndHoursOpen() {
         return daysAndHoursOpen;
@@ -40,14 +50,6 @@ public class CommerceTO {
 
     public void setAddress(AddressTO address) {
         this.address = address;
-    }
-
-    public List<PaymentMethodTO> getPaymentMethods() {
-        return paymentMethods;
-    }
-
-    public void setPaymentMethods(List<PaymentMethodTO> paymentMethods) {
-        this.paymentMethods = paymentMethods;
     }
 
     public String getArrivalRange() {

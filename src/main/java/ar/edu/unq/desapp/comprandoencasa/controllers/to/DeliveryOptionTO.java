@@ -1,11 +1,8 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 
-public class PaymentMethodTO {
+public class DeliveryOptionTO {
     private String type;
-    private String accept;
-
-    public PaymentMethodTO() {
-    }
+    private String suggestedDay;
 
     public String getType() {
         return type;
@@ -15,11 +12,11 @@ public class PaymentMethodTO {
         this.type = type;
     }
 
-    public String getAccept() {
-        return accept;
+    public String getSuggestedDay() {
+        return suggestedDay;
     }
 
-    public void setAccept(String accept) {
-        this.accept = accept;
+    public void setSuggestedDay(String suggestedDay) {
+        this.suggestedDay = suggestedDay;
     }
 }

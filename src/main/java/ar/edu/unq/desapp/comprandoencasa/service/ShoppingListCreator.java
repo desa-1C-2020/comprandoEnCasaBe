@@ -14,7 +14,7 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,11 +31,9 @@ public class ShoppingListCreator {
         this.commerceRepository = commerceRepository;
     }
 
-    public ShoppingList createAndSave(ShoppingListTo shoppingListTo, Long userId) {
+    public ShoppingList createAndSave(ShoppingListTo shoppingListTo, User user) {
         //Aca deberia ver de guardar los errores, pero si crear la lista con los que no fallaron.
         //Revisar esto pero por ahora si falla uno, fallan todos.
-        User user = userFinder.findUserById(userId);
-        Date creationDateTime = shoppingListTo.getCreationDateTime();
         BigDecimal total = shoppingListTo.getTotal();
 
         List<ItemByCommerceTo> itemByCommerceTo = shoppingListTo.getItemByCommerceTo();
@@ -45,7 +43,7 @@ public class ShoppingListCreator {
             .map(this::getItemByCommerce)
             .collect(Collectors.toList());
 
-        ShoppingList shoppingList = new ShoppingList(user, itemsByCommerces, total, creationDateTime);
+        ShoppingList shoppingList = new ShoppingList(user, itemsByCommerces, total, LocalDateTime.now());
         shoppingListRepository.save(shoppingList);
         return shoppingList;
     }

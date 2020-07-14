@@ -66,4 +66,14 @@ public class SaleableItemTest {
 
         assertThat(sameProduct, is(true));
     }
+
+    @Test
+    public void whenDecrementStock_thenTheNewStockIsDecrement() {
+        Product product = new Product("un nombre de producto", "una marca", "una url");
+        SaleableItem saleableItem = new SaleableItem(10, 50.00, product);
+
+        saleableItem.decrementStockIn(7);
+
+        assertThat(saleableItem.getStock(), is(3));
+    }
 }

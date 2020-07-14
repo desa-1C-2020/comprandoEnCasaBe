@@ -70,7 +70,6 @@ public class DayOfWeekWithTimeRange extends PersistibleSupport {
         while (tomorrowDay != dayOfWeek.getValue()) {
             tomorrow = tomorrow.plusDays(plusDays);
             tomorrowDay = tomorrow.getDayOfWeek().getValue();
-            plusDays++;
         }
         LocalTime localTime = getTimeRange();
         return LocalDateTime.of(tomorrow.toLocalDate(), localTime.plusSeconds(1));

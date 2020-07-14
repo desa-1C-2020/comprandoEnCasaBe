@@ -6,6 +6,7 @@ import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 import com.google.maps.model.LatLng;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -24,8 +25,8 @@ public class Commerce extends PersistibleSupport {
     private String businessSector;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Efectivo> paymentMethods;
+    @ElementCollection
+    private List<PaymentMethod> paymentMethods;
     @OneToMany(cascade = CascadeType.ALL)
     private List<DayOfWeekWithTimeRange> daysAndHoursOpen;
     private String arrivalRange;
@@ -36,7 +37,7 @@ public class Commerce extends PersistibleSupport {
     public Commerce() {
     }
 
-    public Commerce(String name, String businessSector, Address address, List<Efectivo> paymentMethods,
+    public Commerce(String name, String businessSector, Address address, List<PaymentMethod> paymentMethods,
                     List<DayOfWeekWithTimeRange> daysAndHoursOpen, String arrivalRange) {
         this.name = name;
         this.businessSector = businessSector;
@@ -45,6 +46,14 @@ public class Commerce extends PersistibleSupport {
         this.daysAndHoursOpen = daysAndHoursOpen;
         this.arrivalRange = arrivalRange;
         this.saleableItems = new ArrayList<>();
+    }
+
+    public List<PaymentMethod> getPaymentMethods() {
+        return paymentMethods;
+    }
+
+    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+        this.paymentMethods = paymentMethods;
     }
 
     public String getBusinessSector() {
@@ -61,14 +70,6 @@ public class Commerce extends PersistibleSupport {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public List<Efectivo> getPaymentMethods() {
-        return paymentMethods;
-    }
-
-    public void setPaymentMethods(List<Efectivo> paymentMethods) {
-        this.paymentMethods = paymentMethods;
     }
 
     public List<DayOfWeekWithTimeRange> getDaysAndHoursOpen() {
@@ -95,6 +96,10 @@ public class Commerce extends PersistibleSupport {
         return saleableItems;
     }
 
+    public void setSaleableItems(List<SaleableItem> saleableItems) {
+        this.saleableItems = saleableItems;
+    }
+
     public String getName() {
         return name;
     }
@@ -118,22 +123,6 @@ public class Commerce extends PersistibleSupport {
     public void removeProduct(Product product) {
         SaleableItem saleableItem = findByProduct(product);
         saleableItems.remove(saleableItem);
-    }
-
-    private SaleableItem findByProduct(Product product) {
-        return saleableItems
-            .stream()
-            .filter(saleableItem -> saleableItem.sameProduct(product))
-            .findFirst()
-            .get();
-    }
-
-    private SaleableItem findByProductId(Long productId) {
-        return saleableItems
-            .stream()
-            .filter(saleableItem -> saleableItem.sameProductId(productId))
-            .findFirst()
-            .get();
     }
 
     public SaleableItem removeSaleableItemByProductId(Long productId) {
@@ -181,5 +170,38 @@ public class Commerce extends PersistibleSupport {
         String startMessage = "Rangos abierto: \n";
         String rangesJoinning = String.join("\n", ranges);
         return startMessage + rangesJoinning;
+    }
+
+    public void affectStock(List<ShoppingListItem> items) {
+        items.forEach(this::proccessStock);
+    }
+
+    public Optional<SaleableItem> getSaleableItemByProduct(Product product) {
+        return Optional
+            .create(saleableItems
+                .stream()
+                .filter(saleableItem -> saleableItem.sameProduct(product))
+                .findFirst());
+    }
+
+    private void proccessStock(ShoppingListItem item) {
+        Optional<SaleableItem> saleableItemByProduct = getSaleableItemByProduct(item.getProduct());
+        saleableItemByProduct.ifPresent(saleableItem -> saleableItem.decrementStockIn(item.getQuantity()));
+    }
+
+    private SaleableItem findByProduct(Product product) {
+        return saleableItems
+            .stream()
+            .filter(saleableItem -> saleableItem.sameProduct(product))
+            .findFirst()
+            .get();
+    }
+
+    private SaleableItem findByProductId(Long productId) {
+        return saleableItems
+            .stream()
+            .filter(saleableItem -> saleableItem.sameProductId(productId))
+            .findFirst()
+            .get();
     }
 }
