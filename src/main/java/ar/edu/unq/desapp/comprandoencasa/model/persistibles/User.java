@@ -31,6 +31,7 @@ public class User extends PersistibleSupport {
     private String imageUrl;
 
     public User() {
+        //Used for hibernate
     }
 
     private User(String name, String surname, String email, String password, Address address) {

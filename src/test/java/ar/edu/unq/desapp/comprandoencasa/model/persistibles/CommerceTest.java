@@ -213,7 +213,7 @@ public class CommerceTest {
     }
 
     @Test
-    public void whenAffectsTheStockForProduct_thenTheProductStockChange() {
+    public void whenDecreaseTheStockForProduct_thenTheProductStockChange() {
         DayOfWeekWithTimeRange dayOfWeekWithTimeRange = new DayOfWeekWithTimeRange(DayOfWeek.MONDAY,
             Collections.singletonList(new TimeRange(8, 12)));
         Product product = new Product("Lays", "Lays", "www.imagenes.com/lays");
@@ -223,9 +223,25 @@ public class CommerceTest {
         ShoppingListItem shoppingListItem = new ShoppingListItem(product, 2, BigDecimal.valueOf(50.00));
         shoppingListItems.add(shoppingListItem);
 
-        kiosco.affectStock(shoppingListItems);
+        kiosco.decreaseStock(shoppingListItems);
 
         assertThat(kiosco.getSaleableItemByProduct(product).get().getStock(), is(8));
+    }
+
+    @Test
+    public void whenIncreaseTheStockForProduct_thenTheProductStockChange() {
+        DayOfWeekWithTimeRange dayOfWeekWithTimeRange = new DayOfWeekWithTimeRange(DayOfWeek.MONDAY,
+            Collections.singletonList(new TimeRange(8, 12)));
+        Product product = new Product("Lays", "Lays", "www.imagenes.com/lays");
+        product.setId(1L);
+        Commerce kiosco = createCommerceWith(product, dayOfWeekWithTimeRange);
+        List<ShoppingListItem> shoppingListItems = new ArrayList<>();
+        ShoppingListItem shoppingListItem = new ShoppingListItem(product, 2, BigDecimal.valueOf(50.00));
+        shoppingListItems.add(shoppingListItem);
+
+        kiosco.increaseStock(shoppingListItems);
+
+        assertThat(kiosco.getSaleableItemByProduct(product).get().getStock(), is(12));
     }
 
     @Test

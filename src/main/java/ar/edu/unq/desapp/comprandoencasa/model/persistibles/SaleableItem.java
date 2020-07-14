@@ -16,6 +16,7 @@ public class SaleableItem extends PersistibleSupport {
     private Product product;
 
     public SaleableItem() {
+        //Used for hibernate
     }
 
     public SaleableItem(int stock, double price, Product product) {
@@ -75,5 +76,9 @@ public class SaleableItem extends PersistibleSupport {
             throw new RuntimeException("No se puede decrementar el stock. No hay stock suficiente: " + stock);
         }
         stock -= quantity;
+    }
+
+    public void incrementStockIn(int quantity) {
+        stock += quantity;
     }
 }

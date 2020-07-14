@@ -9,16 +9,11 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRan
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DeliveryOption;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DeliveryOptionType;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DeliveryRegister;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Purchase;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PurchaseRegister;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PurchaseStatus;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleRegister;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingListItem;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
-import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRegisterRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRepository;
 import ar.edu.unq.desapp.comprandoencasa.support.DateUtils;
 import org.slf4j.Logger;
@@ -28,7 +23,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,20 +33,18 @@ public class PurchaseService {
     private CommerceFinder commerceFinder;
     private UserFinder userFinder;
     private Logger log = LoggerFactory.getLogger(PurchaseService.class);
-    private PurchaseRegisterRepository purchaseRegisterRepository;
-    private CommerceRepository commerceRepository;
     private PurchaseRepository purchaseRepository;
+    private SaleRegisterService saleRegisterService;
 
     public PurchaseService(CommerceFinder commerceFinder, UserFinder userFinder, DeliveryService deliveryService,
-                           ShoppingListCreator shoppingListCreator, PurchaseRegisterRepository purchaseRegisterRepository,
-                           CommerceRepository commerceRepository, PurchaseRepository purchaseRepository) {
+                           ShoppingListCreator shoppingListCreator, PurchaseRepository purchaseRepository,
+                           SaleRegisterService saleRegisterService) {
         this.commerceFinder = commerceFinder;
         this.userFinder = userFinder;
         this.deliveryService = deliveryService;
         this.shoppingListCreator = shoppingListCreator;
-        this.purchaseRegisterRepository = purchaseRegisterRepository;
-        this.commerceRepository = commerceRepository;
         this.purchaseRepository = purchaseRepository;
+        this.saleRegisterService = saleRegisterService;
     }
 
     public LocalDateTime getTakeAwayOptionFor(List<Long> commercesId, String suggestedDay) {
@@ -93,13 +85,13 @@ public class PurchaseService {
         ShoppingListTo shoppingListTo = purchaseTO.getShoppingListTo();
         ShoppingList shoppingList = shoppingListCreator.createAndSave(shoppingListTo, user);
 
-        List<PurchaseRegister> purchaseRegisters = createPurchaseRegisterAndSaveItFrom(shoppingList);
+        List<SaleRegister> saleRegisters = saleRegisterService.createAndSaveSale(shoppingList);
         BigDecimal total = purchaseTO.getTotal();
 
         Purchase purchase = new Purchase(shoppingList, paymentMethod, deliveryOption, total, LocalDateTime.now(), user);
         purchaseRepository.save(purchase);
 
-        sendEmailToSellers(purchaseRegisters, purchase);
+        sendEmailToSellers(saleRegisters, purchase);
         sendEmailToBuyer(user, purchase);
         return purchase;
     }
@@ -108,29 +100,8 @@ public class PurchaseService {
         // howdy is not used
     }
 
-    private void sendEmailToSellers(List<PurchaseRegister> purchaseRegisters, Purchase purchase) {
+    private void sendEmailToSellers(List<SaleRegister> saleRegisters, Purchase purchase) {
         // howdy is not used
-    }
-
-    private List<PurchaseRegister> createPurchaseRegisterAndSaveItFrom(ShoppingList shoppingList) {
-        List<ItemsByCommerce> itemsByCommerce = shoppingList.getItemsByCommerce();
-        return itemsByCommerce
-            .stream()
-            .map(itemByCommerce -> createPurchaseRegisterAndAffectStockFrom(itemByCommerce, shoppingList))
-            .collect(Collectors.toList());
-    }
-
-    private PurchaseRegister createPurchaseRegisterAndAffectStockFrom(ItemsByCommerce itemByCommerce, ShoppingList shoppingList) {
-        Commerce commerce = itemByCommerce.getCommerce();
-        List<ShoppingListItem> items = itemByCommerce.getItems();
-        PurchaseStatus pending = PurchaseStatus.PENDING;
-        List itemsCopy = new ArrayList<>();
-        itemsCopy.addAll(items); //Para saltearme el tema de que es una coleccion persistente
-        PurchaseRegister purchaseRegister = new PurchaseRegister(commerce, shoppingList, itemsCopy, pending, shoppingList.getUser());
-        pending.affectStock(commerce, items);
-        commerceRepository.save(commerce);
-        purchaseRegisterRepository.save(purchaseRegister);
-        return purchaseRegister;
     }
 
     private DeliveryOption getDeliveryOption(PurchaseTO purchaseTO) {
@@ -157,7 +128,7 @@ public class PurchaseService {
 }
 
 
-// por cada comercio, se crea un objeto venta productos, total, etc... PurchaseRegister HECHO
+// por cada comercio, se crea un objeto venta productos, total, etc... SaleRegister HECHO
 //por cada comercio se crea el estado de la venta en pendiente -> esto va a decrementar el stock.. HECHO
 
 // cuando se hace la compra, aca recien se guarda la shopping list. para el comprador HECHO

@@ -88,4 +88,14 @@ public class SaleableItemTest {
             .isThrownBy(() -> saleableItem.decrementStockIn(3))
             .withMessage("No se puede decrementar el stock. No hay stock suficiente: " + actualStock);
     }
+
+    @Test
+    public void whenIncrementStock_thenTheNewStockIsIncremented() {
+        Product product = new Product("un nombre de producto", "una marca", "una url");
+        SaleableItem saleableItem = new SaleableItem(10, 50.00, product);
+
+        saleableItem.incrementStockIn(10);
+
+        assertThat(saleableItem.getStock(), is(20));
+    }
 }

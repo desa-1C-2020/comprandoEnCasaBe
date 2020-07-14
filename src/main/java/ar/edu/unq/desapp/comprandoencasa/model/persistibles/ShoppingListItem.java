@@ -16,6 +16,7 @@ public class ShoppingListItem extends PersistibleSupport {
     private BigDecimal price;//precio que valia cuando se creo la lista de compras. Hay que quitar el precio del producto.
 
     public ShoppingListItem() {
+        //Used for hibernate
     }
 
     public ShoppingListItem(Product product, int quantity, BigDecimal price) {

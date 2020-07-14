@@ -17,7 +17,8 @@ public class UserSeller extends PersistibleSupport {
     private Commerce commerce;
 
     public UserSeller() {
-    }//For jpa
+        //Used for hibernate
+    }
 
     public UserSeller(User user, Commerce commerce) {
         this.user = user;

@@ -1,10 +1,13 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleUpdateTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.SaleableItemTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleRegister;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.SaleableItem;
 import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
+import ar.edu.unq.desapp.comprandoencasa.service.SaleRegisterService;
 import ar.edu.unq.desapp.comprandoencasa.service.SaleableItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,6 +33,9 @@ public class SellerController {
 
     @Autowired
     private ObjectConverter converter;
+
+    @Autowired
+    private SaleRegisterService saleRegisterService;
 
     @PostMapping(value = "product")
     public List<SaleableItem> addSaleableProduct(@CurrentUser UserPrincipal userPrincipal, @RequestBody SaleableItemTO saleableItemTo) {
@@ -61,6 +67,11 @@ public class SellerController {
     @GetMapping("products")
     public List<SaleableItem> products(@CurrentUser UserPrincipal userPrincipal) {
         return saleableItemService.getProductsFor(userPrincipal.getId());
+    }
+
+    @PostMapping("update/sale")
+    public List<SaleRegister> updatePurchaseRegisterStatus(@CurrentUser UserPrincipal userPrincipal, @RequestBody SaleUpdateTO saleUpdateTO) {
+        return saleRegisterService.update(saleUpdateTO, userPrincipal.getId());
     }
 }
 

@@ -28,6 +28,7 @@ public class DayOfWeekWithTimeRange extends PersistibleSupport {
     }
 
     public DayOfWeekWithTimeRange() {
+        //Used for hibernate
     }
 
     public boolean match(LocalDateTime suggestedDateTime) {

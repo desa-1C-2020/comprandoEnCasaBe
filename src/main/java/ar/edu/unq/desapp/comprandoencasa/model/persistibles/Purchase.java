@@ -23,6 +23,7 @@ public class Purchase extends PersistibleSupport {
     private User user;
 
     public Purchase() {
+        //Used for hibernate
     }
 
     public Purchase(ShoppingList shoppingList, PaymentMethod paymentMethod, DeliveryOption deliveryOption,

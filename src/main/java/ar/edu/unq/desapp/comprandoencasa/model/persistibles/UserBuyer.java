@@ -13,6 +13,7 @@ public class UserBuyer extends PersistibleSupport {
     private User user;
 
     public UserBuyer() {
+        //Used for hibernate
     }
 
     public UserBuyer(User user) {
