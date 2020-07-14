@@ -2,6 +2,8 @@ package ar.edu.unq.desapp.comprandoencasa.configurations;
 
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.DeliveryRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRegisterRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
@@ -9,14 +11,19 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.CommerceRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.DeliveryRepositoryImpl;
+import ar.edu.unq.desapp.comprandoencasa.repositories.impl.PurchaseRegisterRepositoryImpl;
+import ar.edu.unq.desapp.comprandoencasa.repositories.impl.PurchaseRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.SaleableItemRepositoryImpl;
+import ar.edu.unq.desapp.comprandoencasa.repositories.impl.ShoppingListRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserBuyerRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserSellerRepositoryImpl;
-import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.ShoppingListRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.CommerceRepositoryJpa;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.DeliveryRepositoryJpa;
+import ar.edu.unq.desapp.comprandoencasa.repositories.spring.PurchaseRegisterRepositoryJpa;
+import ar.edu.unq.desapp.comprandoencasa.repositories.spring.PurchaseRepositoryJpa;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.SaleableItemRepositoryJpa;
+import ar.edu.unq.desapp.comprandoencasa.repositories.spring.ShoppingListRepositoryJpa;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.UserBuyerRepositoryJpa;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.UserRepositoryJpa;
 import ar.edu.unq.desapp.comprandoencasa.repositories.spring.UserSellerRepositoryJpa;
@@ -57,9 +64,18 @@ public class RepositoryJpaConfiguration {
         return DeliveryRepositoryImpl.create(deliveryRepositoryJpa);
     }
 
-    //Reemplazar estos a medida que se hacen los mapeos
     @Bean
-    public ShoppingListRepository shoppingListRepository() {
-        return new ShoppingListRepositoryMem();
+    public PurchaseRegisterRepository purchaseRegisterRepository(PurchaseRegisterRepositoryJpa purchaseRegisterRepositoryJpa) {
+        return PurchaseRegisterRepositoryImpl.create(purchaseRegisterRepositoryJpa);
+    }
+
+    @Bean
+    public ShoppingListRepository shoppingListRepository(ShoppingListRepositoryJpa shoppingListRepositoryJpa) {
+        return ShoppingListRepositoryImpl.create(shoppingListRepositoryJpa);
+    }
+
+    @Bean
+    public PurchaseRepository purchaseRepository(PurchaseRepositoryJpa purchaseRegisterRepositoryJpa) {
+        return PurchaseRepositoryImpl.create(purchaseRegisterRepositoryJpa);
     }
 }

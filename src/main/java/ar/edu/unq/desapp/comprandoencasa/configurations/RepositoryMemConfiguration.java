@@ -2,6 +2,8 @@ package ar.edu.unq.desapp.comprandoencasa.configurations;
 
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.DeliveryRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRegisterRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
@@ -9,6 +11,8 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.CommerceRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.DeliveryRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.PurchaseRegisterRepositoryMem;
+import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.PurchaseRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.SaleableItemRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.ShoppingListRepositoryMem;
 import ar.edu.unq.desapp.comprandoencasa.repositories.memoria.UserBuyerRepositoryMem;
@@ -54,5 +58,15 @@ public class RepositoryMemConfiguration {
     @Bean
     public DeliveryRepository deliveryRepository() {
         return new DeliveryRepositoryMem();
+    }
+
+    @Bean
+    public PurchaseRegisterRepository purchaseRegisterRepository() {
+        return new PurchaseRegisterRepositoryMem();
+    }
+
+    @Bean
+    public PurchaseRepository purchaseRepository() {
+        return new PurchaseRepositoryMem();
     }
 }

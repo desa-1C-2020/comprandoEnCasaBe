@@ -69,4 +69,8 @@ public class SaleableItem extends PersistibleSupport {
     public boolean containsInProductName(String productToFind) {
         return product.containsInName(productToFind);
     }
+
+    public void decrementStockIn(int quantity) {
+        stock -= quantity;
+    }
 }

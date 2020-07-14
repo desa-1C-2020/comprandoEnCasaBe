@@ -182,4 +182,22 @@ public class Commerce extends PersistibleSupport {
         String rangesJoinning = String.join("\n", ranges);
         return startMessage + rangesJoinning;
     }
+
+    public void affectStock(List<ShoppingListItem> items) {
+        items.forEach(this::proccessStock);
+    }
+
+    private void proccessStock(ShoppingListItem item) {
+        Optional<SaleableItem> saleableItemByProduct = getSaleableItemByProduct(item.getProduct());
+        saleableItemByProduct.ifPresent(saleableItem -> saleableItem.decrementStockIn(item.getQuantity()));
+    }
+
+    private Optional<SaleableItem> getSaleableItemByProduct(Product product) {
+        return Optional
+            .create(saleableItems
+                .stream()
+                .filter(saleableItem -> saleableItem.sameProduct(product))
+                .findFirst());
+    }
+
 }

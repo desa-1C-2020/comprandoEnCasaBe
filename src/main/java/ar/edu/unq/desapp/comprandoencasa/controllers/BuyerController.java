@@ -3,10 +3,12 @@ package ar.edu.unq.desapp.comprandoencasa.controllers;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
 import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreator;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +37,13 @@ public class BuyerController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private UserFinder userFinder;
+
     @PostMapping(value = "shoppingList")
     public ResponseEntity addShoppingList(@CurrentUser UserPrincipal userPrincipal, @RequestBody ShoppingListTo shoppingListTo) {
-        shoppingListCreator.createAndSave(shoppingListTo, userPrincipal.getId());
+        User user = userFinder.findUserById(userPrincipal.getId());
+        shoppingListCreator.createAndSave(shoppingListTo, user);
         return (ResponseEntity) ResponseEntity.ok();
     }
 
