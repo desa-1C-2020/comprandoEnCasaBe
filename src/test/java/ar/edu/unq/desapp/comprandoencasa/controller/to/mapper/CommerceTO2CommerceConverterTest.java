@@ -7,7 +7,7 @@ import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.MutablePair;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class CommerceTO2CommerceConverterTest extends SpringIntegrationTest {
         DayOfWeekWithTimeRangeTO dayOfWeekWithTimeRangeTO = new DayOfWeekWithTimeRangeTO();
         int saturday = 6;
         dayOfWeekWithTimeRangeTO.setDayOfWeek(saturday);
-        dayOfWeekWithTimeRangeTO.setTimeRanges(Collections.singletonList(Pair.of(8, 12)));
+        dayOfWeekWithTimeRangeTO.setTimeRanges(Collections.singletonList(MutablePair.of(8, 12)));
         long lat = 10L;
         long lng = 20L;
         addressTO = new AddressTO();

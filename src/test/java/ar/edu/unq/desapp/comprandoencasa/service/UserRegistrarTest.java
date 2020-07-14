@@ -12,7 +12,7 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.MutablePair;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -99,7 +99,7 @@ public class UserRegistrarTest extends SpringIntegrationTest {
         DayOfWeekWithTimeRangeTO dayOfWeekWithTimeRangeTO = new DayOfWeekWithTimeRangeTO();
         int saturday = 7;
         dayOfWeekWithTimeRangeTO.setDayOfWeek(saturday);
-        dayOfWeekWithTimeRangeTO.setTimeRanges(Collections.singletonList(Pair.of(8, 12)));
+        dayOfWeekWithTimeRangeTO.setTimeRanges(Collections.singletonList(MutablePair.of(8, 12)));
         long lat = 10L;
         long lng = 20L;
         AddressTO addressTO = new AddressTO();
