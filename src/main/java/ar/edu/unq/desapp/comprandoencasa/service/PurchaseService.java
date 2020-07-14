@@ -104,11 +104,11 @@ public class PurchaseService {
     }
 
     private void sendEmailToBuyer(User user, Purchase purchase) {
-
+        // howdy is not used
     }
 
     private void sendEmailToSellers(List<PurchaseRegister> purchaseRegisters, Purchase purchase) {
-
+        // howdy is not used
     }
 
     private List<PurchaseRegister> createPurchaseRegisterAndSaveItFrom(ShoppingList shoppingList) {

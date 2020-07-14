@@ -25,7 +25,7 @@ public class Purchase extends PersistibleSupport {
     }
 
     public Purchase(ShoppingList shoppingList, PaymentMethod paymentMethod, DeliveryOption deliveryOption,
-                    BigDecimal total, LocalDateTime now, User user) {
+                    BigDecimal total, LocalDateTime creationDateTime, User user) {
         this.shoppingList = shoppingList;
         this.paymentMethod = paymentMethod;
         this.deliveryOption = deliveryOption;

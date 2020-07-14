@@ -4,13 +4,13 @@ public enum DeliveryOptionType {
     TAKE_AWAY { //Retirar por local
 
         @Override
-        public String type() {
+        public String toShow() {
             return "Retiro por el local";
         }
     },
     DELIVERY; //Envio a domicilio
 
-    public String type() {
+    public String toShow() {
         return "Delivery";
     }
 }

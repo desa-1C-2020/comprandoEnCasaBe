@@ -19,4 +19,20 @@ public class DeliveryOption extends PersistibleSupport {
         this.deliveryOptionType = deliveryOptionType;
         this.suggestedDay = suggestedDay;
     }
+
+    public LocalDateTime getSuggestedDay() {
+        return suggestedDay;
+    }
+
+    public void setSuggestedDay(LocalDateTime suggestedDay) {
+        this.suggestedDay = suggestedDay;
+    }
+
+    public DeliveryOptionType getDeliveryOptionType() {
+        return deliveryOptionType;
+    }
+
+    public void setDeliveryOptionType(DeliveryOptionType deliveryOptionType) {
+        this.deliveryOptionType = deliveryOptionType;
+    }
 }

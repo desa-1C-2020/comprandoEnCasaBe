@@ -13,14 +13,17 @@ import java.util.List;
 @Table(name = "purchase_register")
 public class PurchaseRegister extends PersistibleSupport {
     @OneToOne
-    private final Commerce commerce;
+    private Commerce commerce;
     @OneToOne
-    private final ShoppingList shoppingList;
+    private ShoppingList shoppingList;
     @OneToMany
-    private final List<ShoppingListItem> items;
+    private List<ShoppingListItem> items;
     private PurchaseStatus purchaseStatus;
     @ManyToOne
     private User user;
+
+    public PurchaseRegister() {
+    }
 
     public PurchaseRegister(Commerce commerce, ShoppingList shoppingList, List<ShoppingListItem> items,
                             PurchaseStatus purchaseStatus, User user) {
@@ -28,6 +31,34 @@ public class PurchaseRegister extends PersistibleSupport {
         this.shoppingList = shoppingList;
         this.items = items;
         this.purchaseStatus = purchaseStatus;
+        this.user = user;
+    }
+
+    public Commerce getCommerce() {
+        return commerce;
+    }
+
+    public ShoppingList getShoppingList() {
+        return shoppingList;
+    }
+
+    public List<ShoppingListItem> getItems() {
+        return items;
+    }
+
+    public PurchaseStatus getPurchaseStatus() {
+        return purchaseStatus;
+    }
+
+    public void setPurchaseStatus(PurchaseStatus purchaseStatus) {
+        this.purchaseStatus = purchaseStatus;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
         this.user = user;
     }
 }
