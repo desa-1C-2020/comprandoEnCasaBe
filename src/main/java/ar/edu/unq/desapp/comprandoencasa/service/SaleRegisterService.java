@@ -39,17 +39,22 @@ public class SaleRegisterService {
         return saleRegisterRepository.findAllByCommerce(commerce);
     }
 
-    private Commerce getCommereByBuyer(Long userSellerId) {
-        UserSeller seller = userFinder.findSellerByUserId(userSellerId);
-        return seller.getCommerce();
-    }
-
     public List<SaleRegister> createAndSaveSale(ShoppingList shoppingList) {
         List<ItemsByCommerce> itemsByCommerce = shoppingList.getItemsByCommerce();
         return itemsByCommerce
             .stream()
             .map(itemByCommerce -> createPurchaseRegisterAndAffectStockFrom(itemByCommerce, shoppingList))
             .collect(Collectors.toList());
+    }
+
+    private Commerce getCommereByBuyer(Long userSellerId) {
+        UserSeller seller = userFinder.findSellerByUserId(userSellerId);
+        return seller.getCommerce();
+    }
+
+    public List<SaleRegister> getAllFor(Long userSellerId) {
+        Commerce commerce = getCommereByBuyer(userSellerId);
+        return saleRegisterRepository.findAllByCommerce(commerce);
     }
 
     private SaleRegister createPurchaseRegisterAndAffectStockFrom(ItemsByCommerce itemByCommerce, ShoppingList shoppingList) {
