@@ -221,4 +221,7 @@ dependencies {
 
     //Utilidades
     compile 'org.apache.commons:commons-lang3:3.7'
+
+    //Sengrid
+    compile 'com.sendgrid:sendgrid-java:4.1.0'
 }

@@ -74,7 +74,7 @@ public class SellerController {
         return saleRegisterService.update(saleUpdateTO, userPrincipal.getId());
     }
 
-    @PostMapping("sales")
+    @GetMapping("sales")
     public List<SaleRegister> getSalesRegister(@CurrentUser UserPrincipal userPrincipal) {
         return saleRegisterService.getAllFor(userPrincipal.getId());
     }

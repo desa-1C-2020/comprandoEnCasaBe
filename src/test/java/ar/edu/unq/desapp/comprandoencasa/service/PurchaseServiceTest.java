@@ -40,11 +40,13 @@ public class PurchaseServiceTest extends SpringIntegrationTest {
     private SaleRegisterService saleRegisterService;
     @Mock
     private PurchaseRepository purchaseRepository;
+    @Mock
+    private EmailSender emailSender;
 
     @Before
     public void setUp() {
         purchaseService = new PurchaseService(commerceFinder, userFinder, deliveryService, creator,
-            purchaseRepository, saleRegisterService);
+            purchaseRepository, saleRegisterService, emailSender);
     }
 
     @Test

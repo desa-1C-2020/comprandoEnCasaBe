@@ -7,6 +7,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
+import ar.edu.unq.desapp.comprandoencasa.service.EmailSender;
 import ar.edu.unq.desapp.comprandoencasa.service.UserLoger;
 import ar.edu.unq.desapp.comprandoencasa.service.UserRegistrar;
 import org.slf4j.Logger;
@@ -26,10 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     public static final String basePath = "/user";
     public static Logger logger = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     private UserRegistrar userRegistrar;
-
     @Autowired
     private UserLoger userLoger;
 

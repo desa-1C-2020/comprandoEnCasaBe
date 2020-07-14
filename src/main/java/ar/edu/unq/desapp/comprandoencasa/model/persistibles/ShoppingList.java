@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "shopping_list")
@@ -75,5 +76,12 @@ public class ShoppingList extends PersistibleSupport {
 
     public void setCreationDateTime(LocalDateTime creationDateTime) {
         this.creationDateTime = creationDateTime;
+    }
+
+    public String show() {
+        return itemsByCommerce
+            .stream()
+            .map(itemsByCommerce1 -> itemsByCommerce1.getCommerce().getName() + itemsByCommerce1.getItems().toString())
+            .collect(Collectors.joining("\n"));
     }
 }

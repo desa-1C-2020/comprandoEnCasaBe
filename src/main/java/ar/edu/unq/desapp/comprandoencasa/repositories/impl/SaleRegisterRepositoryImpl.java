@@ -19,7 +19,7 @@ public class SaleRegisterRepositoryImpl implements SaleRegisterRepository {
 
     @Override
     public void save(SaleRegister saleRegister) {
-        repoJpa.save(saleRegister);
+        repoJpa.saveAndFlush(saleRegister);
     }
 
     @Override

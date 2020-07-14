@@ -23,3 +23,7 @@ app:
 
 delivery:
   maxDeliverysPerDay: 1
+
+sendgrid:
+  apiKey: un_api_key
+  email: example@example.com

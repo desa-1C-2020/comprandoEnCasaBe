@@ -7,7 +7,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "sale_register")
@@ -76,5 +78,17 @@ public class SaleRegister extends PersistibleSupport {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String showItems() {
+        List<String> productsText = items
+            .stream()
+            .map(item -> "Producto: " + item.getProduct().getName() + ". Cantidad: " + item.getQuantity())
+            .collect(Collectors.toList());
+        return String.join("\n", productsText);
+    }
+
+    public BigDecimal total() {
+        return items.stream().map(ShoppingListItem::getPrice).reduce(new BigDecimal(0), BigDecimal::add);
     }
 }

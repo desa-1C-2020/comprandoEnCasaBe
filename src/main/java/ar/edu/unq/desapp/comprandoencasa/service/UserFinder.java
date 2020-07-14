@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
@@ -46,10 +47,6 @@ public class UserFinder {
         return getUserOrThrow(userOptional, "No existe el usuario con id: [" + userId + "]");
     }
 
-    public boolean existsUser(User user) {
-        return userRepository.existsByEmail(user.getEmail());
-    }
-
     private User getUserOrThrow(Optional<User> userOptional, String message) {
         if (userOptional.isAbsent()) {
             throw new RuntimeException(message);
@@ -70,5 +67,9 @@ public class UserFinder {
     public boolean isBuyer(User user) {
         Optional<UserBuyer> userBuyer = userBuyerRepository.findByUser(user);
         return !userBuyer.isAbsent();
+    }
+
+    public UserSeller findByCommerce(Commerce commerce) {
+        return userSellerRepository.findByCommerce(commerce);
     }
 }
