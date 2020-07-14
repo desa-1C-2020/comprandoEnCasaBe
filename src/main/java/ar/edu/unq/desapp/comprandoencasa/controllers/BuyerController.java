@@ -54,7 +54,7 @@ public class BuyerController {
     }
 
     @DeleteMapping(value = "shoppingList")
-    public ResponseEntity deleteShoppingList(@RequestParam String shoppingListToDeleteId) {
+    public ResponseEntity deleteShoppingList(@RequestParam Long shoppingListToDeleteId) {
         shoppingListRepository.removeById(shoppingListToDeleteId);
         return (ResponseEntity) ResponseEntity.ok();
     }

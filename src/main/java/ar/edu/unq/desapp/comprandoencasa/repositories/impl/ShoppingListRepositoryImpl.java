@@ -23,11 +23,11 @@ public class ShoppingListRepositoryImpl implements ShoppingListRepository {
 
     @Override
     public List<ShoppingList> getAllByUser(User user) {
-        return null;
+        return repoJpa.findByUser(user);
     }
 
     @Override
-    public void removeById(String shoppingListToDeleteId) {
-
+    public void removeById(Long shoppingListToDeleteId) {
+        repoJpa.deleteById(shoppingListToDeleteId);
     }
 }

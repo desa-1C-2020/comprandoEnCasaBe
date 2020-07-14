@@ -31,13 +31,11 @@ public class ShoppingListRepositoryMem implements ShoppingListRepository {
     }
 
     @Override
-    public void removeById(String shoppingListToDeleteId) {
+    public void removeById(Long shoppingListToDeleteId) {
         Optional<ShoppingList> optionalShoppingList = repo
             .stream()
             .filter(shoppingList -> shoppingList.sameId(shoppingListToDeleteId))
             .findFirst();
-        if (optionalShoppingList.isPresent()) {
-            repo.remove(optionalShoppingList.get());
-        }
+        optionalShoppingList.ifPresent(shoppingList -> repo.remove(shoppingList));
     }
 }

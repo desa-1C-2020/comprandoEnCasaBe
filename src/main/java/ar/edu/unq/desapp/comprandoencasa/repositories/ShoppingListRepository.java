@@ -10,5 +10,5 @@ public interface ShoppingListRepository {
 
     List<ShoppingList> getAllByUser(User user);
 
-    void removeById(String shoppingListToDeleteId);
+    void removeById(Long shoppingListToDeleteId);
 }

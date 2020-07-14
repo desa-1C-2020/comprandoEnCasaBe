@@ -64,7 +64,7 @@ public class ShoppingList extends PersistibleSupport {
         return user.getId();
     }
 
-    public boolean sameId(String shoppingListToDeleteId) {
+    public boolean sameId(Long shoppingListToDeleteId) {
         return getId().equals(shoppingListToDeleteId);
     }
 
