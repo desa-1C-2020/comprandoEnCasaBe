@@ -13,7 +13,6 @@ public class PurchaseTO {
     public DeliveryOptionTO getDeliveryOption() {
         return deliveryOption;
     }
-    // -> Take_AWAY-> "12/07/2020 16_59"
 
     public void setDeliveryOption(DeliveryOptionTO deliveryOption) {
         this.deliveryOption = deliveryOption;

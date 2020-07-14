@@ -1,10 +1,12 @@
 package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
+import ar.com.kfgodel.nary.api.optionals.Optional;
 import com.google.maps.model.LatLng;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -210,6 +212,50 @@ public class CommerceTest {
         assertThat(openAsString, is("Rangos abierto: \nMonday: \nDe 08:00 a 12:00 horas."));
     }
 
+    @Test
+    public void whenAffectsTheStockForProduct_thenTheProductStockChange() {
+        DayOfWeekWithTimeRange dayOfWeekWithTimeRange = new DayOfWeekWithTimeRange(DayOfWeek.MONDAY,
+            Collections.singletonList(new TimeRange(8, 12)));
+        Product product = new Product("Lays", "Lays", "www.imagenes.com/lays");
+        product.setId(1L);
+        Commerce kiosco = createCommerceWith(product, dayOfWeekWithTimeRange);
+        List<ShoppingListItem> shoppingListItems = new ArrayList<>();
+        ShoppingListItem shoppingListItem = new ShoppingListItem(product, 2, BigDecimal.valueOf(50.00));
+        shoppingListItems.add(shoppingListItem);
+
+        kiosco.affectStock(shoppingListItems);
+
+        assertThat(kiosco.getSaleableItemByProduct(product).get().getStock(), is(8));
+    }
+
+    @Test
+    public void whenGetSaleableItemByProductAndExists_thenReturnTheRightSaleableItem() {
+        DayOfWeekWithTimeRange dayOfWeekWithTimeRange = new DayOfWeekWithTimeRange(DayOfWeek.MONDAY,
+            Collections.singletonList(new TimeRange(8, 12)));
+        Product product = new Product("Lays", "Lays", "www.imagenes.com/lays");
+        SaleableItem saleableItem = new SaleableItem(10, 50.00, product);
+        product.setId(1L);
+        Commerce kiosco = createCommerceWith(null, dayOfWeekWithTimeRange);
+        kiosco.addSaleableItem(saleableItem);
+
+        Optional<SaleableItem> saleableItemByProduct = kiosco.getSaleableItemByProduct(product);
+
+        assertThat(saleableItemByProduct.get(), is(saleableItem));
+    }
+
+    @Test
+    public void whenGetSaleableItemByProductAndNotExists_thenReturnEmptyValue() {
+        DayOfWeekWithTimeRange dayOfWeekWithTimeRange = new DayOfWeekWithTimeRange(DayOfWeek.MONDAY,
+            Collections.singletonList(new TimeRange(8, 12)));
+        Product product = new Product("Lays", "Lays", "www.imagenes.com/lays");
+        product.setId(1L);
+        Commerce kiosco = createCommerceWith(null, dayOfWeekWithTimeRange);
+
+        Optional<SaleableItem> saleableItemByProduct = kiosco.getSaleableItemByProduct(product);
+
+        assertThat(saleableItemByProduct.isAbsent(), is(true));
+    }
+
     private Commerce createCommerceWith(Product product, DayOfWeekWithTimeRange horarios) {
         Efectivo efectivo = new Efectivo("pesos");
         List<Efectivo> paymentMethods = new ArrayList<>();
@@ -217,7 +263,7 @@ public class CommerceTest {
         Address kioscoAddress = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
         Commerce kiosco = new Commerce("un nombre de comercio", "Kiosco", kioscoAddress, paymentMethods,
             Collections.singletonList(horarios), "3km");
-        SaleableItem saleableItem = new SaleableItem(1, 50.00, product);
+        SaleableItem saleableItem = new SaleableItem(10, 50.00, product);
 
         if (product != null) {
             kiosco.addSaleableItem(saleableItem);

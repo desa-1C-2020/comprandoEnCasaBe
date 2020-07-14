@@ -8,13 +8,7 @@ public enum DeliveryOptionType {
             return "Retiro por el local";
         }
     },
-    DELIVERY { //Envio a domicilio
-
-        @Override
-        public String type() {
-            return "Delivery";
-        }
-    };
+    DELIVERY; //Envio a domicilio
 
     public String type() {
         return "Delivery";

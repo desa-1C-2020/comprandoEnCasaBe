@@ -120,22 +120,6 @@ public class Commerce extends PersistibleSupport {
         saleableItems.remove(saleableItem);
     }
 
-    private SaleableItem findByProduct(Product product) {
-        return saleableItems
-            .stream()
-            .filter(saleableItem -> saleableItem.sameProduct(product))
-            .findFirst()
-            .get();
-    }
-
-    private SaleableItem findByProductId(Long productId) {
-        return saleableItems
-            .stream()
-            .filter(saleableItem -> saleableItem.sameProductId(productId))
-            .findFirst()
-            .get();
-    }
-
     public SaleableItem removeSaleableItemByProductId(Long productId) {
         SaleableItem saleableItem = findByProductId(productId);
         saleableItems.remove(saleableItem);
@@ -187,12 +171,7 @@ public class Commerce extends PersistibleSupport {
         items.forEach(this::proccessStock);
     }
 
-    private void proccessStock(ShoppingListItem item) {
-        Optional<SaleableItem> saleableItemByProduct = getSaleableItemByProduct(item.getProduct());
-        saleableItemByProduct.ifPresent(saleableItem -> saleableItem.decrementStockIn(item.getQuantity()));
-    }
-
-    private Optional<SaleableItem> getSaleableItemByProduct(Product product) {
+    public Optional<SaleableItem> getSaleableItemByProduct(Product product) {
         return Optional
             .create(saleableItems
                 .stream()
@@ -200,4 +179,24 @@ public class Commerce extends PersistibleSupport {
                 .findFirst());
     }
 
+    private void proccessStock(ShoppingListItem item) {
+        Optional<SaleableItem> saleableItemByProduct = getSaleableItemByProduct(item.getProduct());
+        saleableItemByProduct.ifPresent(saleableItem -> saleableItem.decrementStockIn(item.getQuantity()));
+    }
+
+    private SaleableItem findByProduct(Product product) {
+        return saleableItems
+            .stream()
+            .filter(saleableItem -> saleableItem.sameProduct(product))
+            .findFirst()
+            .get();
+    }
+
+    private SaleableItem findByProductId(Long productId) {
+        return saleableItems
+            .stream()
+            .filter(saleableItem -> saleableItem.sameProductId(productId))
+            .findFirst()
+            .get();
+    }
 }

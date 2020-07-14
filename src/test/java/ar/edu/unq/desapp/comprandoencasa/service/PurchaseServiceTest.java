@@ -56,6 +56,7 @@ public class PurchaseServiceTest extends SpringIntegrationTest {
         Commerce commerce = commerce();
         when(commerceFinder.findById(1L)).thenReturn(Optional.of(commerce));
 
+        //Este test va a romper por el now(), cambiar estos strings en funcion del now().
         LocalDateTime takeAwayOptionFor = purchaseService.getTakeAwayOptionFor(Collections.singletonList(1L), "20200713:130000");
 
         assertThat(takeAwayOptionFor.toString(), is("2020-07-20T08:00:01"));
