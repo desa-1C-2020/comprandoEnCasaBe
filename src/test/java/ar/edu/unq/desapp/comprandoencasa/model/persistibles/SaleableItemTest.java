@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -75,5 +76,16 @@ public class SaleableItemTest {
         saleableItem.decrementStockIn(7);
 
         assertThat(saleableItem.getStock(), is(3));
+    }
+
+    @Test
+    public void whenDecrementStockAndThereSufficient_thenTrowAnException() {
+        Product product = new Product("un nombre de producto", "una marca", "una url");
+        int actualStock = 1;
+        SaleableItem saleableItem = new SaleableItem(actualStock, 50.00, product);
+
+        assertThatExceptionOfType(RuntimeException.class)
+            .isThrownBy(() -> saleableItem.decrementStockIn(3))
+            .withMessage("No se puede decrementar el stock. No hay stock suficiente: " + actualStock);
     }
 }

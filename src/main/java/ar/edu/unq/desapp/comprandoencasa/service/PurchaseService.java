@@ -28,6 +28,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -123,7 +124,9 @@ public class PurchaseService {
         Commerce commerce = itemByCommerce.getCommerce();
         List<ShoppingListItem> items = itemByCommerce.getItems();
         PurchaseStatus pending = PurchaseStatus.PENDING;
-        PurchaseRegister purchaseRegister = new PurchaseRegister(commerce, shoppingList, items, pending, shoppingList.getUser());
+        List itemsCopy = new ArrayList<>();
+        itemsCopy.addAll(items); //Para saltearme el tema de que es una coleccion persistente
+        PurchaseRegister purchaseRegister = new PurchaseRegister(commerce, shoppingList, itemsCopy, pending, shoppingList.getUser());
         pending.affectStock(commerce, items);
         commerceRepository.save(commerce);
         purchaseRegisterRepository.save(purchaseRegister);

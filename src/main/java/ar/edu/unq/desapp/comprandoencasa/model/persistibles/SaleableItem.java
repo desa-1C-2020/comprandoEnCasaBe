@@ -71,6 +71,9 @@ public class SaleableItem extends PersistibleSupport {
     }
 
     public void decrementStockIn(int quantity) {
+        if (stock < quantity) {
+            throw new RuntimeException("No se puede decrementar el stock. No hay stock suficiente: " + stock);
+        }
         stock -= quantity;
     }
 }

@@ -8,6 +8,7 @@ import com.google.maps.model.LatLng;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -30,7 +31,7 @@ public class Commerce extends PersistibleSupport {
     @OneToMany(cascade = CascadeType.ALL)
     private List<DayOfWeekWithTimeRange> daysAndHoursOpen;
     private String arrivalRange;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SaleableItem> saleableItems;
 
     //For springboot serializer
@@ -144,9 +145,10 @@ public class Commerce extends PersistibleSupport {
     }
 
     public Product getProductById(Long saleableId) {
-        Optional<SaleableItem> saleableItemOptional = Nary
-            .create(saleableItems)
-            .filterOptional(saleableItem -> saleableItem.sameProductId(saleableId));
+        Optional<SaleableItem> saleableItemOptional = Optional.create(saleableItems
+            .stream()
+            .filter(saleableItem -> saleableItem.sameProductId(saleableId))
+            .findFirst());
         SaleableItem saleableItem = saleableItemOptional.get();
         return saleableItem.getProduct();
     }

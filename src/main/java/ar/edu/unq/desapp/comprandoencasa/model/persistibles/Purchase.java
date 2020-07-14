@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.model.persistibles;
 
 import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -14,7 +15,7 @@ public class Purchase extends PersistibleSupport {
     @OneToOne
     private ShoppingList shoppingList;
     private PaymentMethod paymentMethod;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private DeliveryOption deliveryOption;
     private BigDecimal total; //total del carrito, + un posible cargo por envío. lo calcula el front
     private LocalDateTime creationDateTime;

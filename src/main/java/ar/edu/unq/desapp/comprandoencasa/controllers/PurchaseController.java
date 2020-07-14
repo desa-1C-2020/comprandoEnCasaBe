@@ -2,12 +2,12 @@ package ar.edu.unq.desapp.comprandoencasa.controllers;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.PurchaseTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.TakeAwayTO;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Purchase;
 import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
 import ar.edu.unq.desapp.comprandoencasa.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,8 +36,7 @@ public class PurchaseController {
     }
 
     @PostMapping
-    public ResponseEntity purchase(@CurrentUser UserPrincipal userPrincipal, @RequestBody PurchaseTO purchaseTO) {
-        purchaseService.makePurchase(purchaseTO, userPrincipal.getId());
-        return (ResponseEntity) ResponseEntity.ok();
+    public Purchase purchase(@CurrentUser UserPrincipal userPrincipal, @RequestBody PurchaseTO purchaseTO) {
+        return purchaseService.makePurchase(purchaseTO, userPrincipal.getId());
     }
 }
