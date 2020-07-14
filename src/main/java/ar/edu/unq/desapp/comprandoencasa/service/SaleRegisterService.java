@@ -33,6 +33,8 @@ public class SaleRegisterService {
         if (sale.isPresent()) {
             SaleRegister saleRegister = sale.get();
             saleRegister.setSaleStatus(saleUpdateTO.getNewSaleStatus());
+            commerceRepository.save(commerce);
+            saleRegisterRepository.save(saleRegister);
         }
         return saleRegisterRepository.findAllByCommerce(commerce);
     }
