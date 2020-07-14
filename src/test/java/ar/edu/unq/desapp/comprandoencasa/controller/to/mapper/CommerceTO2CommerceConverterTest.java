@@ -3,9 +3,9 @@ package ar.edu.unq.desapp.comprandoencasa.controller.to.mapper;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.CommerceTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.DayOfWeekWithTimeRangeTO;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.PaymentMethodTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
@@ -45,11 +45,8 @@ public class CommerceTO2CommerceConverterTest extends SpringIntegrationTest {
         commerceTO.setBusinessSector("sector");
         commerceTO.setName("a commerce");
         commerceTO.setDaysAndHoursOpen(Collections.singletonList(dayOfWeekWithTimeRangeTO));
-        List<PaymentMethodTO> paymentMethods = new ArrayList<>();
-        PaymentMethodTO paymentMethodTO = new PaymentMethodTO();
-        paymentMethodTO.setAccept("Efectivo");
-        paymentMethodTO.setType("Efectivo");
-        paymentMethods.add(paymentMethodTO);
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        paymentMethods.add(PaymentMethod.DEBIT);
         commerceTO.setPaymentMethods(paymentMethods);
     }
 
@@ -62,5 +59,6 @@ public class CommerceTO2CommerceConverterTest extends SpringIntegrationTest {
         assertThat(commerce.getBusinessSector(), is(commerceTO.getBusinessSector()));
         assertThat(commerce.getAddress().getLatitud(), is(addressTO.getLatitud()));
         assertThat(commerce.getDaysAndHoursOpen().get(0).getDayOfWeek(), is("Saturday"));
+        assertThat(commerce.getPaymentMethods().get(0), is(PaymentMethod.DEBIT));
     }
 }

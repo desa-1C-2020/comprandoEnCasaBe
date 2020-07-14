@@ -5,7 +5,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRange;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DeliveryRegister;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.TimeRange;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
@@ -75,9 +75,8 @@ public class PurchaseServiceTest extends SpringIntegrationTest {
     }
 
     public Commerce commerce() {
-        Efectivo efectivo = new Efectivo("pesos");
-        List<Efectivo> paymentMethods = new ArrayList<>();
-        paymentMethods.add(efectivo);
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        paymentMethods.add(PaymentMethod.CASH);
         LatLng aCommerceLatLng = new LatLng(-34.7066345, -58.2819718);
         Address aCommerceAddress = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", aCommerceLatLng);
         DayOfWeekWithTimeRange horarios = new DayOfWeekWithTimeRange(DayOfWeek.MONDAY,

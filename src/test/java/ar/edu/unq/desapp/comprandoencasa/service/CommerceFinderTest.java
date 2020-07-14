@@ -5,7 +5,7 @@ import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRange;
-import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Efectivo;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.TimeRange;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import com.google.maps.model.LatLng;
@@ -69,9 +69,8 @@ public class CommerceFinderTest {
     }
 
     public List<Commerce> commercesSaved() {
-        Efectivo efectivo = new Efectivo("pesos");
-        List<Efectivo> paymentMethods = new ArrayList<>();
-        paymentMethods.add(efectivo);
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        paymentMethods.add(PaymentMethod.CASH);
         LatLng aCommerceLatLng = new LatLng(-34.7066345, -58.2819718);
         Address aCommerceAddress = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", aCommerceLatLng);
         DayOfWeekWithTimeRange horarios = new DayOfWeekWithTimeRange(DayOfWeek.MONDAY,

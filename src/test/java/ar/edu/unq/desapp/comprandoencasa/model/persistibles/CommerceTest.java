@@ -257,9 +257,8 @@ public class CommerceTest {
     }
 
     private Commerce createCommerceWith(Product product, DayOfWeekWithTimeRange horarios) {
-        Efectivo efectivo = new Efectivo("pesos");
-        List<Efectivo> paymentMethods = new ArrayList<>();
-        paymentMethods.add(efectivo);
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        paymentMethods.add(PaymentMethod.CASH);
         Address kioscoAddress = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", new LatLng(-34.7066345, -58.2819718));
         Commerce kiosco = new Commerce("un nombre de comercio", "Kiosco", kioscoAddress, paymentMethods,
             Collections.singletonList(horarios), "3km");

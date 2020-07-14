@@ -6,6 +6,7 @@ import ar.edu.unq.desapp.comprandoencasa.support.PersistibleSupport;
 import com.google.maps.model.LatLng;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -24,8 +25,8 @@ public class Commerce extends PersistibleSupport {
     private String businessSector;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Efectivo> paymentMethods;
+    @ElementCollection
+    private List<PaymentMethod> paymentMethods;
     @OneToMany(cascade = CascadeType.ALL)
     private List<DayOfWeekWithTimeRange> daysAndHoursOpen;
     private String arrivalRange;
@@ -36,7 +37,7 @@ public class Commerce extends PersistibleSupport {
     public Commerce() {
     }
 
-    public Commerce(String name, String businessSector, Address address, List<Efectivo> paymentMethods,
+    public Commerce(String name, String businessSector, Address address, List<PaymentMethod> paymentMethods,
                     List<DayOfWeekWithTimeRange> daysAndHoursOpen, String arrivalRange) {
         this.name = name;
         this.businessSector = businessSector;
@@ -45,6 +46,14 @@ public class Commerce extends PersistibleSupport {
         this.daysAndHoursOpen = daysAndHoursOpen;
         this.arrivalRange = arrivalRange;
         this.saleableItems = new ArrayList<>();
+    }
+
+    public List<PaymentMethod> getPaymentMethods() {
+        return paymentMethods;
+    }
+
+    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+        this.paymentMethods = paymentMethods;
     }
 
     public String getBusinessSector() {
@@ -61,14 +70,6 @@ public class Commerce extends PersistibleSupport {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public List<Efectivo> getPaymentMethods() {
-        return paymentMethods;
-    }
-
-    public void setPaymentMethods(List<Efectivo> paymentMethods) {
-        this.paymentMethods = paymentMethods;
     }
 
     public List<DayOfWeekWithTimeRange> getDaysAndHoursOpen() {
@@ -93,6 +94,10 @@ public class Commerce extends PersistibleSupport {
 
     public List<SaleableItem> getSaleableItems() {
         return saleableItems;
+    }
+
+    public void setSaleableItems(List<SaleableItem> saleableItems) {
+        this.saleableItems = saleableItems;
     }
 
     public String getName() {

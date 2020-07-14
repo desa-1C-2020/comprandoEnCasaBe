@@ -3,8 +3,8 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.AddressTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.CommerceTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.DayOfWeekWithTimeRangeTO;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.PaymentMethodTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
@@ -112,11 +112,7 @@ public class UserRegistrarTest extends SpringIntegrationTest {
         commerceTO.setBusinessSector("sector");
         commerceTO.setName("a commerce");
         commerceTO.setDaysAndHoursOpen(Collections.singletonList(dayOfWeekWithTimeRangeTO));
-        List<PaymentMethodTO> paymentMethods = new ArrayList<>();
-        PaymentMethodTO paymentMethodTO = new PaymentMethodTO();
-        paymentMethodTO.setAccept("Efectivo");
-        paymentMethodTO.setType("Efectivo");
-        paymentMethods.add(paymentMethodTO);
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
         commerceTO.setPaymentMethods(paymentMethods);
         return commerceTO;
     }
