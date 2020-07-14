@@ -8,8 +8,6 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DeliveryRegister;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.TimeRange;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
-import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRegisterRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRepository;
 import ar.edu.unq.desapp.meta.SpringIntegrationTest;
 import com.google.maps.model.LatLng;
@@ -39,16 +37,14 @@ public class PurchaseServiceTest extends SpringIntegrationTest {
     @Mock
     private ShoppingListCreator creator;
     @Mock
-    private PurchaseRegisterRepository purchaseRegisterRepository;
-    @Mock
-    private CommerceRepository commerceRepository;
+    private SaleRegisterService saleRegisterService;
     @Mock
     private PurchaseRepository purchaseRepository;
 
     @Before
     public void setUp() {
         purchaseService = new PurchaseService(commerceFinder, userFinder, deliveryService, creator,
-            purchaseRegisterRepository, commerceRepository, purchaseRepository);
+            purchaseRepository, saleRegisterService);
     }
 
     @Test

@@ -76,4 +76,8 @@ public class SaleableItem extends PersistibleSupport {
         }
         stock -= quantity;
     }
+
+    public void incrementStockIn(int quantity) {
+        stock += quantity;
+    }
 }

@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -177,8 +178,12 @@ public class Commerce extends PersistibleSupport {
         return startMessage + rangesJoinning;
     }
 
-    public void affectStock(List<ShoppingListItem> items) {
-        items.forEach(this::proccessStock);
+    public void increaseStock(List<ShoppingListItem> items) {
+        items.forEach(item -> proccessStock(item, saleableItem -> saleableItem.incrementStockIn(item.getQuantity())));
+    }
+
+    public void decreaseStock(List<ShoppingListItem> items) {
+        items.forEach(item -> proccessStock(item, saleableItem -> saleableItem.decrementStockIn(item.getQuantity())));
     }
 
     public Optional<SaleableItem> getSaleableItemByProduct(Product product) {
@@ -189,9 +194,9 @@ public class Commerce extends PersistibleSupport {
                 .findFirst());
     }
 
-    private void proccessStock(ShoppingListItem item) {
+    private void proccessStock(ShoppingListItem item, Consumer<SaleableItem> saleableItemConsumer) {
         Optional<SaleableItem> saleableItemByProduct = getSaleableItemByProduct(item.getProduct());
-        saleableItemByProduct.ifPresent(saleableItem -> saleableItem.decrementStockIn(item.getQuantity()));
+        saleableItemByProduct.ifPresent(saleableItemConsumer);
     }
 
     private SaleableItem findByProduct(Product product) {

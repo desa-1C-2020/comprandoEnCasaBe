@@ -2,8 +2,8 @@ package ar.edu.unq.desapp.comprandoencasa.configurations;
 
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.DeliveryRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRegisterRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.SaleRegisterRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
@@ -11,8 +11,8 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.CommerceRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.DeliveryRepositoryImpl;
-import ar.edu.unq.desapp.comprandoencasa.repositories.impl.PurchaseRegisterRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.PurchaseRepositoryImpl;
+import ar.edu.unq.desapp.comprandoencasa.repositories.impl.SaleRegisterRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.SaleableItemRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.ShoppingListRepositoryImpl;
 import ar.edu.unq.desapp.comprandoencasa.repositories.impl.UserBuyerRepositoryImpl;
@@ -65,8 +65,8 @@ public class RepositoryJpaConfiguration {
     }
 
     @Bean
-    public PurchaseRegisterRepository purchaseRegisterRepository(PurchaseRegisterRepositoryJpa purchaseRegisterRepositoryJpa) {
-        return PurchaseRegisterRepositoryImpl.create(purchaseRegisterRepositoryJpa);
+    public SaleRegisterRepository purchaseRegisterRepository(PurchaseRegisterRepositoryJpa purchaseRegisterRepositoryJpa) {
+        return SaleRegisterRepositoryImpl.create(purchaseRegisterRepositoryJpa);
     }
 
     @Bean

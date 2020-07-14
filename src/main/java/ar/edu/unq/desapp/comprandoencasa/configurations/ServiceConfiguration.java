@@ -4,8 +4,8 @@ import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.repositories.CommerceRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.DeliveryRepository;
-import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRegisterRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.PurchaseRepository;
+import ar.edu.unq.desapp.comprandoencasa.repositories.SaleRegisterRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
@@ -15,6 +15,7 @@ import ar.edu.unq.desapp.comprandoencasa.service.CommerceFinder;
 import ar.edu.unq.desapp.comprandoencasa.service.DeliveryService;
 import ar.edu.unq.desapp.comprandoencasa.service.ProductFinder;
 import ar.edu.unq.desapp.comprandoencasa.service.PurchaseService;
+import ar.edu.unq.desapp.comprandoencasa.service.SaleRegisterService;
 import ar.edu.unq.desapp.comprandoencasa.service.SaleableItemService;
 import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreator;
 import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
@@ -84,18 +85,18 @@ public class ServiceConfiguration {
         return new ProductFinder(commerceFinder, googleConnector, converter);
     }
 
-//    @Bean
-//    public PurchaseService purchaseService(UserFinder userFinder, CommerceFinder commerceFinder){
-//         return new PurchaseService(userFinder, commerceFinder);
-//    }
-
     @Bean
     public PurchaseService purchaseService(CommerceFinder commerceFinder, UserFinder userFinder,
                                            DeliveryService deliveryService, ShoppingListCreator shoppingListCreator,
-                                           PurchaseRegisterRepository purchaseRegisterRepository,
-                                           CommerceRepository commerceRepository, PurchaseRepository purchaseRepository) {
+                                           PurchaseRepository purchaseRepository, SaleRegisterService saleRegisterService) {
         return new PurchaseService(commerceFinder, userFinder, deliveryService, shoppingListCreator,
-            purchaseRegisterRepository, commerceRepository, purchaseRepository);
+            purchaseRepository, saleRegisterService);
+    }
+
+    @Bean
+    public SaleRegisterService saleRegisterService(SaleRegisterRepository saleRegisterRepository,
+                                                   CommerceRepository commerceRepository, UserFinder userFinder) {
+        return new SaleRegisterService(saleRegisterRepository, commerceRepository, userFinder);
     }
 
     @Bean
