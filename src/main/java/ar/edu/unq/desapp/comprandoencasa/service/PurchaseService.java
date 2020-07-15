@@ -119,4 +119,9 @@ public class PurchaseService {
     private boolean canWithdrawThisDay(LocalDateTime suggestedDateTime, List<Commerce> commerces) {
         return commerces.stream().allMatch(commerce -> commerce.isOpenIn(suggestedDateTime));
     }
+
+    public List<Purchase> getPurchasesFor(Long userId) {
+        User user = userFinder.findUserById(userId);
+        return purchaseRepository.findAllByUser(user);
+    }
 }

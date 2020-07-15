@@ -2,11 +2,13 @@ package ar.edu.unq.desapp.comprandoencasa.controllers;
 
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
+import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Purchase;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
+import ar.edu.unq.desapp.comprandoencasa.service.PurchaseService;
 import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreator;
 import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,8 @@ public class BuyerController {
 
     @Autowired
     private UserFinder userFinder;
+    @Autowired
+    private PurchaseService purchaseService;
 
     @PostMapping(value = "shoppingList")
     public ResponseEntity addShoppingList(@CurrentUser UserPrincipal userPrincipal, @RequestBody ShoppingListTo shoppingListTo) {
@@ -57,5 +61,10 @@ public class BuyerController {
     public ResponseEntity deleteShoppingList(@RequestParam Long shoppingListToDeleteId) {
         shoppingListRepository.removeById(shoppingListToDeleteId);
         return (ResponseEntity) ResponseEntity.ok();
+    }
+
+    @GetMapping(value = "purchases")
+    public List<Purchase> purchases(@CurrentUser UserPrincipal userPrincipal) {
+        return purchaseService.getPurchasesFor(userPrincipal.getId());
     }
 }
