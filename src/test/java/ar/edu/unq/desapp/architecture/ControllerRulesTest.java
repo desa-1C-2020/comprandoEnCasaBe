@@ -15,19 +15,20 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
 public class ControllerRulesTest {
 
-    private final JavaClasses classes = new ClassFileImporter().importPackages("com.tngtech.archunit.example.layers");
+	private final JavaClasses classes = new ClassFileImporter().importPackages("ar.edu.unq.desapp.comprandoencasa.controller");
 
     @Test
     public void controllers_should_only_call_secured_methods() {
         classes()
-            .that().resideInAPackage("..controller..")
-            .should().onlyCallMethodsThat(areDeclaredInController())
+        	.that().resideInAPackage("..controller")
+        	.and().areInnerClasses()
+            .should().onlyCallMethodsThat(areDeclaredInServices())
             .check(classes);
     }
 
-    private DescribedPredicate<JavaMember> areDeclaredInController() {
-        DescribedPredicate<JavaClass> aPackageController = GET_PACKAGE_NAME.is(PackageMatchers.of("..controller..", "java.."))
-            .as("a package '..controller..'");
-        return are(declaredIn(aPackageController));
+    private DescribedPredicate<JavaMember> areDeclaredInServices() {
+        DescribedPredicate<JavaClass> aPackageService = GET_PACKAGE_NAME.is(PackageMatchers.of("..service..", "java.."))
+            .as("a package '..service..'");
+        return are(declaredIn(aPackageService));
     }
 }

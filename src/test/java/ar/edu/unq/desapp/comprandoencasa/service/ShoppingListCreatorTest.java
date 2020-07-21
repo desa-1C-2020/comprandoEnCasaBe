@@ -1,9 +1,9 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListItemTO;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTO;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
@@ -38,10 +38,10 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ShoppingListCreatorTest {
 
-    private ShoppingListCreator creator;
+    private ShoppingListCreatorService creator;
 
     @Mock
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
 
     @Mock
     private ShoppingListRepository shoppingListRepository;
@@ -54,14 +54,14 @@ public class ShoppingListCreatorTest {
 
     @Before
     public void setUp() {
-        creator = new ShoppingListCreator(userFinder, shoppingListRepository, commerceRepository);
+        creator = new ShoppingListCreatorService(userFinder, shoppingListRepository, commerceRepository);
     }
 
     @Test
     public void whenCreatesAShoppingListWithValidValus_thenSavesTheCreatedShoppingList() {
         User user = User.create("aName", "aSurname", "anEmail@email.com", "password", null);
         user.setId(Long.MAX_VALUE);
-        ShoppingListTo shoppingListTo = getShoppingListTo(123L, 1234L);
+        ShoppingListTO shoppingListTo = getShoppingListTo(123L, 1234L);
         simulatesRightOperationForCommerceAndCommerceRepository();
 
         ShoppingList shoppingList = creator.createAndSave(shoppingListTo, user);
@@ -76,7 +76,7 @@ public class ShoppingListCreatorTest {
         User user = User.create("aName", "aSurname", "anEmail@email.com", "password", null);
         user.setId(Long.MAX_VALUE);
         Long commerceId = 123L;
-        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, 1234L);
+        ShoppingListTO shoppingListTo = getShoppingListTo(commerceId, 1234L);
         when(commerceRepository.getById(anyLong())).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(RuntimeException.class)
@@ -93,7 +93,7 @@ public class ShoppingListCreatorTest {
         user.setId(Long.MAX_VALUE);
         Long commerceId = 123L;
         Long productId = 1234L;
-        ShoppingListTo shoppingListTo = getShoppingListTo(commerceId, productId);
+        ShoppingListTO shoppingListTo = getShoppingListTo(commerceId, productId);
         Commerce anyCommerce = new Commerce("name", null, null, null, null, null);
         when(commerceRepository.getById(anyLong())).thenReturn(Optional.of(anyCommerce));
 
@@ -129,19 +129,19 @@ public class ShoppingListCreatorTest {
         return new ShoppingList(user, itemsByCommerces, BigDecimal.TEN, LocalDateTime.now());
     }
 
-    private ShoppingListTo getShoppingListTo(Long commerceId, Long productId) {
-        List<ItemByCommerceTo> itemsByCommerce = getItemByCommerceTos(commerceId, productId);
+    private ShoppingListTO getShoppingListTo(Long commerceId, Long productId) {
+        List<ItemByCommerceTO> itemsByCommerce = getItemByCommerceTos(commerceId, productId);
 
-        ShoppingListTo shoppingListTo = new ShoppingListTo();
+        ShoppingListTO shoppingListTo = new ShoppingListTO();
         shoppingListTo.setTotal(BigDecimal.TEN);
         shoppingListTo.setItemByCommerceTo(itemsByCommerce);
         return shoppingListTo;
     }
 
-    private List<ItemByCommerceTo> getItemByCommerceTos(Long commerceId, Long productId) {
+    private List<ItemByCommerceTO> getItemByCommerceTos(Long commerceId, Long productId) {
         List<ShoppingListItemTO> items = getAShoppingListItemTo(productId);
-        List<ItemByCommerceTo> itemsByCommerce = new ArrayList<>();
-        ItemByCommerceTo itemByCommerceTo = new ItemByCommerceTo();
+        List<ItemByCommerceTO> itemsByCommerce = new ArrayList<>();
+        ItemByCommerceTO itemByCommerceTo = new ItemByCommerceTO();
         itemByCommerceTo.setCommerceId(commerceId);
         itemByCommerceTo.setItems(items);
         itemsByCommerce.add(itemByCommerceTo);

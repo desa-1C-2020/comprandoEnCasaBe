@@ -5,10 +5,10 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 
-public class UserLoger {
-    private UserFinder userFinder;
+public class UserLogerService {
+    private UserFinderService userFinder;
 
-    public UserLoger(UserFinder userFinder) {
+    public UserLogerService(UserFinderService userFinder) {
         this.userFinder = userFinder;
     }
 

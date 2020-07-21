@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class EmailSender {
-    public static Logger logger = LoggerFactory.getLogger(EmailSender.class);
+public class EmailSenderService {
+    public static Logger logger = LoggerFactory.getLogger(EmailSenderService.class);
     private SendGridClient sendGridClient;
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
 
-    public EmailSender(SendGridClient sendGridClient, UserFinder userFinder) {
+    public EmailSenderService(SendGridClient sendGridClient, UserFinderService userFinder) {
         this.sendGridClient = sendGridClient;
         this.userFinder = userFinder;
     }

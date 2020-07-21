@@ -7,8 +7,8 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserBuyer;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.UserSeller;
 import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
-import ar.edu.unq.desapp.comprandoencasa.service.UserLoger;
-import ar.edu.unq.desapp.comprandoencasa.service.UserRegistrar;
+import ar.edu.unq.desapp.comprandoencasa.service.UserLogerService;
+import ar.edu.unq.desapp.comprandoencasa.service.UserRegistrarService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +27,9 @@ public class UserController {
     public static final String basePath = "/user";
     public static Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
-    private UserRegistrar userRegistrar;
+    private UserRegistrarService userRegistrar;
     @Autowired
-    private UserLoger userLoger;
+    private UserLogerService userLoger;
 
     @PostMapping("buyer/update")
     public UserBuyer updateBuyer(@CurrentUser UserPrincipal userPrincipal, @RequestBody AddressTO addressTO) {

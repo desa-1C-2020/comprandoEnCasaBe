@@ -9,11 +9,11 @@ import com.google.maps.model.LatLng;
 
 import java.util.List;
 
-public class CommerceFinder {
+public class CommerceFinderService {
     private CommerceRepository commerceRepository;
     private GoogleConnector googleConnector;
 
-    public CommerceFinder(CommerceRepository commerceRepository, GoogleConnector googleConnector) {
+    public CommerceFinderService(CommerceRepository commerceRepository, GoogleConnector googleConnector) {
         this.commerceRepository = commerceRepository;
         this.googleConnector = googleConnector;
     }

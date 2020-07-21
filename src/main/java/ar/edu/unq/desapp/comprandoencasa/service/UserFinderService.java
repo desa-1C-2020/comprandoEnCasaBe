@@ -9,12 +9,12 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 
-public class UserFinder {
+public class UserFinderService {
     private UserRepository userRepository;
     private UserSellerRepository userSellerRepository;
     private UserBuyerRepository userBuyerRepository;
 
-    public UserFinder(UserRepository userRepository, UserSellerRepository userSellerRepository,
+    public UserFinderService(UserRepository userRepository, UserSellerRepository userSellerRepository,
                       UserBuyerRepository userBuyerRepository) {
         this.userRepository = userRepository;
         this.userSellerRepository = userSellerRepository;

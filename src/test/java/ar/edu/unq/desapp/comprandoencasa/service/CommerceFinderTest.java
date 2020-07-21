@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CommerceFinderTest {
 
-    private CommerceFinder commerceFinder;
+    private CommerceFinderService commerceFinder;
 
     @Mock
     private CommerceRepository commerceRepository;
@@ -39,7 +39,7 @@ public class CommerceFinderTest {
 
     @Before
     public void setUp() {
-        commerceFinder = new CommerceFinder(commerceRepository, googleConnector);
+        commerceFinder = new CommerceFinderService(commerceRepository, googleConnector);
     }
 
     @Test

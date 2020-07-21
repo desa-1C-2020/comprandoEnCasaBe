@@ -29,19 +29,19 @@ import static org.mockito.Mockito.when;
 public class PurchaseServiceTest extends SpringIntegrationTest {
     private PurchaseService purchaseService;
     @Mock
-    private CommerceFinder commerceFinder;
+    private CommerceFinderService commerceFinder;
     @Mock
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
     @Mock
     private DeliveryService deliveryService;
     @Mock
-    private ShoppingListCreator creator;
+    private ShoppingListCreatorService creator;
     @Mock
     private SaleRegisterService saleRegisterService;
     @Mock
     private PurchaseRepository purchaseRepository;
     @Mock
-    private EmailSender emailSender;
+    private EmailSenderService emailSender;
 
     @Before
     public void setUp() {

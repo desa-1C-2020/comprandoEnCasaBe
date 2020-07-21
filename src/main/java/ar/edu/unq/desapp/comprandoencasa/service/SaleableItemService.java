@@ -9,11 +9,11 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.SaleableItemRepository;
 import java.util.List;
 
 public class SaleableItemService {
-    private final UserFinder userFinder;
+    private final UserFinderService userFinder;
     private final SaleableItemRepository saleableItemRepository;
     private final CommerceRepository commerceRepository;
 
-    public SaleableItemService(UserFinder userFinder, SaleableItemRepository saleableItemRepository, CommerceRepository commerceRepository) {
+    public SaleableItemService(UserFinderService userFinder, SaleableItemRepository saleableItemRepository, CommerceRepository commerceRepository) {
         this.userFinder = userFinder;
         this.saleableItemRepository = saleableItemRepository;
         this.commerceRepository = commerceRepository;

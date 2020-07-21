@@ -8,7 +8,7 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
 import ar.edu.unq.desapp.comprandoencasa.security.oauth2.user.OAuth2UserInfo;
 import ar.edu.unq.desapp.comprandoencasa.security.oauth2.user.OAuth2UserInfoFactoryHelper;
-import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -26,7 +26,7 @@ import java.util.List;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
 
     @Autowired
     private UserRepository userRepository;

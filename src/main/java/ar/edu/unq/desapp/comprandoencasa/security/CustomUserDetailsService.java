@@ -4,7 +4,7 @@ package ar.edu.unq.desapp.comprandoencasa.security;
 import ar.edu.unq.desapp.comprandoencasa.exception.ResourceNotFoundException;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
-import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
 
     @Override
     @Transactional

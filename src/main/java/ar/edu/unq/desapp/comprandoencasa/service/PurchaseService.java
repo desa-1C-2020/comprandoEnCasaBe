@@ -3,7 +3,7 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 import ar.com.kfgodel.nary.api.optionals.InterfacedOptional;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.DeliveryOptionTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.PurchaseTO;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTO;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DayOfWeekWithTimeRange;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.DeliveryOption;
@@ -29,17 +29,17 @@ import java.util.stream.Collectors;
 public class PurchaseService {
     private final LocalTime defaultDeliveryTime = LocalTime.of(18, 30);
     private DeliveryService deliveryService;
-    private ShoppingListCreator shoppingListCreator;
-    private CommerceFinder commerceFinder;
-    private UserFinder userFinder;
+    private ShoppingListCreatorService shoppingListCreator;
+    private CommerceFinderService commerceFinder;
+    private UserFinderService userFinder;
     private Logger log = LoggerFactory.getLogger(PurchaseService.class);
     private PurchaseRepository purchaseRepository;
     private SaleRegisterService saleRegisterService;
-    private EmailSender emailSender;
+    private EmailSenderService emailSender;
 
-    public PurchaseService(CommerceFinder commerceFinder, UserFinder userFinder, DeliveryService deliveryService,
-                           ShoppingListCreator shoppingListCreator, PurchaseRepository purchaseRepository,
-                           SaleRegisterService saleRegisterService, EmailSender emailSender) {
+    public PurchaseService(CommerceFinderService commerceFinder, UserFinderService userFinder, DeliveryService deliveryService,
+                           ShoppingListCreatorService shoppingListCreator, PurchaseRepository purchaseRepository,
+                           SaleRegisterService saleRegisterService, EmailSenderService emailSender) {
         this.commerceFinder = commerceFinder;
         this.userFinder = userFinder;
         this.deliveryService = deliveryService;
@@ -84,7 +84,7 @@ public class PurchaseService {
         DeliveryOption deliveryOption = getDeliveryOption(purchaseTO);
         PaymentMethod paymentMethod = purchaseTO.getSelectedPaymentMethod();
 
-        ShoppingListTo shoppingListTo = purchaseTO.getShoppingListTo();
+        ShoppingListTO shoppingListTo = purchaseTO.getShoppingListTo();
         ShoppingList shoppingList = shoppingListCreator.createAndSave(shoppingListTo, user);
 
         List<SaleRegister> saleRegisters = saleRegisterService.createAndSaveSale(shoppingList);

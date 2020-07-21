@@ -12,14 +12,14 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 
-public class UserRegistrar {
-    private UserFinder userFinder;
+public class UserRegistrarService {
+    private UserFinderService userFinder;
     private UserRepository userRepository;
     private UserBuyerRepository buyerRepository;
     private UserSellerRepository userSellerRepository;
     private ObjectConverter converter;
 
-    public UserRegistrar(UserFinder userFinder, UserRepository userRepository,
+    public UserRegistrarService(UserFinderService userFinder, UserRepository userRepository,
                          UserBuyerRepository buyerRepository, UserSellerRepository userSellerRepository,
                          ObjectConverter objectConverter) {
         this.userFinder = userFinder;
