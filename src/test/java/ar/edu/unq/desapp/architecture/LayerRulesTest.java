@@ -14,7 +14,7 @@ public class LayerRulesTest {
 
 	@Test
 	public void controllers_should_access_services_only() {
-		noClasses()
+		classes()
     	.that().resideInAPackage("..controller..")
     	.and().areInnerClasses()
       .should().accessClassesThat().resideInAPackage("..service..").check(classes);
