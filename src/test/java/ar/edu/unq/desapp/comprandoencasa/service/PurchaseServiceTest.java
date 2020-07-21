@@ -57,7 +57,7 @@ public class PurchaseServiceTest extends SpringIntegrationTest {
         //Este test va a romper por el now(), cambiar estos strings en funcion del now().
         LocalDateTime takeAwayOptionFor = purchaseService.getTakeAwayOptionFor(Collections.singletonList(1L), "20200713:130000");
 
-        assertThat(takeAwayOptionFor.toString(), is("2020-07-20T08:00:01"));
+        assertThat(takeAwayOptionFor.toString(), is("2020-07-27T08:00:01"));
     }
 
     @Test
