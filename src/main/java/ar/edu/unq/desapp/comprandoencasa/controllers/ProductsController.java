@@ -1,11 +1,11 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.CommerceWithFoundProducts;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.CommerceWithFoundProductsTO;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
-import ar.edu.unq.desapp.comprandoencasa.service.ProductFinder;
-import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
+import ar.edu.unq.desapp.comprandoencasa.service.ProductFinderService;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +20,13 @@ public class ProductsController {
 
     public static final String basePath = "/products";
     @Autowired
-    private ProductFinder productFinder;
+    private ProductFinderService productFinder;
 
     @Autowired
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
 
     @GetMapping("find")
-    public List<CommerceWithFoundProducts> findByName(@CurrentUser UserPrincipal userPrincipal,
+    public List<CommerceWithFoundProductsTO> findByName(@CurrentUser UserPrincipal userPrincipal,
                                                       @RequestParam("maxDistance") String maxDistanceMeters,
                                                       @RequestParam("productToFind") String productName) {
         User user = userFinder.findUserById(userPrincipal.getId());
@@ -34,7 +34,7 @@ public class ProductsController {
     }
 
     @GetMapping("by-name")
-    public List<CommerceWithFoundProducts> find(@RequestParam("productToFind") String productName) {
+    public List<CommerceWithFoundProductsTO> find(@RequestParam("productToFind") String productName) {
         return productFinder.productsByname(productName);
     }
 }

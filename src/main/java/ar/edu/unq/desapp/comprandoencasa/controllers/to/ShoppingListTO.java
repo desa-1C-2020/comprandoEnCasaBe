@@ -3,16 +3,16 @@ package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ShoppingListTo {
+public class ShoppingListTO {
     public static final String itemByCommerceTo_FIELD = "itemByCommerceTo";
-    private List<ItemByCommerceTo> itemByCommerceTo;
+    private List<ItemByCommerceTO> itemByCommerceTo;
     private BigDecimal total;
 
-    public List<ItemByCommerceTo> getItemByCommerceTo() {
+    public List<ItemByCommerceTO> getItemByCommerceTo() {
         return itemByCommerceTo;
     }
 
-    public void setItemByCommerceTo(List<ItemByCommerceTo> itemByCommerceTo) {
+    public void setItemByCommerceTo(List<ItemByCommerceTO> itemByCommerceTo) {
         this.itemByCommerceTo = itemByCommerceTo;
     }
 

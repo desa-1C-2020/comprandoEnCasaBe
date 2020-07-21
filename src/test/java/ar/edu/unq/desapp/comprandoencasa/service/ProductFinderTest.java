@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
 import ar.edu.unq.desapp.comprandoencasa.configurations.GoogleConnector;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.CommerceWithFoundProducts;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.CommerceWithFoundProductsTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.mapstruct.ObjectConverter;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Address;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
@@ -31,10 +31,10 @@ import static org.mockito.Mockito.when;
 
 public class ProductFinderTest extends SpringIntegrationTest {
 
-    private ProductFinder productFinder;
+    private ProductFinderService productFinder;
 
     @Mock
-    private CommerceFinder commerceFinder;
+    private CommerceFinderService commerceFinder;
 
     @Mock
     private GoogleConnector googleConnector;
@@ -44,7 +44,7 @@ public class ProductFinderTest extends SpringIntegrationTest {
 
     @Before
     public void setUp() {
-        productFinder = new ProductFinder(commerceFinder, googleConnector, converter);
+        productFinder = new ProductFinderService(commerceFinder, googleConnector, converter);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class ProductFinderTest extends SpringIntegrationTest {
         String maxDistance = "10";
         String productToFind = "un nombre";
 
-        List<CommerceWithFoundProducts> commerceWithFoundProducts = productFinder.findByNameInRangeForUser(productToFind, maxDistance, userAddress);
+        List<CommerceWithFoundProductsTO> commerceWithFoundProducts = productFinder.findByNameInRangeForUser(productToFind, maxDistance, userAddress);
 
         assertThat(commerceWithFoundProducts, empty());
     }
@@ -73,9 +73,9 @@ public class ProductFinderTest extends SpringIntegrationTest {
         LatLng latLngFrom = new LatLng(123, 123);
         Address userAddress = Address.create("Roque Sáenz Peña 284, Bernal, Buenos Aires", latLngFrom);
 
-        List<CommerceWithFoundProducts> commerceWithFoundProducts = productFinder.findByNameInRangeForUser(productToFind, maxDistance, userAddress);
+        List<CommerceWithFoundProductsTO> commerceWithFoundProducts = productFinder.findByNameInRangeForUser(productToFind, maxDistance, userAddress);
 
-        CommerceWithFoundProducts commerceWithFoundProduct = commerceWithFoundProducts.get(0);
+        CommerceWithFoundProductsTO commerceWithFoundProduct = commerceWithFoundProducts.get(0);
         assertThat(commerceWithFoundProduct.getCommerceName(), is("un nombre de comercio"));
         assertThat(commerceWithFoundProduct.getDistance(), is(distance));
     }

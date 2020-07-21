@@ -4,8 +4,8 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.User;
 import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
-import ar.edu.unq.desapp.comprandoencasa.service.CommerceFinder;
-import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
+import ar.edu.unq.desapp.comprandoencasa.service.CommerceFinderService;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +20,10 @@ public class CommercesController {
     public static final String basePath = "/commerces";
 
     @Autowired
-    private CommerceFinder commerceFinder;
+    private CommerceFinderService commerceFinder;
 
     @Autowired
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
 
     @GetMapping("findInRange")
     public List<Commerce> getAllWithinGivenDistance(@CurrentUser UserPrincipal userPrincipal,

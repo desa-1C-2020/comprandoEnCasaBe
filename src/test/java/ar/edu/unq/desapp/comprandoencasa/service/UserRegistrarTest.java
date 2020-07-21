@@ -35,10 +35,10 @@ import static org.mockito.Mockito.when;
 
 public class UserRegistrarTest extends SpringIntegrationTest {
 
-    private UserRegistrar userRegistrar;
+    private UserRegistrarService userRegistrar;
 
     @Mock
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
 
     @Mock
     private UserRepository userRepository;
@@ -60,7 +60,7 @@ public class UserRegistrarTest extends SpringIntegrationTest {
 
     @Before
     public void setUp() {
-        userRegistrar = new UserRegistrar(userFinder, userRepository, userBuyerRepository,
+        userRegistrar = new UserRegistrarService(userFinder, userRepository, userBuyerRepository,
             userSellerRepository, converter);
     }
 

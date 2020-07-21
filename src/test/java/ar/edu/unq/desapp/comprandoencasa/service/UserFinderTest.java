@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserFinderTest {
 
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
 
     @Mock
     private UserRepository userRepository;
@@ -37,7 +37,7 @@ public class UserFinderTest {
 
     @Before
     public void setUp() {
-        userFinder = new UserFinder(userRepository, userSellerRepository, userBuyerRepository);
+        userFinder = new UserFinderService(userRepository, userSellerRepository, userBuyerRepository);
     }
 
     @Test

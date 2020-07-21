@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 
 import java.util.List;
 
-public class ItemByCommerceTo {
+public class ItemByCommerceTO {
     private Long commerceId;
     private List<ShoppingListItemTO> items;
 

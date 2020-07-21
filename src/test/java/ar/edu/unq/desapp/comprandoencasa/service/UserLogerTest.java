@@ -20,14 +20,14 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserLogerTest {
-    private UserLoger userLoger;
+    private UserLogerService userLoger;
 
     @Mock
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
 
     @Before
     public void setUp() {
-        userLoger = new UserLoger(userFinder);
+        userLoger = new UserLogerService(userFinder);
     }
 
     @Test

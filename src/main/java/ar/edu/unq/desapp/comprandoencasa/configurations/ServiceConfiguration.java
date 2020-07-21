@@ -12,17 +12,17 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.UserBuyerRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserRepository;
 import ar.edu.unq.desapp.comprandoencasa.repositories.UserSellerRepository;
 import ar.edu.unq.desapp.comprandoencasa.sendgrid.SendGridClient;
-import ar.edu.unq.desapp.comprandoencasa.service.CommerceFinder;
+import ar.edu.unq.desapp.comprandoencasa.service.CommerceFinderService;
 import ar.edu.unq.desapp.comprandoencasa.service.DeliveryService;
-import ar.edu.unq.desapp.comprandoencasa.service.EmailSender;
-import ar.edu.unq.desapp.comprandoencasa.service.ProductFinder;
+import ar.edu.unq.desapp.comprandoencasa.service.EmailSenderService;
+import ar.edu.unq.desapp.comprandoencasa.service.ProductFinderService;
 import ar.edu.unq.desapp.comprandoencasa.service.PurchaseService;
 import ar.edu.unq.desapp.comprandoencasa.service.SaleRegisterService;
 import ar.edu.unq.desapp.comprandoencasa.service.SaleableItemService;
-import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreator;
-import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
-import ar.edu.unq.desapp.comprandoencasa.service.UserLoger;
-import ar.edu.unq.desapp.comprandoencasa.service.UserRegistrar;
+import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreatorService;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinderService;
+import ar.edu.unq.desapp.comprandoencasa.service.UserLogerService;
+import ar.edu.unq.desapp.comprandoencasa.service.UserRegistrarService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,22 +41,22 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public UserFinder userFinder(UserRepository userRepository, UserSellerRepository userSellerRepository,
+    public UserFinderService userFinder(UserRepository userRepository, UserSellerRepository userSellerRepository,
                                  UserBuyerRepository userBuyerRepository) {
-        return new UserFinder(userRepository, userSellerRepository, userBuyerRepository);
+        return new UserFinderService(userRepository, userSellerRepository, userBuyerRepository);
     }
 
     @Bean
-    public SaleableItemService userSellerService(UserFinder userFinder, SaleableItemRepository saleableItemRepository,
+    public SaleableItemService userSellerService(UserFinderService userFinder, SaleableItemRepository saleableItemRepository,
                                                  CommerceRepository commerceRepository) {
         return new SaleableItemService(userFinder, saleableItemRepository, commerceRepository);
     }
 
     @Bean
-    public UserRegistrar userRegistrar(UserFinder userFinder, UserRepository userRepository,
+    public UserRegistrarService userRegistrar(UserFinderService userFinder, UserRepository userRepository,
                                        UserBuyerRepository userBuyerRepository,
                                        UserSellerRepository userSellerRepository, ObjectConverter objectConverter) {
-        return new UserRegistrar(userFinder, userRepository, userBuyerRepository, userSellerRepository,
+        return new UserRegistrarService(userFinder, userRepository, userBuyerRepository, userSellerRepository,
             objectConverter);
     }
 
@@ -66,39 +66,39 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public ShoppingListCreator shoppingListCreator(UserFinder userFinder,
+    public ShoppingListCreatorService shoppingListCreator(UserFinderService userFinder,
                                                    ShoppingListRepository shoppingListRepository,
                                                    CommerceRepository commerceRepository) {
-        return new ShoppingListCreator(userFinder, shoppingListRepository, commerceRepository);
+        return new ShoppingListCreatorService(userFinder, shoppingListRepository, commerceRepository);
     }
 
     @Bean
-    public UserLoger userLoger(UserFinder userFinder) {
-        return new UserLoger(userFinder);
+    public UserLogerService userLoger(UserFinderService userFinder) {
+        return new UserLogerService(userFinder);
     }
 
     @Bean
-    public CommerceFinder commerceFinder(CommerceRepository commerceRepository, GoogleConnector googleConnector) {
-        return new CommerceFinder(commerceRepository, googleConnector);
+    public CommerceFinderService commerceFinder(CommerceRepository commerceRepository, GoogleConnector googleConnector) {
+        return new CommerceFinderService(commerceRepository, googleConnector);
     }
 
     @Bean
-    public ProductFinder productFinder(CommerceFinder commerceFinder, GoogleConnector googleConnector, ObjectConverter converter) {
-        return new ProductFinder(commerceFinder, googleConnector, converter);
+    public ProductFinderService productFinder(CommerceFinderService commerceFinder, GoogleConnector googleConnector, ObjectConverter converter) {
+        return new ProductFinderService(commerceFinder, googleConnector, converter);
     }
 
     @Bean
-    public PurchaseService purchaseService(CommerceFinder commerceFinder, UserFinder userFinder,
-                                           DeliveryService deliveryService, ShoppingListCreator shoppingListCreator,
+    public PurchaseService purchaseService(CommerceFinderService commerceFinder, UserFinderService userFinder,
+                                           DeliveryService deliveryService, ShoppingListCreatorService shoppingListCreator,
                                            PurchaseRepository purchaseRepository, SaleRegisterService saleRegisterService,
-                                           EmailSender emailSender) {
+                                           EmailSenderService emailSender) {
         return new PurchaseService(commerceFinder, userFinder, deliveryService, shoppingListCreator,
             purchaseRepository, saleRegisterService, emailSender);
     }
 
     @Bean
     public SaleRegisterService saleRegisterService(SaleRegisterRepository saleRegisterRepository,
-                                                   CommerceRepository commerceRepository, UserFinder userFinder) {
+                                                   CommerceRepository commerceRepository, UserFinderService userFinder) {
         return new SaleRegisterService(saleRegisterRepository, commerceRepository, userFinder);
     }
 
@@ -108,7 +108,7 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public EmailSender emailSender(SendGridClient sendGridClient, UserFinder userFinder) {
-        return new EmailSender(sendGridClient, userFinder);
+    public EmailSenderService emailSender(SendGridClient sendGridClient, UserFinderService userFinder) {
+        return new EmailSenderService(sendGridClient, userFinder);
     }
 }

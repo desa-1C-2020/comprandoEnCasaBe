@@ -29,19 +29,19 @@ import static org.mockito.Mockito.when;
 public class PurchaseServiceTest extends SpringIntegrationTest {
     private PurchaseService purchaseService;
     @Mock
-    private CommerceFinder commerceFinder;
+    private CommerceFinderService commerceFinder;
     @Mock
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
     @Mock
     private DeliveryService deliveryService;
     @Mock
-    private ShoppingListCreator creator;
+    private ShoppingListCreatorService creator;
     @Mock
     private SaleRegisterService saleRegisterService;
     @Mock
     private PurchaseRepository purchaseRepository;
     @Mock
-    private EmailSender emailSender;
+    private EmailSenderService emailSender;
 
     @Before
     public void setUp() {
@@ -57,7 +57,7 @@ public class PurchaseServiceTest extends SpringIntegrationTest {
         //Este test va a romper por el now(), cambiar estos strings en funcion del now().
         LocalDateTime takeAwayOptionFor = purchaseService.getTakeAwayOptionFor(Collections.singletonList(1L), "20200713:130000");
 
-        assertThat(takeAwayOptionFor.toString(), is("2020-07-20T08:00:01"));
+        assertThat(takeAwayOptionFor.toString(), is("2020-07-27T08:00:01"));
     }
 
     @Test

@@ -1,9 +1,9 @@
 package ar.edu.unq.desapp.comprandoencasa.service;
 
 import ar.com.kfgodel.nary.api.optionals.Optional;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.ItemByCommerceTO;
 import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListItemTO;
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTO;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Commerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ItemsByCommerce;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Product;
@@ -18,25 +18,25 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ShoppingListCreator {
+public class ShoppingListCreatorService {
 
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
     private ShoppingListRepository shoppingListRepository;
     private CommerceRepository commerceRepository;
 
-    public ShoppingListCreator(UserFinder userFinder, ShoppingListRepository shoppingListRepository,
+    public ShoppingListCreatorService(UserFinderService userFinder, ShoppingListRepository shoppingListRepository,
                                CommerceRepository commerceRepository) {
         this.userFinder = userFinder;
         this.shoppingListRepository = shoppingListRepository;
         this.commerceRepository = commerceRepository;
     }
 
-    public ShoppingList createAndSave(ShoppingListTo shoppingListTo, User user) {
+    public ShoppingList createAndSave(ShoppingListTO shoppingListTo, User user) {
         //Aca deberia ver de guardar los errores, pero si crear la lista con los que no fallaron.
         //Revisar esto pero por ahora si falla uno, fallan todos.
         BigDecimal total = shoppingListTo.getTotal();
 
-        List<ItemByCommerceTo> itemByCommerceTo = shoppingListTo.getItemByCommerceTo();
+        List<ItemByCommerceTO> itemByCommerceTo = shoppingListTo.getItemByCommerceTo();
 
         List<ItemsByCommerce> itemsByCommerces = itemByCommerceTo
             .stream()
@@ -48,7 +48,7 @@ public class ShoppingListCreator {
         return shoppingList;
     }
 
-    private ItemsByCommerce getItemByCommerce(ItemByCommerceTo itemByCommerceTo) {
+    private ItemsByCommerce getItemByCommerce(ItemByCommerceTO itemByCommerceTo) {
         Long commerceId = itemByCommerceTo.getCommerceId();
         List<ShoppingListItemTO> itemsTo = itemByCommerceTo.getItems();
         Commerce commerce = getCommerceOrThrow(commerceId);

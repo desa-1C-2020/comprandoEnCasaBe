@@ -5,7 +5,7 @@ import ar.edu.unq.desapp.comprandoencasa.model.persistibles.PaymentMethod;
 import java.math.BigDecimal;
 
 public class PurchaseTO {
-    private ShoppingListTo shoppingListTo;
+    private ShoppingListTO shoppingListTo;
     private PaymentMethod selectedPaymentMethod;
     private DeliveryOptionTO deliveryOption;
     private BigDecimal total; //total del carrito, + un posible cargo por envío.
@@ -18,11 +18,11 @@ public class PurchaseTO {
         this.deliveryOption = deliveryOption;
     }
 
-    public ShoppingListTo getShoppingListTo() {
+    public ShoppingListTO getShoppingListTo() {
         return shoppingListTo;
     }
 
-    public void setShoppingListTo(ShoppingListTo shoppingListTo) {
+    public void setShoppingListTo(ShoppingListTO shoppingListTo) {
         this.shoppingListTo = shoppingListTo;
     }
 

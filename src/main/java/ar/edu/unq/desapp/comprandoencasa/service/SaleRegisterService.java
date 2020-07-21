@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 public class SaleRegisterService {
     private SaleRegisterRepository saleRegisterRepository;
     private CommerceRepository commerceRepository;
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
 
-    public SaleRegisterService(SaleRegisterRepository saleRegisterRepository, CommerceRepository commerceRepository, UserFinder userFinder) {
+    public SaleRegisterService(SaleRegisterRepository saleRegisterRepository, CommerceRepository commerceRepository, UserFinderService userFinder) {
         this.saleRegisterRepository = saleRegisterRepository;
         this.commerceRepository = commerceRepository;
         this.userFinder = userFinder;

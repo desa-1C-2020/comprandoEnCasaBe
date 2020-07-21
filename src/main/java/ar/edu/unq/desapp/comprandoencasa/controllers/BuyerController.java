@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.comprandoencasa.controllers;
 
-import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTo;
+import ar.edu.unq.desapp.comprandoencasa.controllers.to.ShoppingListTO;
 import ar.edu.unq.desapp.comprandoencasa.extensions.ObjectMapper;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.Purchase;
 import ar.edu.unq.desapp.comprandoencasa.model.persistibles.ShoppingList;
@@ -9,8 +9,8 @@ import ar.edu.unq.desapp.comprandoencasa.repositories.ShoppingListRepository;
 import ar.edu.unq.desapp.comprandoencasa.security.CurrentUser;
 import ar.edu.unq.desapp.comprandoencasa.security.UserPrincipal;
 import ar.edu.unq.desapp.comprandoencasa.service.PurchaseService;
-import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreator;
-import ar.edu.unq.desapp.comprandoencasa.service.UserFinder;
+import ar.edu.unq.desapp.comprandoencasa.service.ShoppingListCreatorService;
+import ar.edu.unq.desapp.comprandoencasa.service.UserFinderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,7 @@ public class BuyerController {
     public static final String basePath = "/buyer";
 
     @Autowired
-    private ShoppingListCreator shoppingListCreator;
+    private ShoppingListCreatorService shoppingListCreator;
 
     @Autowired
     private ShoppingListRepository shoppingListRepository;
@@ -40,19 +40,19 @@ public class BuyerController {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private UserFinder userFinder;
+    private UserFinderService userFinder;
     @Autowired
     private PurchaseService purchaseService;
 
     @PostMapping(value = "shoppingList")
-    public ResponseEntity addShoppingList(@CurrentUser UserPrincipal userPrincipal, @RequestBody ShoppingListTo shoppingListTo) {
+    public ResponseEntity addShoppingList(@CurrentUser UserPrincipal userPrincipal, @RequestBody ShoppingListTO shoppingListTo) {
         User user = userFinder.findUserById(userPrincipal.getId());
         shoppingListCreator.createAndSave(shoppingListTo, user);
         return (ResponseEntity) ResponseEntity.ok();
     }
 
     @GetMapping(value = "shoppingList")
-    public List<ShoppingListTo> getShoppingList(@CurrentUser UserPrincipal userPrincipal) {
+    public List<ShoppingListTO> getShoppingList(@CurrentUser UserPrincipal userPrincipal) {
         List<ShoppingList> shoppingList = shoppingListCreator.recreateAllListsForUserWithId(userPrincipal.getId());
         return objectMapper.mapToShoppingListsTo(shoppingList);
     }

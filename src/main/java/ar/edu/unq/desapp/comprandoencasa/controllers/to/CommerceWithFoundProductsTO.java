@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.comprandoencasa.controllers.to;
 
 import java.util.List;
 
-public class CommerceWithFoundProducts {
+public class CommerceWithFoundProductsTO {
     private Long commerceId;
     private String commerceName;
     private Long distance;
