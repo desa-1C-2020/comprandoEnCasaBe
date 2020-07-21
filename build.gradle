@@ -189,6 +189,9 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.springframework.security:spring-security-test')
 
+    //To do architecture test
+    testImplementation 'com.tngtech.archunit:archunit:0.14.1'
+
     //JUnit
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
